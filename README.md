@@ -45,8 +45,6 @@ See the [github repo](https://github.com/eieioxyz/Beyond-Dotfiles-in-100-Seconds
 Watch the [video collaboration](https://youtu.be/r_MpUP6aKiQ 'Dotfiles in 100
 Seconds on YouTube') between [fireship.io](https://fireship.io/ 'Build and ship
 🔥 your app ⚡ faster') and [eieio.xyz](http://dotfiles.eieio.xyz 'Dotfiles from
-Start to Finish-ish'). And don't forget to
-[subscribe](https://fireship.page.link/youtube 'Fireship YouTube Channel') while
-you're there!
+Start to Finish-ish').
 
-Then, go **_way_** beyond 100 seconds by taking the full course on Udemy, [**_Dotfiles from Start to Finish-ish_**](https://www.udemy.com/course/dotfiles-from-start-to-finish-ish/?referralCode=445BE0B541C48FE85276 'Learn Dotfiles from Start to Finish-ish on Udemy') (aka "Dotiles in 15240 Seconds and Growing"). Keep an eye on [Twitter](https://twitter.com/EIEIOxyz '@EIEIOxyz') and [YouTube](https://www.youtube.com/channel/UCcZZOzRKMbql7IEL0midfgQ 'EIEIO YouTube Channel') for updates to the course.
+Then, go **_way_** beyond 100 seconds by taking the full course on Udemy, [**_Dotfiles from Start to Finish-ish_**](https://www.udemy.com/course/dotfiles-from-start-to-finish-ish/?referralCode=445BE0B541C48FE85276 'Learn Dotfiles from Start to Finish-ish on Udemy') (aka "Dotiles in 15240 Seconds and Growing").

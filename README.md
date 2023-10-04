@@ -28,6 +28,7 @@ git clone https://github.com/edouardmisset/dotfiles.git ~/.dotfiles
 
 ln -s ~/.dotfiles/.zshrc ~/.zshrc
 ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
+ln -s ~/.dotfiles/.p10k.zsh ~/.p10k.zsh
 ```
 
 4. Install Homebrew, followed by the software listed in the Brewfile.

@@ -9,3 +9,5 @@
 	helper = !/usr/bin/gh auth git-credential
 [color]
 	ui = auto
+[core]
+	editor = nano

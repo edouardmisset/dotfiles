@@ -30,6 +30,8 @@ brew "httpd"
 brew "python@3.11"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Mac App Store command-line interface
+brew "mas"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
 # Platform built on V8 to build network applications
@@ -109,6 +111,16 @@ cask "spotify"
 cask "suspicious-package"
 # Open-source code editor
 cask "visual-studio-code"
+mas "BetterSnapTool", id: 417375580
+mas "DaisyDisk", id: 411643860
+mas "Fantastical", id: 975937182
+mas "Just Focus", id: 1142151959
+mas "Mactracker", id: 430255202
+mas "MindNode", id: 1289197285
+mas "OmniFocus", id: 1346203938
+mas "Pages", id: 409201541
+mas "Spark", id: 1176895641
+mas "WhatsApp", id: 1147396723
 vscode "aaron-bond.better-comments"
 vscode "Angular.ng-template"
 vscode "bierner.color-info"

@@ -242,6 +242,9 @@ RPROMPT='%*'
 
 # Add Locations ot $PATH Variables
 
+# Add Visual Studio Code (code)
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
 # Write Handy Functions
 
 function mkcd() {

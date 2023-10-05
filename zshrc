@@ -121,7 +121,6 @@
 # # alias zshconfig="mate ~/.zshrc"
 # # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-
 # # alias aliassearch ="alias | grep "
 
 # # Shell
@@ -202,7 +201,6 @@
 # alias bst="bun run start"
 # alias bt="bun test"
 
-
 # # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 # [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -226,6 +224,9 @@
 
 # Set variables
 
+# Syntax highlighting for the man pages using bat
+export MANPAGER="sh -c 'col -bx | bat -l man -p'"
+
 # Change ZSH Options
 
 # Create Aliases
@@ -238,7 +239,6 @@ PROMPT='
 %1~ %L %# '
 
 RPROMPT='%*'
-
 
 # Add Locations ot $PATH Variables
 

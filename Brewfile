@@ -1,76 +1,113 @@
 tap "dart-lang/dart"
-tap "heroku/brew"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/command-not-found"
 tap "homebrew/services"
-tap "mongodb/brew"
-tap "sass/sass"
+tap "oven-sh/bun"
+# Search tool like grep, but optimized for programmers
 brew "ack"
-brew "openssl@1.1"
-brew "autojump"
+# Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Get/set bluetooth power and discoverable state
 brew "blueutil"
-brew "python@3.9"
-brew "cowsay"
+# Secure runtime for JavaScript and TypeScript
 brew "deno"
+# Modern replacement for 'ls'
 brew "exa"
+# Play, record, convert, and stream audio and video
 brew "ffmpeg"
-brew "flyctl"
-brew "fortune"
+# Command-line fuzzy finder written in Go
 brew "fzf"
+# GitHub command-line tool
 brew "gh"
+# Distributed revision control system
 brew "git"
-brew "python@3.11"
+# Open-source video transcoder available for Linux, Mac, and Windows
 brew "handbrake"
+# Apache HTTP server
 brew "httpd"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
+# User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
-brew "luarocks"
+# Matroska media files manipulation tools
 brew "mkvtoolnix"
+# Platform built on V8 to build network applications
 brew "node"
+# Read, create, and modify MP4 files
 brew "mp4v2"
+# Open source relational database management system
 brew "mysql"
-brew "php"
-brew "postgresql@13"
+# Cryptography and SSL/TLS Toolkit
+brew "openssl@1.1"
+# Object-relational database system
 brew "postgresql@14"
+# Interpreted, interactive, object-oriented programming language
 brew "python@3.8"
-brew "ruby"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.9"
+# Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Next-generation plugin manager for zsh
 brew "zplug"
+# UNIX shell (command interpreter)
 brew "zsh"
+# Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
+# Additional completion definitions for zsh
 brew "zsh-completions"
+# Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-brew "heroku/brew/heroku"
-brew "mongodb/brew/mongodb-community"
+# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
+brew "oven-sh/bun/bun"
+# Application launcher and productivity software
 cask "alfred"
+# Utility to create and modify archives
 cask "betterzip"
-cask "caprine"
+# Universal database tool and SQL client
 cask "dbeaver-community"
-cask "figma"
+# Web browser
 cask "firefox"
+# Free monospaced font with programming ligatures
 cask "font-fira-code"
+# Developer targeted fonts with a high number of glyphs
 cask "font-fira-code-nerd-font"
 cask "font-petit-formal-script"
+# Git client focusing on productivity
 cask "gitkraken"
+# Web browser
 cask "google-chrome"
+# Client for the Google Drive storage service
 cask "google-drive"
+# Open-source video transcoder
 cask "handbrake"
+# HTTP and GraphQL Client
 cask "insomnia"
+# Native desktop app for Messenger (formerly Facebook Messenger)
 cask "messenger"
-cask "microsoft-teams"
+# Home media player
 cask "plex"
+# Home media server
 cask "plex-media-server"
+# QuickLook plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
+# Display image info and preview unsupported formats in QuickLook
 cask "qlimagesize"
+# QuickLook generator for Markdown files
 cask "qlmarkdown"
+# QuickLook plugin for plaintext files without an extension
 cask "qlstephen"
+# Thumbnails, static previews, cover art and metadata for video files
 cask "qlvideo"
+# QuickLook plugin for CSV files
 cask "quicklook-csv"
+# QuickLook plugin for JSON files
 cask "quicklook-json"
-cask "quicklookase"
+# Music streaming service
 cask "spotify"
+# Application for inspecting installer packages
 cask "suspicious-package"
+# Open-source code editor
 cask "visual-studio-code"
 vscode "aaron-bond.better-comments"
 vscode "Angular.ng-template"

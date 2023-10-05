@@ -1,0 +1,13 @@
+[user]
+	name = 'Edouard Misset'
+	email = 63284636+edouardmisset@users.noreply.github.com
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[color]
+	ui = auto
+[core]
+	editor = nano

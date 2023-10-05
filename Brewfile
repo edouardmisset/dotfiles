@@ -64,6 +64,10 @@ brew "zsh-syntax-highlighting"
 brew "oven-sh/bun/bun"
 # Application launcher and productivity software
 cask "alfred"
+# Menu bar icon organizer
+cask "bartender"
+# Tool to customize input devices and automate computer systems
+cask "bettertouchtool"
 # Utility to create and modify archives
 cask "betterzip"
 # Universal database tool and SQL client
@@ -85,6 +89,10 @@ cask "google-drive"
 cask "handbrake"
 # HTTP and GraphQL Client
 cask "insomnia"
+# System monitoring app
+cask "istat-menus"
+# Terminal emulator as alternative to Apple's Terminal app
+cask "iterm2"
 # Native desktop app for Messenger (formerly Facebook Messenger)
 cask "messenger"
 # Home media player

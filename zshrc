@@ -224,8 +224,6 @@
 
 # Set variables
 
-# Syntax highlighting for the man pages using bat
-export MANPAGER="sh -c 'col -bx | bat -l man -p'"
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # Change ZSH Options
@@ -235,6 +233,9 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 alias ls='exa -laFh --git'
 alias lst='exa -laFh --git --tree --level=2'
 alias exa='exa -laFh --git'
+alias man=batman
+alias grep=batgrep
+alias brewdump='brew bundle dump --force --describe'
 
 # Customize Prompt(s)
 

@@ -114,6 +114,7 @@ cask "visual-studio-code"
 mas "BetterSnapTool", id: 417375580
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
+mas "Gemini 2", id: 1090488118
 mas "Just Focus", id: 1142151959
 mas "Mactracker", id: 430255202
 mas "MindNode", id: 1289197285

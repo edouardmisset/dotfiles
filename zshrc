@@ -69,9 +69,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
-
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
@@ -105,43 +102,37 @@ source $ZSH/oh-my-zsh.sh
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
+#   export EDITOR='nano'
 # else
-#   export EDITOR='mvim'
+#   export EDITOR='nano'
 # fi
 
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
+# VARIABLES
 
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+# Disable gatekeeper for Homebrew
+export HOMEBREW_CASK_OPTS="--no-quarantine"
+# Set default "viewer" (from cat => bat)
+export NULLCMD=bat
+export N_PREFIX="$HOME/.n"
+export PREFIX="$N_PREFIX"
 
-# alias aliassearch ="alias | grep "
+# ALIASES
 
 # Shell
+alias as="alias | grep "
 alias c='clear'
+alias cat='bat'
 alias copy='rsync -ah --info=progress2'
-# alias ls='colorls'
-# alias lc='colorls -lA --sd'
-# alias la='colorls -a'
-
-# Go to directory (`cd`) then list what's in it (`ls`)
-function cl() {
-  DIR="$*";
-    # if no DIR given, go home
-    if [ $# -lt 1 ]; then
-      DIR=$HOME;
-  fi;
-  builtin cd "${DIR}" && \
-  # use your preferred ls command
-    ls
-}
+alias exa='exa -laFh --git'
+alias grep='batgrep'
+alias ls='exa -laFh --git'
+alias lst='exa -lFh --git --tree --level=2'
+alias man='batman'
+alias rm='trash'
+alias trail='<<<${(F)path}'
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -167,21 +158,8 @@ alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-gmove() {
-  git stash -- $(git diff --staged --name-only) &&
-  gwip ;
-  git branch $1 $2 &&
-  git checkout $1 &&
-  git stash pop
-}
-
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-killport() {
-  kill -9 $(lsof -t -i:$1)
-}
+# Brew
+alias bbd='brew bundle dump --force --describe'
 
 # YARN
 alias ylf="yarn lint:fix"
@@ -202,58 +180,52 @@ alias brun="bun run"
 alias bst="bun run start"
 alias bt="bun test"
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# FUNCTIONS
 
-# fzf (fuzzy finder)
-export FZF_BASE=/usr/bin/fzf/
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+gmove() {
+  git stash -- $(git diff --staged --name-only) &&
+  gwip ;
+  git branch $1 $2 &&
+  git checkout $1 &&
+  git stash pop
+}
 
-# NVM
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+killport() {
+  kill -9 $(lsof -t -i:$1)
+}
 
-# bun completions
-[ -s "/home/edouard/.bun/_bun" ] && source "/home/edouard/.bun/_bun"
-
-
-# Set variables
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
-# Disable gatekeeper for Homebrew
-export HOMEBREW_CASK_OPTS="--no-quarantine"
-# Set default "viewer" (from cat => bat)
-export NULLCMD=bat
-export N_PREFIX="$HOME/.n"
-export PREFIX="$N_PREFIX"
-
-# Change ZSH Options
-
-# Create Aliases
-
-alias bbd='brew bundle dump --force --describe'
-alias cat='bat'
-alias exa='exa -laFh --git'
-alias grep='batgrep'
-alias ls='exa -laFh --git'
-alias lst='exa -lFh --git --tree --level=2'
-alias rm='trash'
-alias man='batman'
-alias trail='<<<${(F)path}'
-
-# Add Locations ot $PATH Variables
-
-export PATH="$N_PREFIX/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
-# Write Handy Functions
 
 function mkcd() {
   mkdir -p "$@" && cd "$_"
 }
 
-# Use ZSH Plugins
+# Go to directory (`cd`) then list what's in it (`ls`)
+function cl() {
+  DIR="$*";
+    # if no DIR given, go home
+    if [ $# -lt 1 ]; then
+      DIR=$HOME;
+  fi;
+  builtin cd "${DIR}" && \
+  # use your preferred ls command
+    ls
+}
 
-# ...and other Surprises
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# fzf (fuzzy finder)
+export FZF_BASE=/usr/bin/fzf/
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
+# bun completions
+[ -s "/home/edouard/.bun/_bun" ] && source "/home/edouard/.bun/_bun"
+
+# Add Locations ot $PATH Variables
+
+export PATH="$N_PREFIX/bin:$PATH"
+export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"

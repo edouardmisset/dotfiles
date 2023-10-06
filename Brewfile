@@ -1,4 +1,5 @@
 tap "dart-lang/dart"
+tap "eth-p/software"
 tap "homebrew/bundle"
 tap "homebrew/cask-fonts"
 tap "homebrew/command-not-found"
@@ -8,6 +9,8 @@ tap "oven-sh/bun"
 brew "ack"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
+# Bash scripts that integrate bat with various command-line tools
+brew "bat-extras", link: false
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Secure runtime for JavaScript and TypeScript
@@ -40,6 +43,8 @@ brew "node"
 brew "mp4v2"
 # Open source relational database management system
 brew "mysql"
+# Free (GNU) replacement for the Pico text editor
+brew "nano"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Object-relational database system

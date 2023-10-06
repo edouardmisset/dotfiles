@@ -89,6 +89,7 @@ plugins=(
   ubuntu
   vscode
   yarn
+  z
   zsh-autosuggestions
   zsh-syntax-highlighting
   )

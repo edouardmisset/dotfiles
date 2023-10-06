@@ -16,10 +16,11 @@
 
 # Example 1: use the C++ syntax for Arduino .ino files
 
+#--map-syntax "\*.ino:C++"
+
 # Example 2: Use ".gitignore"-style highlighting for ".ignore" files
 
-#--map-syntax "\*.ino:C++"
-#--map-syntax ".ignore:Git Ignore"
+--map-syntax ".ignore:Git Ignore"
 --map-syntax "zshrc:Bourne Again Shell (bash)"
 --map-syntax "zshenv:Bourne Again Shell (bash)"
 --map-syntax "Brewfile:Bourne Again Shell (bash)"

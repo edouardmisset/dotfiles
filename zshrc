@@ -231,7 +231,7 @@ export HOMEBREW_CASK_OPTS="--no-quarantine"
 # Create Aliases
 
 alias ls='exa -laFh --git'
-alias lst='exa -laFh --git --tree --level=2'
+alias lst='exa -lFh --git --tree --level=2'
 alias exa='exa -laFh --git'
 alias man=batman
 alias grep=batgrep

@@ -227,6 +227,8 @@
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 # Set default "viewer" (from cat => bat)
 export NULLCMD=bat
+export N_PREFIX="$HOME/.n"
+export PREFIX="$N_PREFIX"
 
 # Change ZSH Options
 
@@ -251,6 +253,7 @@ RPROMPT='%*'
 
 # Add Visual Studio Code (code)
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+export PATH="$PATH:$N_PREFIX/bin"
 
 # Write Handy Functions
 

@@ -39,14 +39,16 @@ brew "less"
 brew "mas"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
-# Platform built on V8 to build network applications
-brew "node"
 # Read, create, and modify MP4 files
 brew "mp4v2"
 # Open source relational database management system
 brew "mysql"
+# Node version management
+brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Platform built on V8 to build network applications
+brew "node"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Object-relational database system

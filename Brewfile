@@ -57,6 +57,8 @@ brew "postgresql@14"
 brew "python@3.8"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Command-line interface to the freedesktop.org trashcan
+brew "trash-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Next-generation plugin manager for zsh

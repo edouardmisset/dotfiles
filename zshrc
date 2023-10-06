@@ -237,7 +237,7 @@ alias lst='exa -lFh --git --tree --level=2'
 alias exa='exa -laFh --git'
 alias man=batman
 alias grep=batgrep
-alias bdd='brew bundle dump --force --describe'
+alias bbd='brew bundle dump --force --describe'
 alias trail='<<<${(F)path}'
 
 # Customize Prompt(s)

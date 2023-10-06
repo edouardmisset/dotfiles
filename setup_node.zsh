@@ -13,6 +13,7 @@ fi
 # Install Global NPM PAckages
 npm install --global yarn
 npm install --global typescript
+npm install --global trash-cli
 
 echo "Global NPM Packages Installed: "
 npm list --global --depth=0

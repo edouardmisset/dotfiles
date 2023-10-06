@@ -240,6 +240,7 @@ alias exa='exa -laFh --git'
 alias grep=batgrep
 alias ls='exa -laFh --git'
 alias lst='exa -lFh --git --tree --level=2'
+alias rm=trash
 alias man=batman
 alias trail='<<<${(F)path}'
 

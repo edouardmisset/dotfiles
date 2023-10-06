@@ -6,6 +6,7 @@
 
 - link:
     ~/.zshrc:
+    ~/.p10k.zsh:
     ~/.zshenv:
     ~/.gitconfig:
     ~/.config:
@@ -20,5 +21,8 @@
       stdout: true
       stderr: true
     - command: ./setup_zsh.zsh
+      stdout: true
+      stderr: true
+    - command: ./setup_node.zsh
       stdout: true
       stderr: true

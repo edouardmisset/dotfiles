@@ -39,14 +39,16 @@ brew "less"
 brew "mas"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
-# Platform built on V8 to build network applications
-brew "node"
 # Read, create, and modify MP4 files
 brew "mp4v2"
 # Open source relational database management system
 brew "mysql"
+# Node version management
+brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Platform built on V8 to build network applications
+brew "node"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # Object-relational database system
@@ -55,6 +57,8 @@ brew "postgresql@14"
 brew "python@3.8"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Command-line interface to the freedesktop.org trashcan
+brew "trash-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Next-generation plugin manager for zsh

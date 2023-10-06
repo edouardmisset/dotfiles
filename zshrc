@@ -253,9 +253,8 @@ RPROMPT='%*'
 
 # Add Locations ot $PATH Variables
 
-# Add Visual Studio Code (code)
+export PATH="$N_PREFIX/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-export PATH="$PATH:$N_PREFIX/bin"
 
 # Write Handy Functions
 

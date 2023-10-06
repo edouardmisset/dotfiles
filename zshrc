@@ -234,12 +234,13 @@ export PREFIX="$N_PREFIX"
 
 # Create Aliases
 
+alias bbd='brew bundle dump --force --describe'
+alias cat=bat
+alias exa='exa -laFh --git'
+alias grep=batgrep
 alias ls='exa -laFh --git'
 alias lst='exa -lFh --git --tree --level=2'
-alias exa='exa -laFh --git'
 alias man=batman
-alias grep=batgrep
-alias bbd='brew bundle dump --force --describe'
 alias trail='<<<${(F)path}'
 
 # Customize Prompt(s)

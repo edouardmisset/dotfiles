@@ -80,7 +80,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 plugins=(
   alias-tips
   bun
-  colored-man-pages
   colorize
   command-not-found
   fzf

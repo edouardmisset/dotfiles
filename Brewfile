@@ -33,6 +33,8 @@ brew "httpd"
 brew "python@3.11"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Pager program similar to more
+brew "less"
 # Mac App Store command-line interface
 brew "mas"
 # Matroska media files manipulation tools

@@ -225,6 +225,8 @@
 # Set variables
 
 export HOMEBREW_CASK_OPTS="--no-quarantine"
+# Set default "viewer" (from cat => bat)
+export NULLCMD=bat
 
 # Change ZSH Options
 

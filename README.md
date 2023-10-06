@@ -20,44 +20,24 @@ git clone git@github.com:edouardmisset/dotfiles.git ~/.dotfiles
 git clone https://github.com/edouardmisset/dotfiles.git ~/.dotfiles
 ```
 
-3. Create symlinks in the Home directory to the real files in the repo.
+3. Create symlinks, install brew and other packages & software using the
+   `install` script.
 
 ```zsh
-# There are better and less manual ways to do this;
-# investigate install scripts and bootstrapping tools.
-
-ln -s ~/.dotfiles/.zshrc ~/.zshrc
-ln -s ~/.dotfiles/.gitconfig ~/.gitconfig
-ln -s ~/.dotfiles/.p10k.zsh ~/.p10k.zsh
-```
-
-4. Install Homebrew, followed by the software listed in the Brewfile.
-
-```zsh
-# These could also be in an install script.
-
-# Install Homebrew
-/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
-
-# Then pass in the Brewfile location...
-brew bundle --file ~/.dotfiles/Brewfile
-
-# ...or move to the directory first.
-cd ~/.dotfiles && brew bundle
+~/.dotfiles/install
+cd ~/.dotfiles && ./install
 ```
 
 ## TODO List
 
 - Terminal Preferences
-- Change Shell to ZSH
 - Dock Preferences
 - Mission Control Preferences (don't rearrange spaces)
 - Finder Show Path Bar
 - Git (config and SSH)
-- Turn off Spotlight short to switch to Alfred's
+- Turn off Spotlight shortcut to switch to Alfred's
 
 - Learn how to use [`defaults`](https://macos-defaults.com/#%F0%9F%99%8B-what-s-a-defaults-command) to record and restore System Preferences and other macOS configurations.
-- Organize these growing steps into multiple script files.
 - Make a checklist of steps to decommission your computer before wiping your hard drive.
 - Create a [bootable USB installer for macOS](https://support.apple.com/en-us/HT201372).
 - Find inspiration and examples in other Dotfiles repositories at [dotfiles.github.io](https://dotfiles.github.io/).

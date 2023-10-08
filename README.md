@@ -41,6 +41,7 @@ cd ~/.dotfiles && ./install
 - Make a checklist of steps to decommission your computer before wiping your hard drive.
 - Create a [bootable USB installer for macOS](https://support.apple.com/en-us/HT201372).
 - Find inspiration and examples in other Dotfiles repositories at [dotfiles.github.io](https://dotfiles.github.io/).
+- Share this repo with a million people.
 
 ## Credit
 

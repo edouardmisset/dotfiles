@@ -123,16 +123,15 @@ export PREFIX="$N_PREFIX"
 
 # Shell
 alias as="alias | grep "
-alias c='clear'
-alias cat='bat'
-alias copy='rsync -ah --info=progress2'
-alias exa='exa -laFh --git'
-alias grep='batgrep'
-alias ls='exa -laFh --git'
-alias lst='exa -lFh --git --tree --level=2'
-alias man='batman'
-alias rm='trash'
-alias trail='<<<${(F)path}'
+alias c="clear"
+alias cat="bat"
+alias copy="rsync -ah --info=progress2"
+alias exa="exa -laFh --git"
+alias grep="batgrep"
+alias ls="exa -laFh --git"
+alias lst="exa -lFh --git --tree --level=2"
+alias man="batman"
+alias trail="<<<${(F)path}"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -149,17 +148,18 @@ alias gco-2="gco--"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
 alias gdel="git branch -D"
-alias githome='cd `git rev-parse --show-toplevel`'
+alias githome="cd `git rev-parse --show-toplevel`"
 alias gla="git pull --all && git fetch --all"
 alias gmm="git merge main"
 alias gmu="git switch main && git fetch --all && git pull --all"
-alias gpo='git push --set-upstream origin $(git_current_branch)'
+alias gpo="git push --set-upstream origin $(git_current_branch)"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # Brew
-alias bbd='brew bundle dump --force --describe'
+alias bbd="brew bundle dump --force --describe"
+alias bubu="brew update && brew upgrade"
 
 # YARN
 alias ylf="yarn lint:fix"
@@ -225,7 +225,7 @@ export FZF_BASE=/usr/bin/fzf/
 # bun completions
 [ -s "/home/edouard/.bun/_bun" ] && source "/home/edouard/.bun/_bun"
 
-# Add Locations ot $PATH Variables
+# Add Locations to $PATH Variables
 
 export PATH="$N_PREFIX/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"

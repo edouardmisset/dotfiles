@@ -26,11 +26,9 @@ brew "gh"
 # Distributed revision control system
 brew "git"
 # Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake"
+brew "handbrake", link: false
 # Apache HTTP server
 brew "httpd"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.11"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Pager program similar to more
@@ -51,14 +49,18 @@ brew "nano"
 brew "node"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
+# General-purpose scripting language
+brew "php"
 # Object-relational database system
 brew "postgresql@14"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.11"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.8"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
 # Command-line interface to the freedesktop.org trashcan
-brew "trash-cli"
+brew "trash-cli", link: false
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Next-generation plugin manager for zsh
@@ -128,27 +130,21 @@ cask "quicklook-json"
 cask "spotify"
 # Application for inspecting installer packages
 cask "suspicious-package"
+# Virtualizer for x86 hardware
+cask "virtualbox"
 # Open-source code editor
 cask "visual-studio-code"
-mas "BetterSnapTool", id: 417375580
-mas "DaisyDisk", id: 411643860
-mas "Fantastical", id: 975937182
-mas "Gemini 2", id: 1090488118
-mas "Just Focus", id: 1142151959
-mas "Mactracker", id: 430255202
-mas "MindNode", id: 1289197285
-mas "OmniFocus", id: 1346203938
-mas "Pages", id: 409201541
-mas "Spark", id: 1176895641
-mas "WhatsApp", id: 1147396723
+vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "Angular.ng-template"
 vscode "bierner.color-info"
+vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
 vscode "bradlc.vscode-tailwindcss"
+vscode "ChakrounAnas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
-vscode "cmstead.js-codeformer"
+vscode "ctcuff.font-preview"
 vscode "DavidAnson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
@@ -161,20 +157,35 @@ vscode "esbenp.prettier-vscode"
 vscode "EthanSK.restore-terminals"
 vscode "figma.figma-vscode-extension"
 vscode "foxundermoon.shell-format"
+vscode "GitHub.copilot"
+vscode "GitHub.copilot-chat"
 vscode "GitHub.remotehub"
 vscode "github.vscode-github-actions"
 vscode "GitHub.vscode-pull-request-github"
 vscode "GregorBiswanger.json2ts"
 vscode "humao.rest-client"
 vscode "Huuums.vscode-fast-folder-structure"
+vscode "IBM.output-colorizer"
 vscode "IronGeek.vscode-env"
+vscode "jock.svg"
+vscode "johnpapa.vscode-peacock"
+vscode "jpwallace22.react-lazify"
 vscode "lllllllqw.jsdoc"
+vscode "lokalise.i18n-ally"
 vscode "markis.code-coverage"
+vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
+vscode "MeshIntelligentTechnologiesInc.pieces-vscode"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "mhutchie.git-graph"
 vscode "mongodb.mongodb-vscode"
+vscode "monokai.theme-monokai-pro-vscode"
 vscode "ms-azuretools.vscode-docker"
+vscode "ms-toolsai.jupyter"
+vscode "ms-toolsai.jupyter-keymap"
+vscode "ms-toolsai.jupyter-renderers"
+vscode "ms-toolsai.vscode-jupyter-cell-tags"
+vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
@@ -191,6 +202,8 @@ vscode "Orta.vscode-jest"
 vscode "p42ai.refactor"
 vscode "PKief.material-icon-theme"
 vscode "pnp.polacode"
+vscode "Prisma.prisma"
+vscode "pucelle.vscode-css-navigation"
 vscode "ritwickdey.LiveServer"
 vscode "standard.vscode-standard"
 vscode "stkb.rewrap"
@@ -198,14 +211,22 @@ vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "styled-components.vscode-styled-components"
 vscode "stylelint.vscode-stylelint"
+vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
+vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
+vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
+vscode "VisualStudioExptTeam.vscodeintellicode"
 vscode "vivaxy.vscode-conventional-commits"
 vscode "WallabyJs.console-ninja"
 vscode "WallabyJs.quokka-vscode"
+vscode "WallabyJs.wallaby-vscode"
+vscode "wix.vscode-import-cost"
 vscode "xabikos.JavaScriptSnippets"
-vscode "yoavbls.pretty-ts-errors"
+vscode "xyc.vscode-mdx-preview"
+vscode "YoavBls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
+vscode "ZixuanChen.vitest-explorer"

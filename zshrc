@@ -89,6 +89,7 @@ plugins=(
   # z
   zoxide
   zsh-autosuggestions
+  zsh-autocomplete
   zsh-syntax-highlighting
   )
 

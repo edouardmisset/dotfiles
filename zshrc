@@ -158,7 +158,7 @@ alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # Brew
-alias bbd="brew bundle dump --force --describe"
+alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"
 alias bubu="brew update && brew upgrade"
 
 # YARN
@@ -229,3 +229,5 @@ export FZF_BASE=/usr/bin/fzf/
 
 export PATH="$N_PREFIX/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+
+eval "$(zoxide init zsh)"

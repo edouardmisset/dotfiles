@@ -31,6 +31,8 @@ brew "handbrake", link: false
 brew "httpd"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# CLI for ImageOptim, ImageAlpha and JPEGmini
+brew "imageoptim-cli"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -63,6 +65,8 @@ brew "python@3.9"
 brew "trash-cli", link: false
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Shell extension to navigate your filesystem faster
+brew "zoxide"
 # Next-generation plugin manager for zsh
 brew "zplug"
 # UNIX shell (command interpreter)
@@ -77,9 +81,9 @@ brew "zsh-syntax-highlighting"
 brew "oven-sh/bun/bun"
 # Application launcher and productivity software
 cask "alfred"
-# Menu bar icon organizer
+# Menu bar icon organiser
 cask "bartender"
-# Tool to customize input devices and automate computer systems
+# Tool to customise input devices and automate computer systems
 cask "bettertouchtool"
 # Utility to create and modify archives
 cask "betterzip"
@@ -100,6 +104,8 @@ cask "google-chrome"
 cask "google-drive"
 # Open-source video transcoder
 cask "handbrake"
+# Tool to optimise images to a smaller size
+cask "imageoptim"
 # HTTP and GraphQL Client
 cask "insomnia"
 # System monitoring app
@@ -112,40 +118,51 @@ cask "messenger"
 cask "plex"
 # Home media server
 cask "plex-media-server"
-# QuickLook plug-in that renders source code with syntax highlighting
+# Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
 # Display image info and preview unsupported formats in QuickLook
 cask "qlimagesize"
-# QuickLook generator for Markdown files
+# Quick Look generator for Markdown files
 cask "qlmarkdown"
-# QuickLook plugin for plaintext files without an extension
+# Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
 # Thumbnails, static previews, cover art and metadata for video files
 cask "qlvideo"
-# QuickLook plugin for CSV files
+# Quick Look plugin for CSV files
 cask "quicklook-csv"
-# QuickLook plugin for JSON files
+# Quick Look plugin for JSON files
 cask "quicklook-json"
 # Music streaming service
 cask "spotify"
 # Application for inspecting installer packages
 cask "suspicious-package"
-# Virtualizer for x86 hardware
+# Virtualiser for x86 hardware
 cask "virtualbox"
 # Open-source code editor
 cask "visual-studio-code"
+mas "BetterSnapTool", id: 417375580
+mas "DaisyDisk", id: 411643860
+mas "Fantastical", id: 975937182
+mas "Gemini 2", id: 1090488118
+mas "Just Focus", id: 1142151959
+mas "Mactracker", id: 430255202
+mas "MindNode", id: 1289197285
+mas "Numbers", id: 409203825
+mas "OmniFocus", id: 1346203938
+mas "Pages", id: 409201541
+mas "Spark", id: 1176895641
+mas "WhatsApp", id: 1147396723
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
-vscode "Angular.ng-template"
 vscode "bierner.color-info"
 vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
 vscode "bradlc.vscode-tailwindcss"
-vscode "ChakrounAnas.turbo-console-log"
+vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
 vscode "ctcuff.font-preview"
-vscode "DavidAnson.vscode-markdownlint"
+vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
 vscode "dineug.vuerd-vscode"
@@ -154,19 +171,19 @@ vscode "dotiful.dotfiles-syntax-highlighting"
 vscode "dsznajder.es7-react-js-snippets"
 vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
-vscode "EthanSK.restore-terminals"
+vscode "ethansk.restore-terminals"
 vscode "figma.figma-vscode-extension"
 vscode "foxundermoon.shell-format"
-vscode "GitHub.copilot"
-vscode "GitHub.copilot-chat"
-vscode "GitHub.remotehub"
+vscode "github.copilot"
+vscode "github.copilot-chat"
+vscode "github.remotehub"
 vscode "github.vscode-github-actions"
-vscode "GitHub.vscode-pull-request-github"
-vscode "GregorBiswanger.json2ts"
+vscode "github.vscode-pull-request-github"
+vscode "gregorbiswanger.json2ts"
 vscode "humao.rest-client"
-vscode "Huuums.vscode-fast-folder-structure"
-vscode "IBM.output-colorizer"
-vscode "IronGeek.vscode-env"
+vscode "huuums.vscode-fast-folder-structure"
+vscode "ibm.output-colorizer"
+vscode "irongeek.vscode-env"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "jpwallace22.react-lazify"
@@ -175,7 +192,6 @@ vscode "lokalise.i18n-ally"
 vscode "markis.code-coverage"
 vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
-vscode "MeshIntelligentTechnologiesInc.pieces-vscode"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "mhutchie.git-graph"
 vscode "mongodb.mongodb-vscode"
@@ -189,22 +205,20 @@ vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "ms-vscode-remote.remote-containers"
 vscode "ms-vscode-remote.remote-ssh"
 vscode "ms-vscode-remote.remote-ssh-edit"
-vscode "ms-vscode.azure-repos"
 vscode "ms-vscode.live-server"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vscode.remote-repositories"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
-vscode "nrwl.angular-console"
 vscode "oderwat.indent-rainbow"
 vscode "oouo-diogo-perdigao.docthis"
-vscode "Orta.vscode-jest"
+vscode "orta.vscode-jest"
 vscode "p42ai.refactor"
-vscode "PKief.material-icon-theme"
+vscode "pkief.material-icon-theme"
 vscode "pnp.polacode"
-vscode "Prisma.prisma"
+vscode "prisma.prisma"
 vscode "pucelle.vscode-css-navigation"
-vscode "ritwickdey.LiveServer"
+vscode "ritwickdey.liveserver"
 vscode "standard.vscode-standard"
 vscode "stkb.rewrap"
 vscode "streetsidesoftware.code-spell-checker"
@@ -216,17 +230,18 @@ vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
-vscode "VisualStudioExptTeam.intellicode-api-usage-examples"
-vscode "VisualStudioExptTeam.vscodeintellicode"
+vscode "visualstudioexptteam.intellicode-api-usage-examples"
+vscode "visualstudioexptteam.vscodeintellicode"
+vscode "vitest.explorer"
 vscode "vivaxy.vscode-conventional-commits"
-vscode "WallabyJs.console-ninja"
-vscode "WallabyJs.quokka-vscode"
-vscode "WallabyJs.wallaby-vscode"
+vscode "wallabyjs.console-ninja"
+vscode "wallabyjs.quokka-vscode"
+vscode "wallabyjs.wallaby-vscode"
 vscode "wix.vscode-import-cost"
-vscode "xabikos.JavaScriptSnippets"
+vscode "xabikos.javascriptsnippets"
 vscode "xyc.vscode-mdx-preview"
-vscode "YoavBls.pretty-ts-errors"
+vscode "yoavbls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
-vscode "ZixuanChen.vitest-explorer"
+vscode "zixuanchen.vitest-explorer"

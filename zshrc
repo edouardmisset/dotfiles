@@ -143,9 +143,9 @@ alias zshrc="code ~/.zshrc"
 
 # GIT
 alias gac="git add -A && git commit -m"
-alias gbr+="git branch --format=`%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]` --sort=-committerdate"
+alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 alias gca="git commit --amend --no-edit"
-alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v `(^\*|master|main|dev)` | xargs git branch -d"
+alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v '(^\*|master|main|dev)' | xargs git branch -d"
 alias gco--="git checkout @{-2}"
 alias gco-="git checkout -"
 alias gco-2="gco--"
@@ -166,7 +166,7 @@ alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # Brew
-alias bbd="brew bundle dump --force --describe --file=`~/.dotfiles`"
+alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"
 alias bubu="brew update && brew upgrade"
 
 # PNPM
@@ -312,7 +312,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # Jupyter
 export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
 
-PATH=~/.console-ninja/.bin:$PATH
+export PATH=~/.console-ninja/.bin:$PATH
 
 # Initilize zoxide
-eval "$(zoxide init zsh)"
+# eval "$(zoxide init zsh)"

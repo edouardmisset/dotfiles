@@ -223,3 +223,7 @@ export NVM_DIR="$HOME/.nvm"
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Deno
+  export DENO_INSTALL="/home/edouard/.deno"
+  export PATH="$DENO_INSTALL/bin:$PATH"

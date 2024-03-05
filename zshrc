@@ -134,6 +134,8 @@ alias ls="exa -laFh --git"
 alias lst="exa -lFh --git --tree --level=2"
 alias man="batman"
 alias trail="<<<${(F)path}"
+alias cdi="cd ~/code/innova-web-ui"
+alias cwd="pwd"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -141,17 +143,21 @@ alias zshrc="code ~/.zshrc"
 
 # GIT
 alias gac="git add -A && git commit -m"
-alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
+alias gbr+="git branch --format=`%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]` --sort=-committerdate"
 alias gca="git commit --amend --no-edit"
-alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v '(^\*|master|main|dev)' | xargs git branch -d"
+alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v `(^\*|master|main|dev)` | xargs git branch -d"
 alias gco--="git checkout @{-2}"
 alias gco-="git checkout -"
 alias gco-2="gco--"
+alias gco---="git checkout @{-3}"
+alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
 alias gdel="git branch -D"
 alias githome="cd `git rev-parse --show-toplevel`"
 alias gla="git pull --all && git fetch --all"
+alias glolm="git log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\" main..HEAD"
+alias glolsm="glolm --stat"
 alias gmm="git merge main"
 alias gmu="git switch main && git fetch --all && git pull --all"
 alias gpo="git push --set-upstream origin $(git_current_branch)"
@@ -160,12 +166,16 @@ alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # Brew
-alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"
+alias bbd="brew bundle dump --force --describe --file=`~/.dotfiles`"
 alias bubu="brew update && brew upgrade"
+
+# PNPM
+alias pn="pnpm"
 
 # YARN
 alias ylf="yarn lint:fix"
 alias yst="BROWSER=none yarn start"
+alias yta="yarn test:all"
 
 # BUN
 alias b="bun"
@@ -200,7 +210,6 @@ killport() {
   kill -9 $(lsof -t -i:$1)
 }
 
-
 function mkcd() {
   mkdir -p "$@" && cd "$_"
 }
@@ -215,6 +224,55 @@ function cl() {
   builtin cd "${DIR}" && \
   # use your preferred ls command
     ls
+}
+
+# Connect to `Nano Boombox * *` Bluetooth headphones using bluetoothctl on **Linux**
+connectToNano() {
+  # Set the name of the Bluetooth device
+  DEVICE_NAME="Nano Boom Box * *"  # Replace with your device's name
+
+  # Find the MAC address of the device by its name
+  DEVICE_MAC=$(bluetoothctl devices | grep "$DEVICE_NAME" | awk '{print $2}')
+
+  # Check if the device was found
+  if [ -z "$DEVICE_MAC" ]; then
+      echo "Device $DEVICE_NAME not found"
+      exit 1
+  fi
+
+  # Connect to the device using bluetoothctl
+  echo -e "connect $DEVICE_MAC\nquit" | bluetoothctl
+
+  sleep 2
+
+  # Check if the connection was successful
+  connected=$(echo -e "info $DEVICE_MAC\nquit" | bluetoothctl | grep "Connected: yes")
+
+  if [ -n "$connected" ]; then
+      echo "Successfully connected to device $DEVICE_MAC"
+  else
+      echo "Failed to connect to device $DEVICE_MAC"
+  fi
+}
+
+# Function to rename a file from Pascal case or snake case to kebab case
+kebabify() {
+  # Check if at least one filename is provided as an argument
+  if [ "$#" -eq 0 ]; then
+    echo "Usage: pascal_snake_case_to_kebab <filename1> [<filename2> ...]"
+    return 1
+  fi
+
+  # Iterate over all provided filenames
+  for file in "$@"; do
+    # Convert Pascal case or snake case to kebab case using sed and tr
+    new_name=$(echo $file | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g; s/_/-/g' | tr '[:upper:]' '[:lower:]')
+
+    # Rename the file
+    mv "$file" "$new_name"
+    
+    echo "File renamed from $file to $new_name"
+  done
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
@@ -232,4 +290,29 @@ export FZF_BASE=/usr/bin/fzf/
 export PATH="$N_PREFIX/bin:$PATH"
 export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+
+# Deno
+export DENO_INSTALL="/home/edouard/.deno"
+export PATH="$DENO_INSTALL/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/edouard/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# Python
+export PATH="$HOME/.local/bin:$PATH"
+
+# Jupyter
+export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
+
+PATH=~/.console-ninja/.bin:$PATH
+
+# Initilize zoxide
 eval "$(zoxide init zsh)"

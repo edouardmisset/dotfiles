@@ -80,13 +80,14 @@ plugins=(
   bun
   colorize
   command-not-found
-  fzf
+  # fzf
   git
   history
   ubuntu
   vscode
   yarn
-  z
+  # z
+  zoxide
   zsh-autosuggestions
   zsh-syntax-highlighting
   )

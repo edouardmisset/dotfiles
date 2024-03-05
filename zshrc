@@ -315,4 +315,4 @@ export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
 export PATH=~/.console-ninja/.bin:$PATH
 
 # Initilize zoxide
-# eval "$(zoxide init zsh)"
+eval "$(zoxide init zsh)"

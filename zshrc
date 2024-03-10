@@ -192,6 +192,19 @@ alias brun="bun run"
 alias bst="bun run start"
 alias bt="bun test"
 
+# Deno
+alias dd="deno doc"
+alias df="deno fmt"
+alias dl="deno lint"
+alias dt="deno task"
+alias dtc="deno task check" # something like `deno lint && deno fmt && deno test --reporter=dot --coverage --parallel`
+alias dtd="deno task dev" # something like `deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts` 
+alias dtd="deno task docs" # something like `deno doc --html --name='name-of-my-app' ./path/to/entry.ts`
+alias dtl="deno task lock" # something like `deno cache --lock=deno.lock --lock-write ./path/to/entry.ts`
+alias dr="deno run"
+alias dt="deno test"
+alias dtw="deno test --watch"
+
 # FUNCTIONS
 
 # You fix the bug, stage only the changes related to the bug and execute
@@ -312,6 +325,7 @@ export PATH="$HOME/.local/bin:$PATH"
 # Jupyter
 export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
 
+# Add console-ninja to $PATH
 export PATH=~/.console-ninja/.bin:$PATH
 
 # Initilize zoxide

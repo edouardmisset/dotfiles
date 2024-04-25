@@ -164,6 +164,11 @@ alias gpo="git push --set-upstream origin $(git_current_branch)"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
+alias glm="glol main..HEAD"
+alias glol1y="glol --since='1 year ago'"
+alias glol1m="glol --since='1 month ago'"
+alias glol1w="glol --since='1 week ago'"
+alias glolg-="glol --grep="
 
 # Brew
 alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"

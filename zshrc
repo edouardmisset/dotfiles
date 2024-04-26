@@ -134,7 +134,6 @@ alias ls="exa -laFh --git"
 alias lst="exa -lFh --git --tree --level=2"
 alias man="batman"
 alias trail="<<<${(F)path}"
-alias cdi="cd ~/code/innova-web-ui"
 alias cwd="pwd"
 
 # ZSH
@@ -291,6 +290,45 @@ kebabify() {
     
     echo "File renamed from $file to $new_name"
   done
+}
+
+
+list_deno_tasks() {
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
+}
+
+run() {
+  SCRIPT=$1
+  if [ -f package.json ]; then
+    SCRIPT_EXISTS=$(node -e "const pkg = require('./package.json'); console.log(pkg.scripts && pkg.scripts['$SCRIPT'] ? 'true' : 'false');")
+    if [ "$SCRIPT_EXISTS" = "false" ]; then
+      echo "Error: Script '$SCRIPT' not found in package.json"
+      echo "Available scripts:"
+      node -e "const pkg = require('./package.json'); console.log(Object.keys(pkg.scripts || {}).join('\n'))"
+      return 1
+    fi
+
+    elif [ -f pnpm-lock.yaml ]; then
+      pnpm run $SCRIPT
+    elif [ -f bun.lock ]; then
+      bun run $SCRIPT
+    if [ -f yarn.lock ]; then
+      yarn run $SCRIPT
+    else
+      npm run $SCRIPT
+    fi
+  elif [ -f deno.json ]; then
+    if ! list_deno_tasks | grep -qw "$SCRIPT"; then
+      echo "Error: Task '$SCRIPT' not found in deno.json"
+      echo "Available tasks:"
+      list_deno_tasks
+      return 1
+    fi
+
+    deno task $SCRIPT
+  else
+    echo "Error: No package.json or deno.json found. Cannot determine project type."
+  fi
 }
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.

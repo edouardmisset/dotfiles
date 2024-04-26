@@ -325,8 +325,6 @@ GREEN='\033[0;32m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-declare -A package_managers=( ["pnpm"]="pnpm-lock.yaml" ["bun"]="bun.lock" ["yarn"]="yarn.lock" ["npm"]="package-lock.json" )
-
 run() {
   SCRIPT=$1
   if [ -f package.json ]; then
@@ -338,26 +336,37 @@ run() {
       return 1
     fi
 
-    for PACKAGE_MANAGER in "${!package_managers[@]}"; do
-      LOCK_FILE=${package_managers[$PACKAGE_MANAGER]}
-      if [ -f $LOCK_FILE ]; then
-        echo -e "${GREEN}${BOLD}Running script with ${PACKAGE_MANAGER}...${RESET} 🚀"
-        $PACKAGE_MANAGER run $SCRIPT
-        return 0
+    if [ -f pnpm-lock.yaml ]; then
+      echo -e "${GREEN}${BOLD}Running script with pnpm...${RESET} 🚀"
+      pnpm run $SCRIPT
+    elif [ -f bun.lockb ]; then
+      echo -e "${GREEN}${BOLD}Running script with bun...${RESET} 🚀"
+      bun run $SCRIPT
+    elif [ -f yarn.lock ]; then
+      echo -e "${GREEN}${BOLD}Running script with yarn...${RESET} 🚀"
+      yarn run $SCRIPT
+    elif [ -f package-lock.json ]; then
+      echo -e "${GREEN}${BOLD}Running script with npm...${RESET} 🚀"
+      npm run $SCRIPT
+    else
+      echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
+      if command -v bun &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with bun...${RESET} 📦"
+        bun install && bun run $SCRIPT
+      elif command -v pnpm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with pnpm...${RESET} 📦"
+        pnpm install && pnpm run $SCRIPT
+      elif command -v npm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with npm...${RESET} 📦"
+        npm install && npm run $SCRIPT
+      elif command -v yarn &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with yarn...${RESET} 📦"
+        yarn install && yarn run $SCRIPT
+      else
+        echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
+        return 1
       fi
-    done
-
-    echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
-    for PACKAGE_MANAGER in "${!package_managers[@]}"; do
-      if command -v $PACKAGE_MANAGER &> /dev/null; then
-        echo -e "${GREEN}${BOLD}Installing packages with ${PACKAGE_MANAGER}...${RESET} 📦"
-        $PACKAGE_MANAGER install && $PACKAGE_MANAGER run $SCRIPT
-        return 0
-      fi
-    done
-
-    echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
-    return 1
+    fi
   elif [ -f deno.json ]; then
     if ! list_deno_tasks | grep -qw "$SCRIPT"; then
       echo -e "${RED}${BOLD}Error:${RESET} Task '${SCRIPT}' not found in deno.json 🚫"

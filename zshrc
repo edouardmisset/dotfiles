@@ -294,40 +294,93 @@ kebabify() {
 
 
 list_deno_tasks() {
-  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
+  if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed"
+    return 1
+  fi
+
+  tmpfile=$(mktemp)
+  echo "try {
+    import tasks from './deno.json' with { type: 'json' };
+    console.log(Object.keys(tasks.tasks).join('\t'));
+  } catch (error) {
+    console.error('Error:', error);
+  }" > $tmpfile
+
+  deno run --allow-read $tmpfile
+  rm $tmpfile
 }
+
+is_script_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+list_scripts_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(Object.keys(pkg.scripts || {}).join('\n'));
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+# Define some colors and styles
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+declare -A package_managers=( ["pnpm"]="pnpm-lock.yaml" ["bun"]="bun.lock" ["yarn"]="yarn.lock" ["npm"]="package-lock.json" )
 
 run() {
   SCRIPT=$1
   if [ -f package.json ]; then
-    SCRIPT_EXISTS=$(node -e "const pkg = require('./package.json'); console.log(pkg.scripts && pkg.scripts['$SCRIPT'] ? 'true' : 'false');")
-    if [ "$SCRIPT_EXISTS" = "false" ]; then
-      echo "Error: Script '$SCRIPT' not found in package.json"
-      echo "Available scripts:"
-      node -e "const pkg = require('./package.json'); console.log(Object.keys(pkg.scripts || {}).join('\n'))"
+    IS_SCRIPT_IN_PACKAGE_JSON=$(is_script_in_package_json $SCRIPT)
+    if [ "$IS_SCRIPT_IN_PACKAGE_JSON" = "false" ]; then
+      echo -e "${RED}${BOLD}Error:${RESET} Script '${SCRIPT}' not found in package.json 🚫"
+      echo -e "${GREEN}Available scripts:${RESET}"
+      list_scripts_in_package_json
       return 1
     fi
 
-    elif [ -f pnpm-lock.yaml ]; then
-      pnpm run $SCRIPT
-    elif [ -f bun.lock ]; then
-      bun run $SCRIPT
-    if [ -f yarn.lock ]; then
-      yarn run $SCRIPT
-    else
-      npm run $SCRIPT
-    fi
+    for PACKAGE_MANAGER in "${!package_managers[@]}"; do
+      LOCK_FILE=${package_managers[$PACKAGE_MANAGER]}
+      if [ -f $LOCK_FILE ]; then
+        echo -e "${GREEN}${BOLD}Running script with ${PACKAGE_MANAGER}...${RESET} 🚀"
+        $PACKAGE_MANAGER run $SCRIPT
+        return 0
+      fi
+    done
+
+    echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
+    for PACKAGE_MANAGER in "${!package_managers[@]}"; do
+      if command -v $PACKAGE_MANAGER &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with ${PACKAGE_MANAGER}...${RESET} 📦"
+        $PACKAGE_MANAGER install && $PACKAGE_MANAGER run $SCRIPT
+        return 0
+      fi
+    done
+
+    echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
+    return 1
   elif [ -f deno.json ]; then
     if ! list_deno_tasks | grep -qw "$SCRIPT"; then
-      echo "Error: Task '$SCRIPT' not found in deno.json"
-      echo "Available tasks:"
+      echo -e "${RED}${BOLD}Error:${RESET} Task '${SCRIPT}' not found in deno.json 🚫"
+      echo -e "${GREEN}Available tasks:${RESET}"
       list_deno_tasks
       return 1
     fi
 
+    echo -e "${GREEN}${BOLD}Running task with deno...${RESET} 🚀"
     deno task $SCRIPT
   else
-    echo "Error: No package.json or deno.json found. Cannot determine project type."
+    echo -e "${RED}${BOLD}Error:${RESET} No package.json or deno.json found. Cannot determine project type. 🚫"
+    return 1
   fi
 }
 

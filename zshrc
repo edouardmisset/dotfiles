@@ -292,23 +292,13 @@ kebabify() {
   done
 }
 
-
 list_deno_tasks() {
   if ! command -v deno &> /dev/null; then
     echo "Error: deno is not installed"
     return 1
   fi
 
-  tmpfile=$(mktemp)
-  echo "try {
-    import tasks from './deno.json' with { type: 'json' };
-    console.log(Object.keys(tasks.tasks).join('\t'));
-  } catch (error) {
-    console.error('Error:', error);
-  }" > $tmpfile
-
-  deno run --allow-read $tmpfile
-  rm $tmpfile
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
 }
 
 is_script_in_package_json() {

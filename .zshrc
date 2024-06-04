@@ -79,7 +79,6 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
   alias-tips
-  bun
   colored-man-pages
   colorize
   command-not-found
@@ -131,17 +130,10 @@ alias copy='rsync -ah --info=progress2'
 # alias lc='colorls -lA --sd'
 # alias la='colorls -a'
 
-# Go to directory (`cd`) then list what's in it (`ls`)
-function cl() {
-  DIR="$*";
-    # if no DIR given, go home
-    if [ $# -lt 1 ]; then
-      DIR=$HOME;
-  fi;
-  builtin cd "${DIR}" && \
-  # use your preferred ls command
-    ls
-}
+# Shell
+alias as="alias | grep "
+alias cdi="cd ~/code/innova-web-ui"
+alias cwd="pwd"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -161,31 +153,30 @@ alias gdel="git branch -D"
 alias githome='cd `git rev-parse --show-toplevel`'
 alias gla="git pull --all && git fetch --all"
 alias gmm="git merge main"
-alias gmu="git switch main && git fetch --all && git pull --all"
+alias gmu="git switch main && git pull --all && git fetch --all"
 alias gpo='git push --set-upstream origin $(git_current_branch)'
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
-
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-gmove() {
-  git stash -- $(git diff --staged --name-only) &&
-  gwip ;
-  git branch $1 $2 &&
-  git checkout $1 &&
-  git stash pop
-}
-
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-killport() {
-  kill -9 $(lsof -t -i:$1)
-}
+alias glm="glol main..HEAD"
+alias glol1y="glol --since='1 year ago'"
+alias glol1m="glol --since='1 month ago'"
+alias glol1w="glol --since='1 week ago'"
+alias glolg-="glol --grep="
 
 # YARN
 alias ylf="yarn lint:fix"
 alias yst="BROWSER=none yarn start"
+
+# DENO
+alias dta="deno task"
+alias dtt="deno task test"
+alias dtd="deno task dev"
+alias dtf="deno task format"
+alias dtl="deno task lint"
+alias dtc="deno task check"
+alias dtca="deno task cache"
+alias dt="deno test"
 
 # BUN
 alias b="bun"
@@ -202,6 +193,172 @@ alias brun="bun run"
 alias bst="bun run start"
 alias bt="bun test"
 
+# PNPM
+alias pm="pnpm"
+alias pi="pnpm install"
+alias pad="pnpm add -d"
+alias pb="pnpm build"
+alias pd="pnpm dev"
+alias pdev="pnpm dev"
+alias pf="pnpm format"
+alias plf="pnpm lint:fix"
+alias pln="pnpm lint"
+alias prm="pnpm remove"
+alias prun="pnpm run"
+alias pst="pnpm start"
+alias pt="pnpm test"
+
+# Go to directory (`cd`) then list what's in it (`ls`)
+function cl() {
+  DIR="$*";
+    # if no DIR given, go home
+    if [ $# -lt 1 ]; then
+      DIR=$HOME;
+  fi;
+  builtin cd "${DIR}" && \
+  # use your preferred ls command
+    ls
+}
+
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+function gmove() {
+  git stash -- $(git diff --staged --name-only) &&
+  gwip ;
+  git branch $1 $2 &&
+  git checkout $1 &&
+  git stash pop
+}
+
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+function killport() {
+  kill -9 $(lsof -t -i:$1)
+}
+
+function mkcd() {
+  mkdir -p "$@" && cd "$_"
+}
+
+# Connect to `Nano Boombox * *` Bluetooth headphones using bluetoothctl on **Linux**
+function connectToNano() {
+  # Set the name of the Bluetooth device
+  DEVICE_NAME="Nano Boom Box * *"  # Replace with your device's name
+
+  # Find the MAC address of the device by its name
+  DEVICE_MAC=$(bluetoothctl devices | grep "$DEVICE_NAME" | awk '{print $2}')
+
+  # Check if the device was found
+  if [ -z "$DEVICE_MAC" ]; then
+      echo "Device $DEVICE_NAME not found"
+      exit 1
+  fi
+
+  # Connect to the device using bluetoothctl
+  echo -e "connect $DEVICE_MAC\nquit" | bluetoothctl
+
+  sleep 2
+
+  # Check if the connection was successful
+  connected=$(echo -e "info $DEVICE_MAC\nquit" | bluetoothctl | grep "Connected: yes")
+
+  if [ -n "$connected" ]; then
+      echo "Successfully connected to device $DEVICE_MAC"
+  else
+      echo "Failed to connect to device $DEVICE_MAC"
+  fi
+}
+
+function list_deno_tasks() {
+  if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed"
+    return 1
+  fi
+
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
+}
+
+function is_script_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+function list_scripts_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(Object.keys(pkg.scripts || {}).join('\n'));
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+# Define some colors and styles
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+function run() {
+  SCRIPT=$1
+  if [ -f package.json ]; then
+    IS_SCRIPT_IN_PACKAGE_JSON=$(is_script_in_package_json $SCRIPT)
+    if [ "$IS_SCRIPT_IN_PACKAGE_JSON" = "false" ]; then
+      echo -e "${RED}${BOLD}Error:${RESET} Script '${SCRIPT}' not found in package.json 🚫"
+      echo -e "${GREEN}Available scripts:${RESET}"
+      list_scripts_in_package_json
+      return 1
+    fi
+
+    if [ -f pnpm-lock.yaml ]; then
+      echo -e "${GREEN}${BOLD}Running script with pnpm...${RESET} 🚀"
+      pnpm run $SCRIPT
+    elif [ -f bun.lockb ]; then
+      echo -e "${GREEN}${BOLD}Running script with bun...${RESET} 🚀"
+      bun run $SCRIPT
+    elif [ -f yarn.lock ]; then
+      echo -e "${GREEN}${BOLD}Running script with yarn...${RESET} 🚀"
+      yarn run $SCRIPT
+    elif [ -f package-lock.json ]; then
+      echo -e "${GREEN}${BOLD}Running script with npm...${RESET} 🚀"
+      npm run $SCRIPT
+    else
+      echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
+      if command -v bun &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with bun...${RESET} 📦"
+        bun install && bun run $SCRIPT
+      elif command -v pnpm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with pnpm...${RESET} 📦"
+        pnpm install && pnpm run $SCRIPT
+      elif command -v npm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with npm...${RESET} 📦"
+        npm install && npm run $SCRIPT
+      elif command -v yarn &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with yarn...${RESET} 📦"
+        yarn install && yarn run $SCRIPT
+      else
+        echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
+        return 1
+      fi
+    fi
+  elif [ -f deno.json ]; then
+    if ! list_deno_tasks | grep -qw "$SCRIPT"; then
+      echo -e "${RED}${BOLD}Error:${RESET} Task '${SCRIPT}' not found in deno.json 🚫"
+      echo -e "${GREEN}Available tasks:${RESET}"
+      list_deno_tasks
+      return 1
+    fi
+
+    echo -e "${GREEN}${BOLD}Running task with deno...${RESET} 🚀"
+    deno task $SCRIPT
+  else
+    echo -e "${RED}${BOLD}Error:${RESET} No package.json or deno.json found. Cannot determine project type. 🚫"
+    return 1
+  fi
+}
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -227,3 +384,16 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Deno
   export DENO_INSTALL="/home/edouard/.deno"
   export PATH="$DENO_INSTALL/bin:$PATH"
+
+# Console Ninja
+PATH=~/.console-ninja/.bin:$PATH
+
+# Python
+export PATH="/home/edouard/.local/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/home/edouard/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac

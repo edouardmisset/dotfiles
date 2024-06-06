@@ -319,6 +319,20 @@ list_scripts_in_package_json() {
   }"
 }
 
+get_package_manager() {
+  if [ -f pnpm-lock.yaml ]; then
+    echo "pnpm"
+  elif [ -f bun.lockb ]; then
+    echo "bun"
+  elif [ -f yarn.lock ]; then
+    echo "yarn"
+  elif [ -f package-lock.json ]; then
+    echo "npm"
+  else
+    echo "unknown"
+  fi
+}
+
 # Define some colors and styles
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -333,22 +347,13 @@ run() {
       echo -e "${RED}${BOLD}Error:${RESET} Script '${SCRIPT}' not found in package.json 🚫"
       echo -e "${GREEN}Available scripts:${RESET}"
       list_scripts_in_package_json
+      PACKAGE_MANAGER=$(get_package_manager)
+      echo -e "${GREEN}${BOLD}Package manager in use: ${PACKAGE_MANAGER}${RESET} 🚀"
       return 1
     fi
 
-    if [ -f pnpm-lock.yaml ]; then
-      echo -e "${GREEN}${BOLD}Running script with pnpm...${RESET} 🚀"
-      pnpm run $SCRIPT
-    elif [ -f bun.lockb ]; then
-      echo -e "${GREEN}${BOLD}Running script with bun...${RESET} 🚀"
-      bun run $SCRIPT
-    elif [ -f yarn.lock ]; then
-      echo -e "${GREEN}${BOLD}Running script with yarn...${RESET} 🚀"
-      yarn run $SCRIPT
-    elif [ -f package-lock.json ]; then
-      echo -e "${GREEN}${BOLD}Running script with npm...${RESET} 🚀"
-      npm run $SCRIPT
-    else
+    PACKAGE_MANAGER=$(get_package_manager)
+    if [ "$PACKAGE_MANAGER" = "unknown" ]; then
       echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
       if command -v bun &> /dev/null; then
         echo -e "${GREEN}${BOLD}Installing packages with bun...${RESET} 📦"
@@ -366,9 +371,12 @@ run() {
         echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
         return 1
       fi
+    else
+      echo -e "${GREEN}${BOLD}Running script with ${PACKAGE_MANAGER}...${RESET} 🚀"
+      $PACKAGE_MANAGER run $SCRIPT
     fi
   elif [ -f deno.json ]; then
-    if ! list_deno_tasks | grep -qw "$SCRIPT"; then
+    if ! list_deno_tasks | grep -w "$SCRIPT"; then
       echo -e "${RED}${BOLD}Error:${RESET} Task '${SCRIPT}' not found in deno.json 🚫"
       echo -e "${GREEN}Available tasks:${RESET}"
       list_deno_tasks

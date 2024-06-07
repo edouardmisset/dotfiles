@@ -135,6 +135,8 @@ alias lst="exa -lFh --git --tree --level=2"
 alias man="batman"
 alias trail="<<<${(F)path}"
 alias cwd="pwd"
+alias top="btop"
+alias htop="btop"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -395,7 +397,7 @@ run() {
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # fzf (fuzzy finder)
-export FZF_BASE=/usr/bin/fzf/
+export FZF_BASE="/usr/bin/fzf/"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # bun completions

@@ -13,8 +13,12 @@ brew "bat"
 brew "bat-extras", link: false
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
+# Resource monitor. C++ version and continuation of bashtop and bpytop
+brew "btop"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
+# More intuitive version of du in rust
+brew "dust"
 # Modern replacement for 'ls'
 brew "exa"
 # Play, record, convert, and stream audio and video
@@ -53,6 +57,8 @@ brew "node"
 brew "openssl@1.1"
 # General-purpose scripting language
 brew "php"
+# Fast, disk space efficient package manager
+brew "pnpm"
 # Object-relational database system
 brew "postgresql@14"
 # Interpreted, interactive, object-oriented programming language
@@ -61,8 +67,10 @@ brew "python@3.11"
 brew "python@3.8"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Simplified and community-driven man pages
+brew "tldr"
 # Command-line interface to the freedesktop.org trashcan
-brew "trash-cli", link: false
+brew "trash-cli"
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Shell extension to navigate your filesystem faster
@@ -150,6 +158,7 @@ mas "MindNode", id: 1289197285
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
+mas "PrettyJSON for Safari", id: 1445328303
 mas "Spark", id: 1176895641
 mas "WhatsApp", id: 1147396723
 vscode "1000ch.svgo"
@@ -161,6 +170,7 @@ vscode "bradlc.vscode-tailwindcss"
 vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
+vscode "codeium.codeium"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
@@ -179,6 +189,7 @@ vscode "github.copilot-chat"
 vscode "github.remotehub"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
+vscode "gitlab.gitlab-workflow"
 vscode "gregorbiswanger.json2ts"
 vscode "humao.rest-client"
 vscode "huuums.vscode-fast-folder-structure"
@@ -187,6 +198,7 @@ vscode "irongeek.vscode-env"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "jpwallace22.react-lazify"
+vscode "keesschollaart.vscode-home-assistant"
 vscode "lllllllqw.jsdoc"
 vscode "lokalise.i18n-ally"
 vscode "markis.code-coverage"
@@ -195,8 +207,10 @@ vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "mhutchie.git-graph"
 vscode "mongodb.mongodb-vscode"
-vscode "monokai.theme-monokai-pro-vscode"
 vscode "ms-azuretools.vscode-docker"
+vscode "ms-python.debugpy"
+vscode "ms-python.python"
+vscode "ms-python.vscode-pylance"
 vscode "ms-toolsai.jupyter"
 vscode "ms-toolsai.jupyter-keymap"
 vscode "ms-toolsai.jupyter-renderers"
@@ -214,6 +228,7 @@ vscode "oderwat.indent-rainbow"
 vscode "oouo-diogo-perdigao.docthis"
 vscode "orta.vscode-jest"
 vscode "p42ai.refactor"
+vscode "phoenisx.cssvar"
 vscode "pkief.material-icon-theme"
 vscode "pnp.polacode"
 vscode "prisma.prisma"
@@ -230,6 +245,7 @@ vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "unifiedjs.vscode-mdx"
 vscode "usernamehw.errorlens"
+vscode "viijay-kr.react-ts-css"
 vscode "visualstudioexptteam.intellicode-api-usage-examples"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vitest.explorer"
@@ -244,4 +260,3 @@ vscode "yoavbls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
-vscode "zixuanchen.vitest-explorer"

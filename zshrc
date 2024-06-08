@@ -126,23 +126,22 @@ export PREFIX="$N_PREFIX"
 # Shell
 alias as="alias | grep "
 alias c="clear"
-alias cd="z"
-alias cd-="z -"
-alias zz="z -"
-alias z-="z -"
 alias cat="bat"
+alias cd-="z -"
+alias cd="z"
 alias copy="rsync -ah --info=progress2"
-# alias exa="exa -laF --git"
+alias cwd="pwd"
 alias grep="batgrep"
-alias ls="exa -F --git --icons --group-directories-first"
-alias ll="exa -lF --git --icons --group-directories-first"
+alias htop="btop"
 alias la="exa -laF --git  --icons --group-directories-first"
+alias ll="exa -lF --git --icons --group-directories-first"
+alias ls="exa -F --git --icons --group-directories-first"
 alias lst="exa -lF --git --tree --icons --level=2"
 alias man="batman"
-alias trail="<<<${(F)path}"
-alias cwd="pwd"
 alias top="btop"
-alias htop="btop"
+alias trail="<<<${(F)path}"
+alias z-="z -"
+alias zz="z -"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -153,36 +152,48 @@ alias gac="git add -A && git commit -m"
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 alias gca="git commit --amend --no-edit"
 alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v '(^\*|master|main|dev)' | xargs git branch -d"
+alias gco---="git checkout @{-3}"
 alias gco--="git checkout @{-2}"
 alias gco-="git checkout -"
 alias gco-2="gco--"
-alias gco---="git checkout @{-3}"
 alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
 alias gdel="git branch -D"
 alias githome="cd `git rev-parse --show-toplevel`"
 alias gla="git pull --all && git fetch --all"
+alias glm="glol main..HEAD"
+alias glol1m="glol --since='1 month ago'"
+alias glol1w="glol --since='1 week ago'"
+alias glol1y="glol --since='1 year ago'"
+alias glolg-="glol --grep="
 alias glolm="git log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\" main..HEAD"
 alias glolsm="glolm --stat"
 alias gmm="git merge main"
-alias gmu="git switch main && git fetch --all && git pull --all"
+alias gmu="git switch main && git pull --all && git fetch --all"
 alias gpo="git push --set-upstream origin $(git_current_branch)"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
-alias glm="glol main..HEAD"
-alias glol1y="glol --since='1 year ago'"
-alias glol1m="glol --since='1 month ago'"
-alias glol1w="glol --since='1 week ago'"
-alias glolg-="glol --grep="
 
 # Brew
 alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"
 alias bubu="brew update && brew upgrade"
 
 # PNPM
-alias pn="pnpm"
+alias pm="pnpm"
+alias pad="pnpm add -d"
+alias pb="pnpm build"
+alias pd="pnpm dev"
+alias pdev="pnpm dev"
+alias pf="pnpm format"
+alias pi="pnpm install"
+alias plf="pnpm lint:fix"
+alias pln="pnpm lint"
+alias prm="pnpm remove"
+alias prun="pnpm run"
+alias pst="pnpm start"
+alias pt="pnpm test"
 
 # YARN
 alias ylf="yarn lint:fix"
@@ -208,20 +219,20 @@ alias bt="bun test"
 alias dd="deno doc"
 alias df="deno fmt"
 alias dl="deno lint"
-alias dt="deno task"
-alias dtc="deno task check" # something like `deno lint && deno fmt && deno test --reporter=dot --coverage --parallel`
-alias dtd="deno task dev" # something like `deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts` 
-alias dtd="deno task docs" # something like `deno doc --html --name='name-of-my-app' ./path/to/entry.ts`
-alias dtl="deno task lock" # something like `deno cache --lock=deno.lock --lock-write ./path/to/entry.ts`
 alias dr="deno run"
+alias dta="deno task"
 alias dt="deno test"
+alias dtc="deno task check" # something like "deno lint && deno fmt && deno test --reporter=dot --coverage --parallel"
+alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts" 
+alias dtd="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
+alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
 alias dtw="deno test --watch"
 
 # FUNCTIONS
 
 # You fix the bug, stage only the changes related to the bug and execute
 # This will create a branch called bugfix based off master with only the bug fix
-gmove() {
+function gmove() {
   git stash -- $(git diff --staged --name-only) &&
   gwip ;
   git branch $1 $2 &&
@@ -231,7 +242,7 @@ gmove() {
 
 # You fix the bug, stage only the changes related to the bug and execute
 # This will create a branch called bugfix based off master with only the bug fix
-killport() {
+function killport() {
   kill -9 $(lsof -t -i:$1)
 }
 
@@ -252,7 +263,7 @@ function cl() {
 }
 
 # Connect to `Nano Boombox * *` Bluetooth headphones using bluetoothctl on **Linux**
-connectToNano() {
+function connectToNano() {
   # Set the name of the Bluetooth device
   DEVICE_NAME="Nano Boom Box * *"  # Replace with your device's name
 
@@ -281,7 +292,7 @@ connectToNano() {
 }
 
 # Function to rename a file from Pascal case or snake case to kebab case
-kebabify() {
+function kebabify() {
   # Check if at least one filename is provided as an argument
   if [ "$#" -eq 0 ]; then
     echo "Usage: pascal_snake_case_to_kebab <filename1> [<filename2> ...]"
@@ -300,7 +311,7 @@ kebabify() {
   done
 }
 
-list_deno_tasks() {
+function list_deno_tasks() {
   if ! command -v deno &> /dev/null; then
     echo "Error: deno is not installed"
     return 1
@@ -309,7 +320,7 @@ list_deno_tasks() {
   echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
 }
 
-is_script_in_package_json() {
+function is_script_in_package_json() {
   node -e "try {
     const pkg = require('./package.json');
     console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
@@ -318,7 +329,7 @@ is_script_in_package_json() {
   }"
 }
 
-list_scripts_in_package_json() {
+function list_scripts_in_package_json() {
   node -e "try {
     const pkg = require('./package.json');
     console.log(Object.keys(pkg.scripts || {}).join('\n'));
@@ -327,7 +338,7 @@ list_scripts_in_package_json() {
   }"
 }
 
-get_package_manager() {
+function get_package_manager() {
   if [ -f pnpm-lock.yaml ]; then
     echo "pnpm"
   elif [ -f bun.lockb ]; then
@@ -347,7 +358,7 @@ GREEN='\033[0;32m'
 BOLD='\033[1m'
 RESET='\033[0m'
 
-run() {
+function run() {
   SCRIPT=$1
   if [ -f package.json ]; then
     IS_SCRIPT_IN_PACKAGE_JSON=$(is_script_in_package_json $SCRIPT)

@@ -67,6 +67,8 @@ brew "python@3.11"
 brew "python@3.8"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.9"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Simplified and community-driven man pages
 brew "tldr"
 # Command-line interface to the freedesktop.org trashcan

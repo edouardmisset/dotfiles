@@ -123,8 +123,14 @@ source $ZSH/oh-my-zsh.sh
 alias as="alias | grep "
 alias c='clear'
 alias cdi="cd ~/code/innova-web-ui"
-alias copy='rsync --archive --human-readable --recursive --update --copy-links --info=progress2'
 alias cwd="pwd"
+
+# File system
+alias copy='rsync --archive --human-readable --recursive --update --copy-links --info=progress2'
+alias rsync-copy="rsync -avz --progress -h"
+alias rsync-move="rsync -avz --progress -h --remove-source-files"
+alias rsync-update="rsync -avzu --progress -h"
+alias rsync-synchronize="rsync -avzu --delete --progress -h"
 
 # Ubuntu
 alias agi="sudo apt-get install"

@@ -123,7 +123,7 @@ source $ZSH/oh-my-zsh.sh
 alias as="alias | grep "
 alias c='clear'
 alias cdi="cd ~/code/innova-web-ui"
-alias copy='rsync -ah --info=progress2'
+alias copy='rsync --archive --human-readable --recursive --update --copy-links --info=progress2'
 alias cwd="pwd"
 
 # Ubuntu
@@ -169,7 +169,7 @@ alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # VS Code
-alias vsc="code ."
+alias vsc="code"
 
 # YARN
 alias y="yarn"
@@ -188,6 +188,12 @@ alias yst="BROWSER=none yarn start"
 alias yup="yarn upgrade"
 
 # DENO
+alias dfmt="deno fmt"
+alias dln="deno lint"
+alias drun="deno run"
+alias drunA="deno run -A"
+alias drunw="deno run --watch"
+alias drw="deno run --watch"
 alias dt="deno test"
 alias dta="deno task"
 alias dtc="deno task check"
@@ -196,6 +202,8 @@ alias dtd="deno task dev"
 alias dtf="deno task format"
 alias dtl="deno task lint"
 alias dtt="deno task test"
+alias dup="deno upgrade"
+
 
 # BUN
 alias b="bun"

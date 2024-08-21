@@ -318,6 +318,15 @@ function list_deno_tasks() {
   echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
 }
 
+function is_script_in_deno_json () {
+    if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed"
+    return 1
+  fi
+
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks).includes('$1') ? 'true' : 'false')" | deno run --allow-read -
+}
+
 function is_script_in_package_json() {
   node -e "try {
     const pkg = require('./package.json');
@@ -393,8 +402,9 @@ function run() {
       $PACKAGE_MANAGER run $SCRIPT
     fi
   elif [ -f deno.json ]; then
-    if ! list_deno_tasks | grep -w "$SCRIPT"; then
-      echo -e "${RED}${BOLD}Error:${RESET} Task '${SCRIPT}' not found in deno.json 🚫"
+    IS_SCRIPT_IN_DENO_JSON=$(is_script_in_deno_json $SCRIPT)
+    if [ "$IS_SCRIPT_IN_DENO_JSON" = "false" ]; then
+      echo -e "${RED}${BOLD}Error:${RESET} Task '${BOLD}${SCRIPT}${RESET}' not found in deno.json 🚫"
       echo -e "${GREEN}Available tasks:${RESET}"
       list_deno_tasks
       return 1

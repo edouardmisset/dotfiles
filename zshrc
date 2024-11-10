@@ -175,7 +175,7 @@ alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
 
 # Brew
-alias bbd="brew bundle dump --force --describe --file='~/.dotfiles'"
+alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
 alias bubu="brew update && brew upgrade"
 
 # PNPM

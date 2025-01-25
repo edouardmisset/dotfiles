@@ -80,13 +80,10 @@ plugins=(
   bun
   colorize
   command-not-found
-  # fzf
   git
   history
-  ubuntu
   vscode
   yarn
-  # z
   zoxide
   zsh-autosuggestions
   zsh-autocomplete
@@ -140,6 +137,7 @@ alias top="btop"
 alias trail="<<<${(F)path}"
 alias z-="z -"
 alias zz="z -"
+alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && sudo softwareupdate -ia --verbose"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -158,7 +156,6 @@ alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
 alias gdel="git branch -D"
-alias githome="cd `git rev-parse --show-toplevel`"
 alias gla="git pull --all && git fetch --all"
 alias glm="glol main..HEAD"
 alias glol1m="glol --since='1 month ago'"
@@ -220,11 +217,11 @@ alias dl="deno lint"
 alias dr="deno run"
 alias dta="deno task"
 alias dt="deno test"
+alias dtw="deno test --watch"
 alias dtc="deno task check" # something like "deno lint && deno fmt && deno test --reporter=dot --coverage --parallel"
 alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts" 
 alias dtd="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
 alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
-alias dtw="deno test --watch"
 
 # FUNCTIONS
 
@@ -258,35 +255,6 @@ function cl() {
   builtin cd "${DIR}" && \
   # use your preferred ls command
     ls
-}
-
-# Connect to `Nano Boombox * *` Bluetooth headphones using bluetoothctl on **Linux**
-function connectToNano() {
-  # Set the name of the Bluetooth device
-  DEVICE_NAME="Nano Boom Box * *"  # Replace with your device's name
-
-  # Find the MAC address of the device by its name
-  DEVICE_MAC=$(bluetoothctl devices | grep "$DEVICE_NAME" | awk '{print $2}')
-
-  # Check if the device was found
-  if [ -z "$DEVICE_MAC" ]; then
-      echo "Device $DEVICE_NAME not found"
-      exit 1
-  fi
-
-  # Connect to the device using bluetoothctl
-  echo -e "connect $DEVICE_MAC\nquit" | bluetoothctl
-
-  sleep 2
-
-  # Check if the connection was successful
-  connected=$(echo -e "info $DEVICE_MAC\nquit" | bluetoothctl | grep "Connected: yes")
-
-  if [ -n "$connected" ]; then
-      echo "Successfully connected to device $DEVICE_MAC"
-  else
-      echo "Failed to connect to device $DEVICE_MAC"
-  fi
 }
 
 # Function to rename a file from Pascal case or snake case to kebab case

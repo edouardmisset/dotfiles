@@ -32,7 +32,7 @@ brew "gh"
 # Distributed revision control system
 brew "git"
 # Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake", link: false
+brew "handbrake"
 # World's fastest and most advanced password recovery utility
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
@@ -70,7 +70,7 @@ brew "ripgrep"
 # Simplified and community-driven man pages
 brew "tldr"
 # Command-line interface to the freedesktop.org trashcan
-brew "trash-cli"
+brew "trash-cli", link: true
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
 # Shell extension to navigate your filesystem faster
@@ -93,17 +93,19 @@ cask "bartender"
 cask "bettertouchtool"
 # Utility to create and modify archives
 cask "betterzip"
-# E-books management software
-cask "calibre"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Universal database tool and SQL client
 cask "dbeaver-community"
+# Downloads videos from different websites
+cask "downie"
 # Web browser
 cask "firefox"
 cask "font-fira-code-nerd-font"
 cask "font-inconsolata"
 cask "font-petit-formal-script"
+# Terminal emulator that uses platform-native UI and GPU acceleration
+cask "ghostty"
 # Web browser
 cask "google-chrome"
 # Client for the Google Drive storage service
@@ -114,8 +116,6 @@ cask "handbrake"
 cask "imageoptim"
 # System monitoring app
 cask "istat-menus"
-# Terminal emulator as alternative to Apple's Terminal app
-cask "iterm2"
 # Native desktop app for Messenger (formerly Facebook Messenger)
 cask "messenger"
 # Home media player
@@ -146,27 +146,29 @@ cask "transmission"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+mas "Amphetamine", id: 937984704
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
 mas "Just Focus", id: 1142151959
 mas "Mactracker", id: 430255202
 mas "MindNode", id: 1289197285
+mas "Name Mangler", id: 603637384
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
-mas "‎WhatsApp", id: 310633997
+mas "WhatsApp", id: 310633997
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "astro-build.astro-vscode"
-vscode "bierner.color-info"
 vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
 vscode "bradlc.vscode-tailwindcss"
 vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
+vscode "clinyong.vscode-css-modules"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
@@ -207,6 +209,7 @@ vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "oderwat.indent-rainbow"
 vscode "orta.vscode-jest"
+vscode "oven.bun-vscode"
 vscode "p42ai.refactor"
 vscode "phoenisx.cssvar"
 vscode "pkief.material-icon-theme"
@@ -217,7 +220,6 @@ vscode "qwtel.sqlite-viewer"
 vscode "stkb.rewrap"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
-vscode "styled-components.vscode-styled-components"
 vscode "stylelint.vscode-stylelint"
 vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"

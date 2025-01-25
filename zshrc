@@ -350,6 +350,8 @@ function get_package_manager() {
     echo "pnpm"
   elif [ -f bun.lockb ]; then
     echo "bun"
+  elif [ -f bun.lock ]; then
+    echo "bun"
   elif [ -f yarn.lock ]; then
     echo "yarn"
   elif [ -f package-lock.json ]; then

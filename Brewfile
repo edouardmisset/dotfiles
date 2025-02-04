@@ -17,12 +17,16 @@ brew "blueutil"
 brew "icu4c@76"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # More intuitive version of du in rust
 brew "dust"
 # Modern, maintained replacement for ls
 brew "eza"
+# Simple, fast and user-friendly alternative to find
+brew "fd"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
@@ -49,6 +53,8 @@ brew "mas"
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
 brew "mp4v2"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
 # Open source relational database management system
 brew "mysql"
 # Node version management
@@ -73,6 +79,8 @@ brew "tldr"
 brew "trash-cli", link: true
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Internet file retriever
+brew "wget"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # UNIX shell (command interpreter)
@@ -146,6 +154,10 @@ cask "transmission"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Multiplayer code editor
+cask "zed"
+# Gecko based web browser
+cask "zen-browser"
 mas "Amphetamine", id: 937984704
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
@@ -195,7 +207,6 @@ vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "mhutchie.git-graph"
-vscode "million.million-lint"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"

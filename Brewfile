@@ -13,12 +13,8 @@ brew "bat"
 brew "bat-extras"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c@76"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # More intuitive version of du in rust
@@ -27,6 +23,8 @@ brew "dust"
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@76"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
@@ -36,15 +34,19 @@ brew "gh"
 # Distributed revision control system
 brew "git"
 # Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake"
+brew "handbrake", link: false
 # World's fastest and most advanced password recovery utility
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
 brew "hcxtools"
 # Apache HTTP server
 brew "httpd"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
+# Command-line benchmarking tool
+brew "hyperfine"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -105,12 +107,18 @@ cask "betterzip"
 cask "cleanmymac"
 # Universal database tool and SQL client
 cask "dbeaver-community"
+# Voice and text chat software
+cask "discord"
 # Downloads videos from different websites
 cask "downie"
 # Web browser
 cask "firefox"
+cask "font-atkinson-hyperlegible"
+cask "font-atkinson-hyperlegible-mono"
+cask "font-atkinson-hyperlegible-next"
 cask "font-fira-code-nerd-font"
 cask "font-inconsolata"
+cask "font-monaspace"
 cask "font-petit-formal-script"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
@@ -185,15 +193,13 @@ vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
-vscode "donjayamanne.githistory"
 vscode "dotiful.dotfiles-syntax-highlighting"
 vscode "dsznajder.es7-react-js-snippets"
-vscode "eamodio.gitlens"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
+vscode "github.codespaces"
 vscode "github.copilot"
 vscode "github.copilot-chat"
-vscode "github.vscode-github-actions"
 vscode "humao.rest-client"
 vscode "huuums.vscode-fast-folder-structure"
 vscode "ibm.output-colorizer"
@@ -206,7 +212,7 @@ vscode "markis.code-coverage"
 vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
-vscode "mhutchie.git-graph"
+vscode "ms-playwright.playwright"
 vscode "ms-python.debugpy"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
@@ -228,6 +234,7 @@ vscode "pnp.polacode"
 vscode "prisma.prisma"
 vscode "pucelle.vscode-css-navigation"
 vscode "qwtel.sqlite-viewer"
+vscode "ritwickdey.liveserver"
 vscode "stkb.rewrap"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"

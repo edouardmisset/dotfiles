@@ -75,18 +75,19 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  aliases
   alias-tips
+  aliases
   bun
+  colored-man-pages
   colorize
   command-not-found
+  fzf
   git
   history
   vscode
-  yarn
   zoxide
-  zsh-autosuggestions
   zsh-autocomplete
+  zsh-autosuggestions
   zsh-syntax-highlighting
   )
 
@@ -132,21 +133,26 @@ alias htop="btop"
 alias la="eza -laF --git  --icons --group-directories-first"
 alias ll="eza -lF --git --icons --group-directories-first"
 alias ls="eza -F --git --icons --group-directories-first"
+# List directory in tree format with icons and limit depth to 2
 alias lst="eza -lF --git --tree --icons --level=2"
 alias top="btop"
+# Print each element of PATH on a new line
 alias trail="<<<${(F)path}"
 alias z-="z -"
 alias zz="z -"
+# Update all package managers and system software
 alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && sudo softwareupdate -ia --verbose"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
-alias zshrc="code ~/.zshrc"
+alias zshrc="code ~/.dotfiles && code ~/.zshrc"
 
 # GIT
 alias gac="git add -A && git commit -m"
+# List git branches with detailed formatted information
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 alias gca="git commit --amend --no-edit"
+# Clean merged local git branches excluding main, master, and dev
 alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v '(^\*|master|main|dev)' | xargs git branch -d"
 alias gco---="git checkout @{-3}"
 alias gco--="git checkout @{-2}"
@@ -158,14 +164,20 @@ alias gcom="git checkout main"
 alias gdel="git branch -D"
 alias gla="git pull --all && git fetch --all"
 alias glm="glol main..HEAD"
+# Show last commit with formatted details
+alias gllast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
 alias glol1m="glol --since='1 month ago'"
 alias glol1w="glol --since='1 week ago'"
 alias glol1y="glol --since='1 year ago'"
 alias glolg-="glol --grep="
+# Display a graphical git log for commits on current branch with formatting
 alias glolm="git log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\" main..HEAD"
+# Graphical git log with commit stats
 alias glolsm="glolm --stat"
 alias gmm="git merge main"
+# Switch to main branch and update remote branches
 alias gmu="git switch main && git pull --all && git fetch --all"
+# Push current branch with setting upstream tracking
 alias gpo="git push --set-upstream origin $(git_current_branch)"
 alias gt="git tag"
 alias gta="git tag -a"
@@ -428,5 +440,8 @@ export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
 # Add console-ninja to $PATH
 export PATH=~/.console-ninja/.bin:$PATH
 
-# Initilize zoxide
+# Add my scripts to $PATH
+export PATH="$HOME/Projects/code/scripts/bin:$PATH"
+
+# Initialize zoxide
 eval "$(zoxide init zsh)"

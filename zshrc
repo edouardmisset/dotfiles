@@ -165,7 +165,7 @@ alias gdel="git branch -D"
 alias gla="git pull --all && git fetch --all"
 alias glm="glol main..HEAD"
 # Show last commit with formatted details
-alias gllast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
+alias glast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
 alias glol1m="glol --since='1 month ago'"
 alias glol1w="glol --since='1 week ago'"
 alias glol1y="glol --since='1 year ago'"

@@ -7,3 +7,4 @@ function exists() {
   # If the function succeeds the exit code is `0` (and CAN be chained with `&&`)
   # Otherwise the function fails with a non-zero exit code (thus, it CANNOT be chained with `&&`)
 }
+. "$HOME/.cargo/env"

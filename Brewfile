@@ -1,8 +1,7 @@
-tap "eth-p/software"
-tap "homebrew/bundle"
 tap "homebrew/command-not-found"
-tap "homebrew/services"
+tap "libsql/sqld"
 tap "oven-sh/bun"
+tap "tursodatabase/tap"
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # Next-generation aircrack with lots of new features
@@ -15,6 +14,8 @@ brew "bat-extras"
 brew "blueutil"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Dependency manager for Cocoa projects
+brew "cocoapods"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # More intuitive version of du in rust
@@ -23,8 +24,6 @@ brew "dust"
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# C/C++ and Java libraries for Unicode and globalization
-brew "icu4c@76"
 # Play, record, convert, and stream audio and video
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
@@ -34,7 +33,7 @@ brew "gh"
 # Distributed revision control system
 brew "git"
 # Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake", link: false
+brew "handbrake"
 # World's fastest and most advanced password recovery utility
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
@@ -47,6 +46,8 @@ brew "python@3.13"
 brew "httpie"
 # Command-line benchmarking tool
 brew "hyperfine"
+# C/C++ and Java libraries for Unicode and globalization
+brew "icu4c@76"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -55,8 +56,6 @@ brew "mas"
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
 brew "mp4v2"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Open source relational database management system
 brew "mysql"
 # Node version management
@@ -73,6 +72,8 @@ brew "php"
 brew "pnpm"
 # Object-relational database system
 brew "postgresql@14"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Simplified and community-driven man pages
@@ -95,6 +96,7 @@ brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
+brew "tursodatabase/tap/turso"
 # Application launcher and productivity software
 cask "alfred"
 # Menu bar icon organiser
@@ -140,8 +142,6 @@ cask "plex"
 cask "plex-media-server"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
-# Display image info and preview unsupported formats in QuickLook
-cask "qlimagesize"
 # Quick Look generator for Markdown files
 cask "qlmarkdown"
 # Quick Look plugin for plaintext files without an extension
@@ -165,20 +165,22 @@ cask "vlc"
 # Multiplayer code editor
 cask "zed"
 # Gecko based web browser
-cask "zen-browser"
+cask "zen"
+mas "Actions", id: 1586435171
 mas "Amphetamine", id: 937984704
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
-mas "Just Focus", id: 1142151959
+mas "JustFocus", id: 1142151959
 mas "Mactracker", id: 430255202
 mas "MindNode", id: 1289197285
-mas "Name Mangler", id: 603637384
+mas "Name Mangler 3", id: 603637384
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
 mas "WhatsApp", id: 310633997
+mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "astro-build.astro-vscode"
@@ -189,6 +191,8 @@ vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
 vscode "clinyong.vscode-css-modules"
+vscode "coderabbit.coderabbit-vscode"
+vscode "cosminalco.pomodoro"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
@@ -225,6 +229,7 @@ vscode "ms-vscode.live-server"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "oderwat.indent-rainbow"
+vscode "openai.chatgpt"
 vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"
 vscode "p42ai.refactor"

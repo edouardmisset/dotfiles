@@ -142,6 +142,7 @@ alias z-="z -"
 alias zz="z -"
 # Update all package managers and system software
 alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && sudo softwareupdate -ia --verbose"
+alias python="python3"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"

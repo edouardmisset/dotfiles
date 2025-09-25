@@ -448,3 +448,10 @@ export PATH="$HOME/Projects/code/scripts/bin:$PATH"
 
 # Initialize zoxide
 eval "$(zoxide init zsh)"
+
+
+# Command not found
+HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"
+if [ -f "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER" ]; then
+  source "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER";
+fi

@@ -1,7 +1,6 @@
 tap "homebrew/command-not-found"
 tap "libsql/sqld"
 tap "oven-sh/bun"
-tap "tursodatabase/tap"
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # Next-generation aircrack with lots of new features
@@ -10,6 +9,8 @@ brew "aircrack-ng"
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
 brew "bat-extras"
+# Toolchain of the web
+brew "biome"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
@@ -20,6 +21,8 @@ brew "cocoapods"
 brew "deno"
 # More intuitive version of du in rust
 brew "dust"
+# Run arbitrary commands when files change
+brew "entr"
 # Modern, maintained replacement for ls
 brew "eza"
 # Simple, fast and user-friendly alternative to find
@@ -32,8 +35,6 @@ brew "fzf"
 brew "gh"
 # Distributed revision control system
 brew "git"
-# Open-source video transcoder available for Linux, Mac, and Windows
-brew "handbrake"
 # World's fastest and most advanced password recovery utility
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
@@ -48,6 +49,8 @@ brew "httpie"
 brew "hyperfine"
 # C/C++ and Java libraries for Unicode and globalization
 brew "icu4c@76"
+# Lightweight and flexible command-line JSON processor
+brew "jq"
 # Pager program similar to more
 brew "less"
 # Mac App Store command-line interface
@@ -78,10 +81,14 @@ brew "protobuf"
 brew "ripgrep"
 # Simplified and community-driven man pages
 brew "tldr"
+# Terminal multiplexer
+brew "tmux"
 # Command-line interface to the freedesktop.org trashcan
 brew "trash-cli", link: true
 # Display directories as trees (with optional color/HTML output)
 brew "tree"
+# Language for application scale JavaScript development
+brew "typescript"
 # Internet file retriever
 brew "wget"
 # Shell extension to navigate your filesystem faster
@@ -96,15 +103,18 @@ brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 # Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
 brew "oven-sh/bun/bun"
-brew "tursodatabase/tap/turso"
 # Application launcher and productivity software
 cask "alfred"
+# Distribution of the Python and R programming languages for scientific computing
+cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
 cask "bettertouchtool"
 # Utility to create and modify archives
 cask "betterzip"
+# Web browser focusing on privacy
+cask "brave-browser"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Universal database tool and SQL client
@@ -129,17 +139,21 @@ cask "google-chrome"
 # Client for the Google Drive storage service
 cask "google-drive"
 # Open-source video transcoder
-cask "handbrake"
+cask "handbrake-app"
+# Free and open-source media player
+cask "iina"
 # Tool to optimise images to a smaller size
 cask "imageoptim"
 # System monitoring app
 cask "istat-menus"
-# Native desktop app for Messenger (formerly Facebook Messenger)
-cask "messenger"
+# Spot and merge differences in text and image files or folders
+cask "kaleidoscope@3"
 # Home media player
 cask "plex"
 # Home media server
 cask "plex-media-server"
+# IDE for professional Python development
+cask "pycharm"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
 # Quick Look generator for Markdown files
@@ -164,10 +178,10 @@ cask "visual-studio-code"
 cask "vlc"
 # Multiplayer code editor
 cask "zed"
-# Gecko based web browser
-cask "zen"
 mas "Actions", id: 1586435171
 mas "Amphetamine", id: 937984704
+mas "Asphalt", id: 1491129197
+mas "Asphalt8", id: 610391947
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
@@ -179,6 +193,7 @@ mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
+mas "Spaceland", id: 6742552052
 mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
@@ -191,7 +206,6 @@ vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
 vscode "clinyong.vscode-css-modules"
-vscode "coderabbit.coderabbit-vscode"
 vscode "cosminalco.pomodoro"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
@@ -204,6 +218,7 @@ vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
 vscode "github.copilot"
 vscode "github.copilot-chat"
+vscode "github.vscode-pull-request-github"
 vscode "humao.rest-client"
 vscode "huuums.vscode-fast-folder-structure"
 vscode "ibm.output-colorizer"
@@ -217,9 +232,12 @@ vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "ms-playwright.playwright"
+vscode "ms-python.autopep8"
 vscode "ms-python.debugpy"
+vscode "ms-python.pylint"
 vscode "ms-python.python"
 vscode "ms-python.vscode-pylance"
+vscode "ms-python.vscode-python-envs"
 vscode "ms-toolsai.jupyter"
 vscode "ms-toolsai.jupyter-keymap"
 vscode "ms-toolsai.jupyter-renderers"
@@ -229,7 +247,6 @@ vscode "ms-vscode.live-server"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "oderwat.indent-rainbow"
-vscode "openai.chatgpt"
 vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"
 vscode "p42ai.refactor"

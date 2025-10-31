@@ -455,3 +455,8 @@ HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/comman
 if [ -f "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER" ]; then
   source "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER";
 fi
+
+# Common escape sequences emitted by VS Code / different renderers / meta settings
+# Bind all to be safe (duplicate binds are harmless)
+bindkey '^[[1;3C' forward-word
+bindkey '^[[1;3D' backward-word

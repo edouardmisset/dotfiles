@@ -55,6 +55,8 @@ brew "jq"
 brew "less"
 # Mac App Store command-line interface
 brew "mas"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
@@ -65,7 +67,7 @@ brew "mysql"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
-# Platform built on V8 to build network applications
+# Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
@@ -75,8 +77,6 @@ brew "php"
 brew "pnpm"
 # Object-relational database system
 brew "postgresql@14"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Simplified and community-driven man pages
@@ -181,19 +181,18 @@ cask "zed"
 mas "Actions", id: 1586435171
 mas "Amphetamine", id: 937984704
 mas "Asphalt", id: 1491129197
-mas "Asphalt8", id: 610391947
+mas "Assemble", id: 6459060454
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
 mas "JustFocus", id: 1142151959
 mas "Mactracker", id: 430255202
-mas "MindNode", id: 1289197285
+mas "MindNode Classic", id: 1289197285
 mas "Name Mangler 3", id: 603637384
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
-mas "Spaceland", id: 6742552052
 mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
@@ -202,6 +201,8 @@ vscode "astro-build.astro-vscode"
 vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
 vscode "bradlc.vscode-tailwindcss"
+vscode "catppuccin.catppuccin-vsc"
+vscode "catppuccin.catppuccin-vsc-icons"
 vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"

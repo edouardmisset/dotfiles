@@ -440,9 +440,6 @@ export PATH="$HOME/.local/bin:$PATH"
 # Jupyter
 export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
 
-# Add console-ninja to $PATH
-export PATH=~/.console-ninja/.bin:$PATH
-
 # Add my scripts to $PATH
 export PATH="$HOME/Projects/code/scripts/bin:$PATH"
 

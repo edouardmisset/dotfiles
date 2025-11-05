@@ -55,8 +55,6 @@ brew "jq"
 brew "less"
 # Mac App Store command-line interface
 brew "mas"
-# Protocol buffers (Google's data interchange format)
-brew "protobuf"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
@@ -77,6 +75,8 @@ brew "php"
 brew "pnpm"
 # Object-relational database system
 brew "postgresql@14"
+# Protocol buffers (Google's data interchange format)
+brew "protobuf"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Simplified and community-driven man pages
@@ -220,7 +220,6 @@ vscode "github.codespaces"
 vscode "github.copilot"
 vscode "github.copilot-chat"
 vscode "github.vscode-pull-request-github"
-vscode "humao.rest-client"
 vscode "huuums.vscode-fast-folder-structure"
 vscode "ibm.output-colorizer"
 vscode "irongeek.vscode-env"
@@ -266,13 +265,9 @@ vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "unifiedjs.vscode-mdx"
-vscode "viijay-kr.react-ts-css"
 vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vitest.explorer"
 vscode "vivaxy.vscode-conventional-commits"
-vscode "wallabyjs.console-ninja"
-vscode "wallabyjs.quokka-vscode"
-vscode "wallabyjs.wallaby-vscode"
 vscode "wix.vscode-import-cost"
 vscode "xabikos.javascriptsnippets"
 vscode "xyc.vscode-mdx-preview"

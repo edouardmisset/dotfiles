@@ -59,8 +59,6 @@ brew "mas"
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
 brew "mp4v2"
-# Open source relational database management system
-brew "mysql"
 # Node version management
 brew "n"
 # Free (GNU) replacement for the Pico text editor
@@ -73,8 +71,6 @@ brew "openssl@1.1"
 brew "php"
 # Fast, disk space efficient package manager
 brew "pnpm"
-# Object-relational database system
-brew "postgresql@14"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
 # Search tool like grep and The Silver Searcher
@@ -193,6 +189,7 @@ mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
+mas "Reeder", id: 880001334
 mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
@@ -265,7 +262,6 @@ vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "unifiedjs.vscode-mdx"
-vscode "visualstudioexptteam.vscodeintellicode"
 vscode "vitest.explorer"
 vscode "vivaxy.vscode-conventional-commits"
 vscode "wix.vscode-import-cost"

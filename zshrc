@@ -167,6 +167,7 @@ alias gcom="git checkout main"
 alias gdel="git branch -D"
 alias gla="git pull --all && git fetch --all"
 alias glm="glol main..HEAD"
+alias gstat="git shortlog -sne --since='1 year ago'"
 # Show last commit with formatted details
 alias glast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
 alias glol1m="glol --since='1 month ago'"
@@ -411,7 +412,7 @@ export FZF_BASE="/usr/bin/fzf/"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # bun completions
-[ -s "/home/edouard/.bun/_bun" ] && source "/home/edouard/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Add Locations to $PATH Variables
 
@@ -423,11 +424,11 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 
 # Deno
-export DENO_INSTALL="/home/edouard/.deno"
+export DENO_INSTALL="$HOME/.deno"
 export PATH="$DENO_INSTALL/bin:$PATH"
 
 # pnpm
-export PNPM_HOME="/home/edouard/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
   *":$PNPM_HOME:"*) ;;
   *) export PATH="$PNPM_HOME:$PATH" ;;

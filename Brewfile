@@ -41,8 +41,6 @@ brew "hashcat"
 brew "hcxtools"
 # Apache HTTP server
 brew "httpd"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Command-line benchmarking tool
@@ -73,8 +71,12 @@ brew "php"
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
+# Cross-shell prompt for astronauts
+brew "starship"
 # Simplified and community-driven man pages
 brew "tldr"
 # Terminal multiplexer
@@ -87,6 +89,8 @@ brew "tree"
 brew "typescript"
 # Internet file retriever
 brew "wget"
+# Blazing fast terminal file manager written in Rust, based on async I/O
+brew "yazi"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
 # UNIX shell (command interpreter)
@@ -162,6 +166,8 @@ cask "qlvideo"
 cask "quicklook-csv"
 # Quick Look plugin for JSON files
 cask "quicklook-json"
+# Team communication and collaboration software
+cask "slack"
 # Music streaming service
 cask "spotify"
 # Application for inspecting installer packages
@@ -194,6 +200,7 @@ mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
+vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
 vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
@@ -211,6 +218,7 @@ vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
 vscode "dotiful.dotfiles-syntax-highlighting"
 vscode "dsznajder.es7-react-js-snippets"
+vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
@@ -223,6 +231,7 @@ vscode "irongeek.vscode-env"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "keesschollaart.vscode-home-assistant"
+vscode "lifeart.vscode-glimmer-syntax"
 vscode "lllllllqw.jsdoc"
 vscode "markis.code-coverage"
 vscode "mattpocock.ts-error-translator"
@@ -258,12 +267,17 @@ vscode "stkb.rewrap"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
+vscode "svelte.svelte-vscode"
 vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "vivaxy.vscode-conventional-commits"
+vscode "vscjava.migrate-java-to-azure"
+vscode "vscjava.vscode-java-upgrade"
+vscode "vue.volar"
+vscode "wallabyjs.quokka-vscode"
 vscode "wix.vscode-import-cost"
 vscode "xabikos.javascriptsnippets"
 vscode "xyc.vscode-mdx-preview"

@@ -75,16 +75,16 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
 plugins=(
-  alias-tips
-  aliases
+  # alias-tips
+  # aliases
   bun
   colored-man-pages
-  colorize
-  command-not-found
+  # colorize
+  # command-not-found
   fzf
   git
-  history
-  vscode
+  # history
+  # vscode
   zoxide
   zsh-autocomplete
   zsh-autosuggestions
@@ -141,10 +141,10 @@ alias trail="<<<${(F)path}"
 alias z-="z -"
 alias zz="z -"
 # Update all package managers and system software
-alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && sudo softwareupdate --install --all --verbose"
+alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && system_update"
 alias system_update="sudo softwareupdate --install --all --verbose"
 alias python="python3"
-alias watch="watchexec"
+alias vsc="code ."
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"
@@ -446,7 +446,6 @@ export PATH="$HOME/Projects/code/scripts/bin:$PATH"
 
 # Initialize zoxide
 eval "$(zoxide init zsh)"
-
 
 # Command not found
 HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"

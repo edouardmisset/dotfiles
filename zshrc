@@ -86,7 +86,7 @@ plugins=(
   # history
   # vscode
   zoxide
-  zsh-autocomplete
+  # zsh-autocomplete
   zsh-autosuggestions
   zsh-syntax-highlighting
   )

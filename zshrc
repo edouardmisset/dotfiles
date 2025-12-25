@@ -1,21 +1,18 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
+# Prompt: using Starship (fast, cross-shell). p10k instant prompt disabled.
+# If needed, you can re-enable p10k by restoring the block below.
+# (Migrated to Starship — see eval at the end of this file.)
 
 # If you come from bash you might have to change your $PATH.
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.oh-my-zsh"
+## Oh My Zsh disabled (migrated to Zinit + Starship)
+# export ZSH="$HOME/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -69,29 +66,33 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # see 'man strftime' for details.
 # HIST_STAMPS="mm/dd/yyyy"
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(
-  # alias-tips
-  # aliases
-  bun
-  colored-man-pages
-  # colorize
-  # command-not-found
-  fzf
-  git
-  # history
-  # vscode
-  zoxide
-  # zsh-autocomplete
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-  )
+# Plugins: Zinit replaces OMZ plugin loading (fast lazy/turbo load)
+# Bootstrap Zinit if missing, then source it
+ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
+if [[ ! -f "$ZINIT_HOME/zinit.zsh" && ! -f "$HOME/.zinit/bin/zinit.zsh" && ! -f "$ZINIT_HOME/zinit.git/zinit.zsh" ]]; then
+  curl -fsSL https://raw.githubusercontent.com/zdharma-continuum/zinit/refs/heads/main/scripts/install.sh | bash
+fi
+# Source zinit from common install locations
+if [[ -f "$ZINIT_HOME/zinit.zsh" ]]; then
+  source "$ZINIT_HOME/zinit.zsh"
+elif [[ -f "$ZINIT_HOME/zinit.git/zinit.zsh" ]]; then
+  source "$ZINIT_HOME/zinit.git/zinit.zsh"
+elif [[ -f "$HOME/.zinit/bin/zinit.zsh" ]]; then
+  source "$HOME/.zinit/bin/zinit.zsh"
+fi
 
-source $ZSH/oh-my-zsh.sh
+# Core plugins
+zinit light zsh-users/zsh-autosuggestions
+# Faster than zsh-syntax-highlighting; if you prefer the original, replace with zsh-users/zsh-syntax-highlighting and keep it last.
+zinit light zdharma-continuum/fast-syntax-highlighting
+
+# OMZ plugin equivalents via snippets (preserve DX)
+zinit snippet OMZ::plugins/git/git.plugin.zsh
+zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
+zinit snippet OMZ::plugins/bun/bun.plugin.zsh
+
+# Keep fzf init from local install (already sourced below)
+# Keep zoxide init (already present below)
 
 # User configuration
 
@@ -141,7 +142,7 @@ alias trail="<<<${(F)path}"
 alias z-="z -"
 alias zz="z -"
 # Update all package managers and system software
-alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && system_update"
+alias update="brew update && brew upgrade && tldr --update && mas upgrade && system_update"
 alias system_update="sudo softwareupdate --install --all --verbose"
 alias python="python3"
 alias vsc="code ."
@@ -186,6 +187,11 @@ alias gpo="git push --set-upstream origin $(git_current_branch)"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
+
+# Lightweight replacement for OMZ's git_current_branch helper
+if ! command -v git_current_branch >/dev/null 2>&1; then
+  git_current_branch() { git rev-parse --abbrev-ref HEAD 2>/dev/null; }
+fi
 
 # Brew
 alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
@@ -404,8 +410,7 @@ function run() {
   fi
 }
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+# p10k config disabled — using Starship prompt configured in ~/.config/starship.toml
 
 # fzf (fuzzy finder)
 export FZF_BASE="/usr/bin/fzf/"
@@ -457,3 +462,7 @@ fi
 # Bind all to be safe (duplicate binds are harmless)
 bindkey '^[[1;3C' forward-word
 bindkey '^[[1;3D' backward-word
+
+# Initialize Starship prompt (fast, cross-shell). See ~/.config/starship.toml for config.
+eval "$(starship init zsh)"
+# End of Zinit setup

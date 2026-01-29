@@ -1,8 +1,15 @@
 #!/usr/bin/env zsh
 # Move staged changes to a new branch
 gmove() {
+  # Validate required argument
+  if [[ -z "$1" ]]; then
+    echo "Error: gmove requires a branch name" >&2
+    echo "Usage: gmove <new-branch-name> [starting-point]" >&2
+    return 1
+  fi
+
   git stash -- $(git diff --staged --name-only) &&
-  gwip ;
+  gwip &&
   git branch $1 $2 &&
   git checkout $1 &&
   git stash pop

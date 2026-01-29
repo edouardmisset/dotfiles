@@ -5,5 +5,11 @@ killport() {
     echo "Usage: killport <port>" >&2
     return 1
   fi
-  kill -9 $(lsof -t -i:$1)
+  local pids
+  pids=$(lsof -t -i:"$1" 2>/dev/null)
+  if [[ -z "$pids" ]]; then
+    echo "No process found on port $1" >&2
+    return 1
+  fi
+  kill -9 $pids
 }

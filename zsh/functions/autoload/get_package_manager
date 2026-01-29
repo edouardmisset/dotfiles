@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Detect which package manager is in use
+get_package_manager() {
+  if [[ -f pnpm-lock.yaml ]]; then
+    echo "pnpm"
+  elif [[ -f bun.lockb ]] || [[ -f bun.lock ]]; then
+    echo "bun"
+  elif [[ -f yarn.lock ]]; then
+    echo "yarn"
+  elif [[ -f package-lock.json ]]; then
+    echo "npm"
+  else
+    echo "unknown"
+  fi
+}

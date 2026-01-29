@@ -1,0 +1,5 @@
+#!/usr/bin/env zsh
+# Create directory and cd into it
+mkcd() {
+  mkdir -p "$@" && cd "$_"
+}

@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Kill process listening on a specific port
+killport() {
+  if (( $# == 0 )); then
+    echo "Usage: killport <port>" >&2
+    return 1
+  fi
+  kill -9 $(lsof -t -i:$1)
+}

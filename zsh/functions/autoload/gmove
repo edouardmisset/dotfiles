@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Move staged changes to a new branch
+gmove() {
+  git stash -- $(git diff --staged --name-only) &&
+  gwip ;
+  git branch $1 $2 &&
+  git checkout $1 &&
+  git stash pop
+}

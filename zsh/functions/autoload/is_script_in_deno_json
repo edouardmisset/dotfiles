@@ -1,0 +1,9 @@
+#!/usr/bin/env zsh
+# Check if script exists in deno.json
+is_script_in_deno_json() {
+  if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed" >&2
+    return 1
+  fi
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks).includes('$1') ? 'true' : 'false')" | deno run --allow-read -
+}

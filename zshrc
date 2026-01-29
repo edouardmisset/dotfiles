@@ -121,10 +121,9 @@ alias glolm="glm"
 function glolsm() {
     git log "$(get_default_branch)..HEAD" --stat --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"
 }
-alias glol1m="glol --since='1 month ago'"
-alias glol1w="glol --since='1 week ago'"
-alias glol1y="glol --since='1 year ago'"
-alias glolg-="glol --grep="
+alias glog1m="glol --since='1 month ago'"
+alias glog1y="glol --since='1 year ago'"
+alias glogg-="glol --grep="
 # Display a graphical git log for commits on current branch with formatting
 alias glolm="git log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\" main..HEAD"
 # Graphical git log with commit stats
@@ -133,15 +132,11 @@ alias gmm="git merge main"
 # Switch to main branch and update remote branches
 alias gmu="git switch main && git pull --all && git fetch --all"
 # Push current branch with setting upstream tracking
-alias gpo="git push --set-upstream origin $(git_current_branch)"
+alias gpo="git push --set-upstream origin \$(git branch --show-current)"
+alias gpf="git push --force-with-lease"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
-
-# Lightweight replacement for OMZ's git_current_branch helper
-if ! command -v git_current_branch >/dev/null 2>&1; then
-  git_current_branch() { git rev-parse --abbrev-ref HEAD 2>/dev/null; }
-fi
 
 # Brew
 alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
@@ -195,170 +190,19 @@ alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch
 alias dtd="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
 alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
 
-# FUNCTIONS
+# FUNCTIONS (autoloaded from ~/.dotfiles/zsh/functions/autoload/)
+# Functions are lazy-loaded on first use for faster startup
+FPATH_FUNCS="$HOME/.dotfiles/zsh/functions/autoload"
+fpath+=("$FPATH_FUNCS")
 
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-function gmove() {
-  git stash -- $(git diff --staged --name-only) &&
-  gwip ;
-  git branch $1 $2 &&
-  git checkout $1 &&
-  git stash pop
-}
+# Declare functions to autoload
+typeset -a my_funcs=(
+  gmove killport mkcd cl kebabify
+  list_deno_tasks is_script_in_deno_json
+  is_script_in_package_json list_scripts_in_package_json get_package_manager
+)
 
-# You fix the bug, stage only the changes related to the bug and execute
-# This will create a branch called bugfix based off master with only the bug fix
-function killport() {
-  kill -9 $(lsof -t -i:$1)
-}
-
-function mkcd() {
-  mkdir -p "$@" && cd "$_"
-}
-
-# Go to directory (`cd`) then list what's in it (`ls`)
-function cl() {
-  DIR="$*";
-    # if no DIR given, go home
-    if [ $# -lt 1 ]; then
-      DIR=$HOME;
-  fi;
-  builtin cd "${DIR}" && \
-  # use your preferred ls command
-    ls
-}
-
-# Function to rename a file from Pascal case or snake case to kebab case
-function kebabify() {
-  # Check if at least one filename is provided as an argument
-  if [ "$#" -eq 0 ]; then
-    echo "Usage: pascal_snake_case_to_kebab <filename1> [<filename2> ...]"
-    return 1
-  fi
-
-  # Iterate over all provided filenames
-  for file in "$@"; do
-    # Convert Pascal case or snake case to kebab case using sed and tr
-    new_name=$(echo $file | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g; s/_/-/g' | tr '[:upper:]' '[:lower:]')
-
-    # Rename the file
-    mv "$file" "$new_name"
-    
-    echo "File renamed from $file to $new_name"
-  done
-}
-
-function list_deno_tasks() {
-  if ! command -v deno &> /dev/null; then
-    echo "Error: deno is not installed"
-    return 1
-  fi
-
-  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
-}
-
-function is_script_in_deno_json () {
-    if ! command -v deno &> /dev/null; then
-    echo "Error: deno is not installed"
-    return 1
-  fi
-
-  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks).includes('$1') ? 'true' : 'false')" | deno run --allow-read -
-}
-
-function is_script_in_package_json() {
-  node -e "try {
-    const pkg = require('./package.json');
-    console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
-  } catch (error) {
-    throw new Error('Error:', error);
-  }"
-}
-
-function list_scripts_in_package_json() {
-  node -e "try {
-    const pkg = require('./package.json');
-    console.log(Object.keys(pkg.scripts || {}).join('\n'));
-  } catch (error) {
-    throw new Error('Error:', error);
-  }"
-}
-
-function get_package_manager() {
-  if [ -f pnpm-lock.yaml ]; then
-    echo "pnpm"
-  elif [ -f bun.lockb ]; then
-    echo "bun"
-  elif [ -f bun.lock ]; then
-    echo "bun"
-  elif [ -f yarn.lock ]; then
-    echo "yarn"
-  elif [ -f package-lock.json ]; then
-    echo "npm"
-  else
-    echo "unknown"
-  fi
-}
-
-# Define some colors and styles
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-BOLD='\033[1m'
-RESET='\033[0m'
-
-function run() {
-  SCRIPT=$1
-  if [ -f package.json ]; then
-    IS_SCRIPT_IN_PACKAGE_JSON=$(is_script_in_package_json $SCRIPT)
-    if [ "$IS_SCRIPT_IN_PACKAGE_JSON" = "false" ]; then
-      echo -e "${RED}${BOLD}Error:${RESET} Script '${SCRIPT}' not found in package.json 🚫"
-      echo -e "${GREEN}Available scripts:${RESET}"
-      list_scripts_in_package_json
-      PACKAGE_MANAGER=$(get_package_manager)
-      echo -e "${GREEN}${BOLD}Package manager in use: ${PACKAGE_MANAGER}${RESET} 🚀"
-      return 1
-    fi
-
-    PACKAGE_MANAGER=$(get_package_manager)
-    if [ "$PACKAGE_MANAGER" = "unknown" ]; then
-      echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
-      if command -v bun &> /dev/null; then
-        echo -e "${GREEN}${BOLD}Installing packages with bun...${RESET} 📦"
-        bun install && bun run $SCRIPT
-      elif command -v pnpm &> /dev/null; then
-        echo -e "${GREEN}${BOLD}Installing packages with pnpm...${RESET} 📦"
-        pnpm install && pnpm run $SCRIPT
-      elif command -v npm &> /dev/null; then
-        echo -e "${GREEN}${BOLD}Installing packages with npm...${RESET} 📦"
-        npm install && npm run $SCRIPT
-      elif command -v yarn &> /dev/null; then
-        echo -e "${GREEN}${BOLD}Installing packages with yarn...${RESET} 📦"
-        yarn install && yarn run $SCRIPT
-      else
-        echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
-        return 1
-      fi
-    else
-      echo -e "${GREEN}${BOLD}Running script with ${PACKAGE_MANAGER}...${RESET} 🚀"
-      $PACKAGE_MANAGER run $SCRIPT
-    fi
-  elif [ -f deno.json ]; then
-    IS_SCRIPT_IN_DENO_JSON=$(is_script_in_deno_json $SCRIPT)
-    if [ "$IS_SCRIPT_IN_DENO_JSON" = "false" ]; then
-      echo -e "${RED}${BOLD}Error:${RESET} Task '${BOLD}${SCRIPT}${RESET}' not found in deno.json 🚫"
-      echo -e "${GREEN}Available tasks:${RESET}"
-      list_deno_tasks
-      return 1
-    fi
-
-    echo -e "${GREEN}${BOLD}Running task with deno...${RESET} 🚀"
-    deno task $SCRIPT
-  else
-    echo -e "${RED}${BOLD}Error:${RESET} No package.json or deno.json found. Cannot determine project type. 🚫"
-    return 1
-  fi
-}
+autoload -Uz $my_funcs
 
 # Prompt: Starship configured in ~/.config/starship.toml
 

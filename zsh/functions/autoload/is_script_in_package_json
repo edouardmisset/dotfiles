@@ -5,6 +5,6 @@ is_script_in_package_json() {
     const pkg = require('./package.json');
     console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
   } catch (error) {
-    throw new Error('Error:', error);
+    throw new Error('Failed to read package.json: ' + error.message);
   }"
 }

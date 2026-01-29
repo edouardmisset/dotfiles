@@ -13,6 +13,6 @@ kebabify() {
       continue
     fi
     new_name=$(printf '%s\n' "$file" | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g; s/_/-/g' | tr '[:upper:]' '[:lower:]')
-    mv -- "$file" "$new_name" && echo "Renamed: $file -> $new_name"
+    mv -n -- "$file" "$new_name" && echo "Renamed: $file -> $new_name"
   done
 }

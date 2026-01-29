@@ -3,6 +3,13 @@
 run() {
   local SCRIPT="$1" IS_SCRIPT PACKAGE_MANAGER
   
+  # Validate required argument
+  if [[ -z "$SCRIPT" ]]; then
+    echo "Error: run requires a script name" >&2
+    echo "Usage: run <script-name> [args...]" >&2
+    return 1
+  fi
+  
   if [[ ! -f package.json && ! -f deno.json ]]; then
     echo "Error: No package.json or deno.json found" >&2
     return 1
@@ -23,19 +30,24 @@ run() {
     if [[ "$PACKAGE_MANAGER" == "unknown" ]]; then
       echo "No package manager lock file found. Trying to install packages..." >&2
       if command -v bun &> /dev/null; then
-        bun install && bun run "$SCRIPT"
+        bun install && bun run "$@"
+        return $?
       elif command -v pnpm &> /dev/null; then
-        pnpm install && pnpm run "$SCRIPT"
+        pnpm install && pnpm run "$@"
+        return $?
       elif command -v npm &> /dev/null; then
-        npm install && npm run "$SCRIPT"
+        npm install && npm run "$@"
+        return $?
       elif command -v yarn &> /dev/null; then
-        yarn install && yarn run "$SCRIPT"
+        yarn install && yarn run "$@"
+        return $?
       else
         echo "Error: No package manager found 🚫" >&2
         return 1
       fi
     else
-      "$PACKAGE_MANAGER" run "$SCRIPT"
+      "$PACKAGE_MANAGER" run "$@"
+      return $?
     fi
   elif [[ -f deno.json ]]; then
     IS_SCRIPT=$(is_script_in_deno_json "$SCRIPT")
@@ -45,6 +57,7 @@ run() {
       list_deno_tasks >&2
       return 1
     fi
-    deno task "$SCRIPT"
+    deno task "$@"
+    return $?
   fi
 }

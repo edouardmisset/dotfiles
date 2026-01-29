@@ -5,5 +5,5 @@ is_script_in_deno_json() {
     echo "Error: deno is not installed" >&2
     return 1
   fi
-  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks).includes('$1') ? 'true' : 'false')" | deno run --allow-read -
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks ?? {}).includes(Deno.args[0]) ? 'true' : 'false')" | deno run --allow-read - "$1"
 }

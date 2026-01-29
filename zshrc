@@ -13,6 +13,8 @@ elif [[ -f "$ZINIT_HOME/zinit.git/zinit.zsh" ]]; then
   source "$ZINIT_HOME/zinit.git/zinit.zsh"
 elif [[ -f "$HOME/.zinit/bin/zinit.zsh" ]]; then
   source "$HOME/.zinit/bin/zinit.zsh"
+else
+  echo "Warning: Zinit not found. Plugin loading will be skipped." >&2
 fi
 
 # Core plugins

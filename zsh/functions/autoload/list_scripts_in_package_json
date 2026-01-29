@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+# List available npm/yarn scripts
+list_scripts_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(Object.keys(pkg.scripts || {}).join('\n'));
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}

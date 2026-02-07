@@ -183,7 +183,7 @@ fpath+=("$FPATH_FUNCS")
 
 # Declare functions to autoload
 typeset -a my_funcs=(
-  gmove killport mkcd cl kebabify
+  gmove killport mkcd cl kebabify run
   list_deno_tasks is_script_in_deno_json
   is_script_in_package_json list_scripts_in_package_json get_package_manager
 )

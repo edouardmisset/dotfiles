@@ -1,72 +1,121 @@
-### Prompt stack: Starship + Zinit (clean, fast)
-
-# Plugins: Zinit replaces OMZ plugin loading (fast lazy/turbo load)
-# Bootstrap Zinit if missing, then source it
-ZINIT_HOME="${XDG_DATA_HOME:-$HOME/.local/share}/zinit"
-if [[ ! -f "$ZINIT_HOME/zinit.zsh" && ! -f "$HOME/.zinit/bin/zinit.zsh" && ! -f "$ZINIT_HOME/zinit.git/zinit.zsh" ]]; then
-  curl -fsSL https://raw.githubusercontent.com/zdharma-continuum/zinit/refs/heads/main/scripts/install.sh | bash
+# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
+# Initialization code that may require console input (password prompts, [y/n]
+# confirmations, etc.) must go above this block; everything else may go below.
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-# Source zinit from common install locations
-if [[ -f "$ZINIT_HOME/zinit.zsh" ]]; then
-  source "$ZINIT_HOME/zinit.zsh"
-elif [[ -f "$ZINIT_HOME/zinit.git/zinit.zsh" ]]; then
-  source "$ZINIT_HOME/zinit.git/zinit.zsh"
-elif [[ -f "$HOME/.zinit/bin/zinit.zsh" ]]; then
-  source "$HOME/.zinit/bin/zinit.zsh"
+
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  # If you're using macOS, you'll want this enabled
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Set the directory we want to store zinit and plugins
+ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
+
+# Download Zinit, if it's not there yet
+if [ ! -d "$ZINIT_HOME" ]; then
+  mkdir -p "$(dirname $ZINIT_HOME)"
+  git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
+fi
+
+# Source/Load zinit
+source "${ZINIT_HOME}/zinit.zsh"
+
+# Shell integrations (load early for plugins and aliases that depend on them)
+eval "$(fzf --zsh)"
+eval "$(zoxide init zsh)"
+
+# FUNCTIONS (autoloaded from ~/.dotfiles/zsh/functions/autoload/)
+# Functions are lazy-loaded on first use for faster startup
+FPATH_FUNCS="$HOME/.dotfiles/zsh/functions/autoload"
+fpath+=("$FPATH_FUNCS")
+# Declare functions to autoload
+typeset -a my_functions=(
+  gmove killport mkcd cl kebabify run
+  list_deno_tasks is_script_in_deno_json
+  is_script_in_package_json list_scripts_in_package_json get_package_manager
+)
+
+# Completion styling
+zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
+# force zsh not to show completion menu, which allows fzf-tab to capture the unambiguous prefix
+zstyle ':completion:*' menu no
+
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+# NOTE: don't use escape sequences (like '%F{red}%d%f') here, fzf-tab will ignore them
+zstyle ':completion:*:descriptions' format '[%d]'
+
+# fzf-tab previews: use eza when available, fallback to ls
+if command -v eza >/dev/null 2>&1; then
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always $realpath'
 else
-  echo "Warning: Zinit not found. Plugin loading will be skipped." >&2
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -G $realpath'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls -G $realpath'
 fi
 
-# Core plugins
+# Load completions
+autoload -Uz compinit $my_functions && compinit
+
+# Add in Powerlevel10k
+zinit ice depth=1; zinit light romkatv/powerlevel10k
+
+# Add in zsh plugins
+zinit light zsh-users/zsh-syntax-highlighting
+zinit light zsh-users/zsh-completions
 zinit light zsh-users/zsh-autosuggestions
-# Faster than zsh-syntax-highlighting; if you prefer the original, replace with zsh-users/zsh-syntax-highlighting and keep it last.
-zinit light zdharma-continuum/fast-syntax-highlighting
+zinit light Aloxaf/fzf-tab
 
-# OMZ plugin equivalents via snippets (preserve DX)
-zinit snippet OMZ::plugins/git/git.plugin.zsh
-zinit snippet OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh
-zinit snippet OMZ::plugins/bun/bun.plugin.zsh
+# Add in snippets
+zinit snippet OMZL::git.zsh
+zinit snippet OMZP::git
+zinit snippet OMZP::command-not-found
 
-# Keep fzf init from local install (already sourced below)
-# Keep zoxide init (already present below)
+zinit cdreplay -q
 
-# User configuration
+# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# export MANPATH="/usr/local/man:$MANPATH"
+# Keybindings
+# Common escape sequences emitted by VS Code / different renderers / meta settings
+bindkey '^[[1;3C' forward-word
+bindkey '^[[1;3D' backward-word
 
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+# History
+HISTSIZE=5000
+HISTFILE=~/.zsh_history
+SAVEHIST=$HISTSIZE
+HISTDUP=erase
+setopt appendhistory
+setopt sharehistory
+setopt hist_ignore_space
+setopt hist_ignore_all_dups
+setopt hist_save_no_dups
+setopt hist_ignore_dups
+setopt hist_find_no_dups
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='nano'
-# else
-#   export EDITOR='nano'
-# fi
-
-# VARIABLES
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
+# Variables
 # Disable gatekeeper for Homebrew
 export HOMEBREW_CASK_OPTS="--no-quarantine"
 # Set default "viewer" (from cat => bat)
 export NULLCMD=bat
-export N_PREFIX="$HOME/.n"
-export PREFIX="$N_PREFIX"
 
-# HISTORY
+# PATH configuration
+export BUN_INSTALL="$HOME/.bun"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 
-# These options prevent duplicates.
-setopt HIST_IGNORE_DUPS      # Ignore command if it is the same as the previous one
-setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries when adding a new one
-setopt HIST_SAVE_NO_DUPS     # Do not write duplicate entries to the history file
-setopt HIST_FIND_NO_DUPS     # Do not show duplicates during history search
+# Build PATH efficiently
+export PATH="$BUN_INSTALL/bin:$PNPM_HOME:$HOME/.local/bin:$HOME/.local/share/jupyter/runtime:$HOME/Projects/code/scripts/bin:$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
 
-# ALIASES
+# Aliases
 
 # Shell
+alias ".."="cd .."
+alias "..."="cd ../.."
+alias "...."="cd ../../.."
 alias as="alias | grep "
 alias c="clear"
 alias cat="bat"
@@ -100,7 +149,7 @@ alias gac="git add -A && git commit -m"
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 alias gca="git commit --amend --no-edit"
 # Clean merged local git branches excluding main, master, and dev
-alias gclean="git remote prune origin && git switch main | git branch --merged | egrep -v '(^\*|master|main|dev)' | xargs git branch -d"
+alias gclean="git remote prune origin && git switch main && git branch --merged | grep -Ev '(^\*|master|main|dev)' | xargs git branch -d"
 alias gco---="git checkout @{-3}"
 alias gco--="git checkout @{-2}"
 alias gco-="git checkout -"
@@ -144,7 +193,7 @@ alias gundo="git reset --soft HEAD^"
 alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
 alias bubu="brew update && brew upgrade"
 
-# PNPM
+# Pnpm
 alias pm="pnpm"
 alias pad="pnpm add -d"
 alias pb="pnpm build"
@@ -159,12 +208,12 @@ alias prun="pnpm run"
 alias pst="pnpm start"
 alias pt="pnpm test"
 
-# YARN
+# Yarn
 alias ylf="yarn lint:fix"
 alias yst="BROWSER=none yarn start"
 alias yta="yarn test:all"
 
-# BUN
+# Bun
 alias b="bun"
 alias ba="bun add"
 alias bad="bun add -d"
@@ -189,68 +238,5 @@ alias dt="deno test"
 alias dtw="deno test --watch"
 alias dtc="deno task check" # something like "deno lint && deno fmt && deno test --reporter=dot --coverage --parallel"
 alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts" 
-alias dtd="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
+alias dtdoc="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
 alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
-
-# FUNCTIONS (autoloaded from ~/.dotfiles/zsh/functions/autoload/)
-# Functions are lazy-loaded on first use for faster startup
-FPATH_FUNCS="$HOME/.dotfiles/zsh/functions/autoload"
-fpath+=("$FPATH_FUNCS")
-
-# Declare functions to autoload
-typeset -a my_funcs=(
-  gmove killport mkcd cl kebabify run
-  list_deno_tasks is_script_in_deno_json
-  is_script_in_package_json list_scripts_in_package_json get_package_manager
-)
-
-autoload -Uz $my_funcs
-
-# Prompt: Starship configured in ~/.config/starship.toml
-
-# fzf (fuzzy finder)
-export FZF_BASE="/usr/bin/fzf/"
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-# bun completions
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-# Add Locations to $PATH Variables
-
-export PATH="$N_PREFIX/bin:$PATH"
-export PATH="$PATH:/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-
-# pnpm
-export PNPM_HOME="$HOME/.local/share/pnpm"
-case ":$PATH:" in
-  *":$PNPM_HOME:"*) ;;
-  *) export PATH="$PNPM_HOME:$PATH" ;;
-esac
-# pnpm end
-
-# Python
-export PATH="$HOME/.local/bin:$PATH"
-
-# Jupyter
-export PATH="$HOME/.local/share/jupyter/runtime:$PATH"
-
-# Add my scripts to $PATH
-export PATH="$HOME/Projects/code/scripts/bin:$PATH"
-
-# Initialize zoxide
-eval "$(zoxide init zsh)"
-
-# Command not found
-HOMEBREW_COMMAND_NOT_FOUND_HANDLER="$(brew --repository)/Library/Homebrew/command-not-found/handler.sh"
-if [ -f "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER" ]; then
-  source "$HOMEBREW_COMMAND_NOT_FOUND_HANDLER";
-fi
-
-# Common escape sequences emitted by VS Code / different renderers / meta settings
-# Bind all to be safe (duplicate binds are harmless)
-bindkey '^[[1;3C' forward-word
-bindkey '^[[1;3D' backward-word
-
-# Initialize Starship prompt (fast, cross-shell). See ~/.config/starship.toml for config.
-eval "$(starship init zsh)"
-### End of shell init

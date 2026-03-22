@@ -240,3 +240,10 @@ alias dtc="deno task check" # something like "deno lint && deno fmt && deno test
 alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts" 
 alias dtdoc="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
 alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi

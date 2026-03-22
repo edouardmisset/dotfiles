@@ -17,6 +17,11 @@ autoload -Uz \
   list_deno_tasks is_script_in_deno_json \
   is_script_in_package_json list_scripts_in_package_json get_package_manager
 
+if command -v brew >/dev/null 2>&1; then
+  fpath=("$(brew --prefix)/share/zsh/site-functions" "$(brew --prefix)/share/zsh-completions" $fpath)
+  typeset -U fpath
+fi
+
 # ── Completion styling ────────────────────────────────────────────────────
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'  # case-insensitive matching
 zstyle ':completion:*' menu no                          # let fzf-tab render the menu

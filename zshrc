@@ -119,6 +119,14 @@ export NULLCMD=bat
 export N_PREFIX="$HOME/.n"
 export PREFIX="$N_PREFIX"
 
+# HISTORY
+
+# These options prevent duplicates.
+setopt HIST_IGNORE_DUPS      # Ignore command if it is the same as the previous one
+setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries when adding a new one
+setopt HIST_SAVE_NO_DUPS     # Do not write duplicate entries to the history file
+setopt HIST_FIND_NO_DUPS     # Do not show duplicates during history search
+
 # ALIASES
 
 # Shell

@@ -1,0 +1,409 @@
+
+### Added by Zinit's installer
+if [[ ! -f $HOME/.local/share/zinit/zinit.git/zinit.zsh ]]; then
+    print -P "%F{33} %F{220}Installing %F{33}ZDHARMA-CONTINUUM%F{220} Initiative Plugin Manager (%F{33}zdharma-continuum/zinit%F{220})…%f"
+    command mkdir -p "$HOME/.local/share/zinit" && command chmod g-rwX "$HOME/.local/share/zinit"
+    command git clone https://github.com/zdharma-continuum/zinit "$HOME/.local/share/zinit/zinit.git" && \
+        print -P "%F{33} %F{34}Installation successful.%f%b" || \
+        print -P "%F{160} The clone has failed.%f%b"
+fi
+
+source "$HOME/.local/share/zinit/zinit.git/zinit.zsh"
+autoload -Uz _zinit
+(( ${+_comps} )) && _comps[zinit]=_zinit
+
+# Load a few important annexes, without Turbo
+# (this is currently required for annexes)
+zinit light-mode for \
+    zdharma-continuum/zinit-annex-as-monitor \
+    zdharma-continuum/zinit-annex-bin-gem-node \
+    zdharma-continuum/zinit-annex-patch-dl \
+    zdharma-continuum/zinit-annex-rust
+
+### End of Zinit's installer chunk
+
+# VARIABLES
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
+# Disable gatekeeper for Homebrew
+export HOMEBREW_CASK_OPTS="--no-quarantine"
+# Set default "viewer" (from cat => bat)
+export NULLCMD=bat
+
+# HISTORY
+# These options prevent duplicates.
+setopt HIST_IGNORE_DUPS      # Ignore command if it is the same as the previous one
+setopt HIST_IGNORE_ALL_DUPS  # Remove older duplicate entries when adding a new one
+setopt HIST_SAVE_NO_DUPS     # Do not write duplicate entries to the history file
+setopt HIST_FIND_NO_DUPS     # Do not show duplicates during history search
+
+# ALIASES
+
+# Shell
+alias as="alias | grep "
+alias c="clear"
+alias cat="bat"
+alias cd-="z -"
+alias cd="z"
+alias copy="rsync -ah --info=progress2"
+alias cwd="pwd"
+alias htop="btop"
+alias la="eza -laF --git  --icons --group-directories-first"
+alias ll="eza -lF --git --icons --group-directories-first"
+alias ls="eza -F --git --icons --group-directories-first"
+# List directory in tree format with icons and limit depth to 2
+alias lst="eza -lF --git --tree --icons --level=2"
+alias top="btop"
+# Print each element of PATH on a new line
+alias trail="<<<${(F)path}"
+alias ..="cd .."
+alias ...="cd ../.."
+alias z-="z -"
+alias zz="z -"
+# Update all package managers and system software
+alias update="brew update && brew upgrade && tldr --update && mas upgrade && system_update"
+alias system_update="sudo softwareupdate --install --all --verbose"
+alias python="python3"
+alias vsc="code ."
+
+# ZSH
+alias zshrc="code ~/.dotfiles && code ~/.zshrc"
+
+# GIT
+alias gaa="git add -A"
+alias gac="git add -A && git commit -m"
+# List git branches with detailed formatted information
+alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
+alias gbr="git branch"
+alias gca="git commit --amend --no-edit"
+# Clean merged local git branches excluding main, master, and dev
+function gclean() {
+  local default_branch=$(get_default_branch)
+  git remote prune origin && git switch "$default_branch" && git pull --ff-only && git branch --merged | egrep -v '(^\*|master|main|dev)' | sed 's/^ *//' | while read -r b; do git branch -d "$b"; done
+}
+alias gcb="git checkout --branch"
+alias gco="git switch "
+alias gco---="git checkout @{-3}"
+alias gco--="git checkout @{-2}"
+alias gco-="git checkout -"
+alias gco-2="gco--"
+alias gco-3="gco---"
+alias gcod="git checkout dev"
+# Checkout default branch (main or master)
+function gcom() {
+  git checkout "$(get_default_branch)"
+}
+alias gcos="git checkout staging"
+alias gdel="git branch -D"
+alias gfa="git fetch --all"
+alias gl="git pull"
+alias gla="git pull --all && git fetch --all"
+alias gst="git status"
+alias gstat="git shortlog -sne --since='1 year ago'"
+# Show last commit with formatted details
+alias glast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
+# Display a graphical git log for commits on current branch with formatting
+function glm() {
+  glol "$(get_default_branch)..HEAD"
+}
+alias glolm="glm"
+# Graphical git log with commit stats
+alias glolsm="glolm --stat"
+alias glg="git log --oneline --graph --all"
+alias glol="git log --graph --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
+alias glols="glol --stat"
+alias glog24h="glol --since='24 hours ago'"
+alias glog1w="glol --since='1 week ago'"
+alias glog1m="glol --since='1 month ago'"
+alias glog1y="glol --since='1 year ago'"
+alias glogg-="glol --grep="
+# Merge default branch (main or master) into current branch
+function gmm() {
+  git merge "$(get_default_branch)"
+}
+# Rebase current branch onto default branch (main or master)
+function grbm() {
+  git rebase "$(get_default_branch)"
+}
+# Switch to default branch and update remote branches
+function gmu() {
+  git switch "$(get_default_branch)" && git pull && git fetch --all
+}
+alias gsu="git switch staging && git pull && git fetch --all"
+# Push current branch with setting upstream tracking
+alias gpo="git push --set-upstream origin \$(git branch --show-current)"
+alias gp="git push"
+alias gpf="git push --force-with-lease"
+alias grb="git rebase"
+alias grbi="git rebase -i"
+alias grbc="git rebase --continue"
+alias grba="git rebase --abort"
+alias grbs="git rebase staging"
+alias gt="git tag"
+alias gta="git tag -a"
+# Alias that creates a shortcut to undo the last git commit while preserving
+# all changes in the staging area. This allows you to re-stage and recommit
+# changes without losing any work. Useful for fixing commit messages or
+# reorganizing changes before pushing.
+alias gundo="git reset --soft HEAD^"
+alias gbss="git bisect start"
+# Test your code, then mark each commit:
+alias gbsb="git bisect bad"              # Current commit has the bug
+alias gbsg="git bisect good"             # Known good commit (add commit hash or commit tag)
+alias gbsr="git bisect reset"            # When done
+
+# Brew
+alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
+alias bubu="brew update && brew upgrade"
+
+# PNPM
+alias pm="pnpm"
+alias pad="pnpm add -d"
+alias pb="pnpm build"
+alias pd="pnpm dev"
+alias pdev="pnpm dev"
+alias pf="pnpm format"
+alias pi="pnpm install"
+alias plf="pnpm lint:fix"
+alias pln="pnpm lint"
+alias prm="pnpm remove"
+alias prun="pnpm run"
+alias pst="pnpm start"
+alias pt="pnpm test"
+
+# BUN
+alias b="bun"
+alias ba="bun add"
+alias bad="bun add -d"
+alias bb="bun run build"
+alias bdev="bun run dev"
+alias bf="bun run format"
+alias bi="bun install"
+alias blf="bun run lint:fix"
+alias bln="bun run lint"
+alias brm="bun remove"
+alias brun="bun run"
+alias bst="bun run start"
+alias bt="bun test"
+
+# Deno
+alias dd="deno doc"
+alias df="deno fmt"
+alias dl="deno lint"
+alias dr="deno run"
+alias dta="deno task"
+alias dt="deno test"
+alias dtw="deno test --watch"
+alias dtc="deno task check" # something like "deno lint && deno fmt && deno test --reporter=dot --coverage --parallel"
+alias dtd="deno task dev" # something like "deno lint --watch & deno fmt --watch & deno run --allow-net --allow-env --allow-read --watch ./path/to/entry.ts" 
+alias dtd="deno task docs" # something like "deno doc --html --name='name-of-my-app' ./path/to/entry.ts"
+alias dtl="deno task cache" # something like "deno cache --lock=deno.lock --lock-write ./path/to/entry.ts"
+
+# FUNCTIONS
+
+# Helper function to get default branch (main or master)
+function get_default_branch() {
+  if git show-ref --verify --quiet refs/heads/main; then
+    echo "main"
+  elif git show-ref --verify --quiet refs/heads/master; then
+    echo "master"
+  else
+    echo "main"  # default fallback
+  fi
+}
+
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+function gmove() {
+  git stash -- $(git diff --staged --name-only) &&
+  gwip ;
+  git branch $1 $2 &&
+  git checkout $1 &&
+  git stash pop
+}
+
+# You fix the bug, stage only the changes related to the bug and execute
+# This will create a branch called bugfix based off master with only the bug fix
+function killport() {
+  kill -9 $(lsof -t -i:$1)
+}
+
+function mkcd() {
+  mkdir -p "$@" && cd "$_"
+}
+
+# Go to directory (`cd`) then list what's in it (`ls`)
+function cl() {
+  DIR="$*";
+    # if no DIR given, go home
+    if [ $# -lt 1 ]; then
+      DIR=$HOME;
+  fi;
+  builtin cd "${DIR}" && \
+  # use your preferred ls command
+    ls
+}
+
+# Function to rename a file from Pascal case or snake case to kebab case
+function kebabify() {
+  # Check if at least one filename is provided as an argument
+  if [ "$#" -eq 0 ]; then
+    echo "Usage: pascal_snake_case_to_kebab <filename1> [<filename2> ...]"
+    return 1
+  fi
+
+  # Iterate over all provided filenames
+  for file in "$@"; do
+    # Convert Pascal case or snake case to kebab case using sed and tr
+    new_name=$(echo $file | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g; s/_/-/g' | tr '[:upper:]' '[:lower:]')
+
+    # Rename the file
+    mv "$file" "$new_name"
+    
+    echo "File renamed from $file to $new_name"
+  done
+}
+
+function list_deno_tasks() {
+  if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed"
+    return 1
+  fi
+
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
+}
+
+function is_script_in_deno_json () {
+    if ! command -v deno &> /dev/null; then
+    echo "Error: deno is not installed"
+    return 1
+  fi
+
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks).includes('$1') ? 'true' : 'false')" | deno run --allow-read -
+}
+
+function is_script_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+function list_scripts_in_package_json() {
+  node -e "try {
+    const pkg = require('./package.json');
+    console.log(Object.keys(pkg.scripts || {}).join('\n'));
+  } catch (error) {
+    throw new Error('Error:', error);
+  }"
+}
+
+function get_package_manager() {
+  if [ -f pnpm-lock.yaml ]; then
+    echo "pnpm"
+  elif [ -f bun.lockb ]; then
+    echo "bun"
+  elif [ -f bun.lock ]; then
+    echo "bun"
+  elif [ -f yarn.lock ]; then
+    echo "yarn"
+  elif [ -f package-lock.json ]; then
+    echo "npm"
+  else
+    echo "unknown"
+  fi
+}
+
+# Define some colors and styles
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BOLD='\033[1m'
+RESET='\033[0m'
+
+function run() {
+  SCRIPT=$1
+  if [ -f package.json ]; then
+    IS_SCRIPT_IN_PACKAGE_JSON=$(is_script_in_package_json $SCRIPT)
+    if [ "$IS_SCRIPT_IN_PACKAGE_JSON" = "false" ]; then
+      echo -e "${RED}${BOLD}Error:${RESET} Script '${SCRIPT}' not found in package.json 🚫"
+      echo -e "${GREEN}Available scripts:${RESET}"
+      list_scripts_in_package_json
+      PACKAGE_MANAGER=$(get_package_manager)
+      echo -e "${GREEN}${BOLD}Package manager in use: ${PACKAGE_MANAGER}${RESET} 🚀"
+      return 1
+    fi
+
+    PACKAGE_MANAGER=$(get_package_manager)
+    if [ "$PACKAGE_MANAGER" = "unknown" ]; then
+      echo -e "${RED}No package manager lock file found. Trying to install packages...${RESET} 🔄"
+      if command -v bun &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with bun...${RESET} 📦"
+        bun install && bun run $SCRIPT
+      elif command -v pnpm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with pnpm...${RESET} 📦"
+        pnpm install && pnpm run $SCRIPT
+      elif command -v npm &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with npm...${RESET} 📦"
+        npm install && npm run $SCRIPT
+      elif command -v yarn &> /dev/null; then
+        echo -e "${GREEN}${BOLD}Installing packages with yarn...${RESET} 📦"
+        yarn install && yarn run $SCRIPT
+      else
+        echo -e "${RED}${BOLD}Error:${RESET} No package manager found 🚫"
+        return 1
+      fi
+    else
+      echo -e "${GREEN}${BOLD}Running script with ${PACKAGE_MANAGER}...${RESET} 🚀"
+      $PACKAGE_MANAGER run $SCRIPT
+    fi
+  elif [ -f deno.json ]; then
+    IS_SCRIPT_IN_DENO_JSON=$(is_script_in_deno_json $SCRIPT)
+    if [ "$IS_SCRIPT_IN_DENO_JSON" = "false" ]; then
+      echo -e "${RED}${BOLD}Error:${RESET} Task '${BOLD}${SCRIPT}${RESET}' not found in deno.json 🚫"
+      echo -e "${GREEN}Available tasks:${RESET}"
+      list_deno_tasks
+      return 1
+    fi
+
+    echo -e "${GREEN}${BOLD}Running task with deno...${RESET} 🚀"
+    deno task $SCRIPT
+  else
+    echo -e "${RED}${BOLD}Error:${RESET} No package.json or deno.json found. Cannot determine project type. 🚫"
+    return 1
+  fi
+}
+
+zinit wait lucid atload'_zsh_autosuggest_start' light-mode for \
+    zsh-users/zsh-autosuggestions \
+    zsh-users/zsh-syntax-highlighting \
+    OMZ::plugins/colored-man-pages/colored-man-pages.plugin.zsh 
+
+# Starship prompt
+eval "$(starship init zsh)"
+# zoxide
+eval "$(zoxide init zsh)"
+
+# fzf key bindings and fuzzy completion
+# Set up fzf key bindings and fuzzy completion
+source <(fzf --zsh)
+
+export HOMEBREW_GITHUB_API_TOKEN=$GITHUB_TOKEN
+
+# Common escape sequences emitted by VS Code / different renderers / meta settings
+# Bind all to be safe (duplicate binds are harmless)
+bindkey '^[[1;3C' forward-word
+bindkey '^[[1;3D' backward-word
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"
+
+if type brew &>/dev/null; then
+  FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
+
+  autoload -Uz compinit
+  compinit
+fi

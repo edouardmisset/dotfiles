@@ -8,3 +8,6 @@ function exists() {
   # Otherwise the function fails with a non-zero exit code (thus, it CANNOT be chained with `&&`)
 }
 [ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+
+# Vite+ bin (https://viteplus.dev)
+. "$HOME/.vite-plus/env"

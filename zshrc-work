@@ -77,13 +77,14 @@ alias gac="git add -A && git commit -m"
 # List git branches with detailed formatted information
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 alias gbr="git branch"
+alias gbd="git branch -d"
 alias gca="git commit --amend --no-edit"
 # Clean merged local git branches excluding main, master, and dev
 function gclean() {
   local default_branch=$(get_default_branch)
   git remote prune origin && git switch "$default_branch" && git pull --ff-only && git branch --merged | egrep -v '(^\*|master|main|dev)' | sed 's/^ *//' | while read -r b; do git branch -d "$b"; done
 }
-alias gcb="git checkout --branch"
+alias gcb="git checkout -b"
 alias gco="git switch "
 alias gco---="git checkout @{-3}"
 alias gco--="git checkout @{-2}"

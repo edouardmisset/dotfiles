@@ -12,6 +12,16 @@
     ~/.config/bat:
       create: true
       path: config/bat
+    ~/.agents/skills:
+      create: true
+      path: agents/skills
+      force: true
+    ~/.copilot/skills:
+      create: true
+      path: agents/skills
+    ~/.claude/skills:
+      create: true
+      path: agents/skills
 
 - create:
     - ~/Projects

@@ -22,6 +22,12 @@ zinit light-mode for \
 
 ### End of Zinit's installer chunk
 
+# Load machine-local secrets that must never be committed.
+# Store sensitive exports in: ~/.config/zsh/secrets.zsh
+if [[ -f "$HOME/.config/zsh/secrets.zsh" ]]; then
+  source "$HOME/.config/zsh/secrets.zsh"
+fi
+
 # VARIABLES
 
 # bun
@@ -391,8 +397,6 @@ eval "$(zoxide init zsh)"
 # fzf key bindings and fuzzy completion
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
-
-export HOMEBREW_GITHUB_API_TOKEN=$GITHUB_TOKEN
 
 # Common escape sequences emitted by VS Code / different renderers / meta settings
 # Bind all to be safe (duplicate binds are harmless)

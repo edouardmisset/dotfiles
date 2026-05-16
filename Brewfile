@@ -1,3 +1,4 @@
+tap "anomalyco/tap"
 tap "libsql/sqld"
 tap "oven-sh/bun"
 # Search tool like grep, but optimized for programmers
@@ -8,8 +9,6 @@ brew "aircrack-ng"
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
 brew "bat-extras"
-# Toolchain of the web
-brew "biome"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
@@ -66,6 +65,8 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Create, run, and share large language models (LLMs)
+brew "ollama", restart_service: :changed
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # AI coding agent, built for the terminal
@@ -130,6 +131,8 @@ cask "cleanmymac"
 cask "dbeaver-community"
 # Voice and text chat software
 cask "discord"
+# App to build and share containerised applications and microservices
+cask "docker-desktop"
 # Downloads videos from different websites
 cask "downie"
 # Web browser
@@ -175,6 +178,8 @@ cask "qlmarkdown"
 cask "qlstephen"
 # Quick Look plugin for CSV files
 cask "quicklook-csv"
+# Quick Look plugin for JSON files
+cask "quicklook-json"
 # Thumbnails, static previews, cover art and metadata for video files
 cask "quicklook-video"
 # Team communication and collaboration software
@@ -183,6 +188,8 @@ cask "slack"
 cask "spotify"
 # Application for inspecting installer packages
 cask "suspicious-package"
+# Minimal GUI for AI code agents
+cask "t3-code"
 # Open-source BitTorrent client
 cask "transmission"
 # Open-source code editor
@@ -194,10 +201,12 @@ cask "whatsapp"
 # Multiplayer code editor
 cask "zed"
 mas "Actions", id: 1586435171
+mas "Amazing AI", id: 1660147028
 mas "Amphetamine", id: 937984704
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
+mas "Gifski", id: 1351639930
 mas "JustFocus", id: 1142151959
 mas "Keynote", id: 409183694
 mas "Mactracker", id: 430255202
@@ -206,14 +215,18 @@ mas "Name Mangler 3", id: 603637384
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
+mas "Pandan", id: 1569600264
 mas "PrettyJSON for Safari", id: 1445328303
+mas "Reeder", id: 880001334
+mas "RetroArch", id: 6499539433
+mas "Shareful", id: 1522267256
+mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
-vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
 vscode "catppuccin.catppuccin-vsc"
 vscode "catppuccin.catppuccin-vsc-icons"
@@ -223,7 +236,6 @@ vscode "christian-kohler.path-intellisense"
 vscode "clinyong.vscode-css-modules"
 vscode "codacy-app.codacy"
 vscode "coderabbit.coderabbit-vscode"
-vscode "continue.continue"
 vscode "cosminalco.pomodoro"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
@@ -237,7 +249,7 @@ vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
-vscode "huuums.vscode-fast-folder-structure"
+vscode "hideoo.starlight-links"
 vscode "ibm.output-colorizer"
 vscode "irongeek.vscode-env"
 vscode "jock.svg"
@@ -248,22 +260,8 @@ vscode "markis.code-coverage"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "ms-playwright.playwright"
-vscode "ms-python.autopep8"
-vscode "ms-python.debugpy"
-vscode "ms-python.pylint"
-vscode "ms-python.python"
-vscode "ms-python.vscode-pylance"
-vscode "ms-python.vscode-python-envs"
-vscode "ms-toolsai.jupyter"
-vscode "ms-toolsai.jupyter-keymap"
-vscode "ms-toolsai.jupyter-renderers"
-vscode "ms-toolsai.vscode-jupyter-cell-tags"
-vscode "ms-toolsai.vscode-jupyter-slideshow"
-vscode "ms-vscode.live-server"
-vscode "ms-vscode.vscode-chat-customizations-evaluations"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
-vscode "oderwat.indent-rainbow"
 vscode "oven.bun-vscode"
 vscode "oxc.oxc-vscode"
 vscode "p42ai.refactor"
@@ -271,23 +269,21 @@ vscode "phoenisx.cssvar"
 vscode "pnp.polacode"
 vscode "pucelle.vscode-css-navigation"
 vscode "qwtel.sqlite-viewer"
-vscode "ritwickdey.liveserver"
-vscode "sonarsource.sonarlint-vscode"
+vscode "redhat.vscode-xml"
+vscode "stkb.rewrap"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
+vscode "techopolis.omlx-copilot-chat"
 vscode "tomoki1207.pdf"
+vscode "typescriptteam.native-preview"
 vscode "typescriptteam.native-preview"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
-vscode "vivaxy.vscode-conventional-commits"
 vscode "voidzero.vite-plus-extension-pack"
-vscode "wallabyjs.quokka-vscode"
 vscode "wix.vscode-import-cost"
-vscode "xabikos.javascriptsnippets"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
-vscode "zhuangtongfa.material-theme"
 npm "corepack"

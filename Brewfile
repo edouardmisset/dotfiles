@@ -21,6 +21,8 @@ brew "bumblebee"
 brew "cocoapods"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
+# JavaScript runtime, package manager, bundler, and test runner
+brew "oven-sh/bun/bun"
 # More intuitive version of du in rust
 brew "dust"
 # Run arbitrary commands when files change
@@ -89,8 +91,8 @@ brew "protobuf"
 brew "python@3.13"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Official tldr client written in Rust
-brew "tlrc"
+# Simplified and community-driven man pages
+brew "tldr"
 # Official tldr client written in Rust
 brew "tlrc"
 # Terminal multiplexer
@@ -111,6 +113,12 @@ brew "wget"
 brew "yazi"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# Fish-like fast/unobtrusive autosuggestions for zsh
+brew "zsh-autosuggestions"
+# Additional completion definitions for zsh
+brew "zsh-completions"
+# Fish shell like syntax highlighting for zsh
+brew "zsh-syntax-highlighting"
 # UNIX shell (command interpreter)
 brew "zsh"
 # Coding agent with the IDE wired in
@@ -186,6 +194,8 @@ cask "plex-media-server"
 cask "pycharm"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
+# Quick Look generator for Markdown files
+cask "qlmarkdown"
 # Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
 # Quick Look plugin for CSV files
@@ -206,6 +216,8 @@ cask "t3-code"
 cask "transmission"
 # Open-source code editor
 cask "visual-studio-code"
+# Multimedia player
+cask "vlc"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Multiplayer code editor
@@ -213,6 +225,8 @@ cask "zed"
 mas "Actions", id: 1586435171
 mas "Amazing AI", id: 1660147028
 mas "Amphetamine", id: 937984704
+mas "Asphalt", id: 1491129197
+mas "Assemble", id: 6459060454
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
@@ -230,6 +244,7 @@ mas "PrettyJSON for Safari", id: 1445328303
 mas "Reeder", id: 880001334
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
+mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
@@ -237,6 +252,7 @@ vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
 vscode "bradgashler.htmltagwrap"
+vscode "bradlc.vscode-tailwindcss"
 vscode "catppuccin.catppuccin-vsc"
 vscode "catppuccin.catppuccin-vsc-icons"
 vscode "chakrounanas.turbo-console-log"
@@ -256,6 +272,7 @@ vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
+vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "hideoo.starlight-links"
@@ -264,6 +281,7 @@ vscode "irongeek.vscode-env"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "keesschollaart.vscode-home-assistant"
+vscode "lifeart.vscode-glimmer-syntax"
 vscode "lllllllqw.jsdoc"
 vscode "markis.code-coverage"
 vscode "mechatroner.rainbow-csv"
@@ -278,6 +296,7 @@ vscode "oven.bun-vscode"
 vscode "oxc.oxc-vscode"
 vscode "p42ai.refactor"
 vscode "phoenisx.cssvar"
+vscode "pkief.material-icon-theme"
 vscode "pnp.polacode"
 vscode "pucelle.vscode-css-navigation"
 vscode "qwtel.sqlite-viewer"
@@ -289,7 +308,6 @@ vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
 vscode "techopolis.omlx-copilot-chat"
 vscode "tomoki1207.pdf"
-vscode "typescriptteam.native-preview"
 vscode "typescriptteam.native-preview"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"

@@ -175,7 +175,16 @@ alias gla="git pull --all && git fetch --all"
 alias glm="glol main..HEAD"
 alias gstat="git shortlog -sne --since='1 year ago'"
 # Show last commit with formatted details
-alias glast="git log -1 --pretty=format:\"%C(auto)%h %s %Cgreen(%ar)\""
+alias glast="git log -1 --pretty=\"%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset\""
+# Display a graphical git log for commits on current branch with formatting
+function glm() {
+  git log "$(get_default_branch)..HEAD" --graph --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"
+}
+alias glolm="glm"
+# Graphical git log with commit stats
+function glolsm() {
+    git log "$(get_default_branch)..HEAD" --stat --pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset"
+}
 alias glol1m="glol --since='1 month ago'"
 alias glol1w="glol --since='1 week ago'"
 alias glol1y="glol --since='1 year ago'"

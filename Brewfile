@@ -1,4 +1,3 @@
-tap "homebrew/command-not-found"
 tap "libsql/sqld"
 tap "oven-sh/bun"
 # Search tool like grep, but optimized for programmers
@@ -27,7 +26,7 @@ brew "entr"
 brew "eza"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
-# Play, record, convert, and stream audio and video
+# Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
 # Command-line fuzzy finder written in Go
 brew "fzf"
@@ -41,6 +40,8 @@ brew "hashcat"
 brew "hcxtools"
 # Apache HTTP server
 brew "httpd"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Command-line benchmarking tool
@@ -51,6 +52,10 @@ brew "icu4c@76"
 brew "jq"
 # Pager program similar to more
 brew "less"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
+# Fast, flexible, config-based cli for linting Markdown/CommonMark files
+brew "markdownlint-cli2"
 # Mac App Store command-line interface
 brew "mas"
 # Matroska media files manipulation tools
@@ -61,8 +66,10 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
+# AI coding agent, built for the terminal
+brew "opencode"
 # Cryptography and SSL/TLS Toolkit
 brew "openssl@1.1"
 # General-purpose scripting language
@@ -73,12 +80,10 @@ brew "pnpm"
 brew "protobuf"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.13"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Simplified and community-driven man pages
-brew "tldr"
+# Official tldr client written in Rust
+brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
 # Command-line interface to the freedesktop.org trashcan
@@ -87,6 +92,8 @@ brew "trash-cli", link: true
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
+# Watch files and take action when they change
+brew "watchman"
 # Internet file retriever
 brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -115,6 +122,8 @@ cask "bettertouchtool"
 cask "betterzip"
 # Web browser focusing on privacy
 cask "brave-browser"
+# OpenAI's official ChatGPT desktop app
+cask "chatgpt"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
 # Universal database tool and SQL client
@@ -130,7 +139,9 @@ cask "font-atkinson-hyperlegible-mono"
 cask "font-atkinson-hyperlegible-next"
 cask "font-fira-code-nerd-font"
 cask "font-inconsolata"
+cask "font-meslo-lg-nerd-font"
 cask "font-monaspace"
+cask "font-nova-mono"
 cask "font-petit-formal-script"
 # Terminal emulator that uses platform-native UI and GPU acceleration
 cask "ghostty"
@@ -148,6 +159,8 @@ cask "imageoptim"
 cask "istat-menus"
 # Spot and merge differences in text and image files or folders
 cask "kaleidoscope@3"
+# Discover, download, and run local LLMs
+cask "lm-studio"
 # Home media player
 cask "plex"
 # Home media server
@@ -160,12 +173,10 @@ cask "qlcolorcode"
 cask "qlmarkdown"
 # Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
-# Thumbnails, static previews, cover art and metadata for video files
-cask "qlvideo"
 # Quick Look plugin for CSV files
 cask "quicklook-csv"
-# Quick Look plugin for JSON files
-cask "quicklook-json"
+# Thumbnails, static previews, cover art and metadata for video files
+cask "quicklook-video"
 # Team communication and collaboration software
 cask "slack"
 # Music streaming service
@@ -178,16 +189,17 @@ cask "transmission"
 cask "visual-studio-code"
 # Multimedia player
 cask "vlc"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Multiplayer code editor
 cask "zed"
 mas "Actions", id: 1586435171
 mas "Amphetamine", id: 937984704
-mas "Asphalt", id: 1491129197
-mas "Assemble", id: 6459060454
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
 mas "JustFocus", id: 1142151959
+mas "Keynote", id: 409183694
 mas "Mactracker", id: 430255202
 mas "MindNode Classic", id: 1289197285
 mas "Name Mangler 3", id: 603637384
@@ -195,35 +207,35 @@ mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "Pages", id: 409201541
 mas "PrettyJSON for Safari", id: 1445328303
-mas "Reeder", id: 880001334
-mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
+vscode "bierner.markdown-mermaid"
 vscode "biomejs.biome"
 vscode "bradgashler.htmltagwrap"
-vscode "bradlc.vscode-tailwindcss"
 vscode "catppuccin.catppuccin-vsc"
 vscode "catppuccin.catppuccin-vsc-icons"
 vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
 vscode "clinyong.vscode-css-modules"
+vscode "codacy-app.codacy"
+vscode "coderabbit.coderabbit-vscode"
+vscode "continue.continue"
 vscode "cosminalco.pomodoro"
 vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
+vscode "donjayamanne.githistory"
 vscode "dotiful.dotfiles-syntax-highlighting"
-vscode "dsznajder.es7-react-js-snippets"
 vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
-vscode "github.copilot"
-vscode "github.copilot-chat"
+vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "huuums.vscode-fast-folder-structure"
 vscode "ibm.output-colorizer"
@@ -231,10 +243,8 @@ vscode "irongeek.vscode-env"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "keesschollaart.vscode-home-assistant"
-vscode "lifeart.vscode-glimmer-syntax"
 vscode "lllllllqw.jsdoc"
 vscode "markis.code-coverage"
-vscode "mattpocock.ts-error-translator"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "ms-playwright.playwright"
@@ -250,38 +260,34 @@ vscode "ms-toolsai.jupyter-renderers"
 vscode "ms-toolsai.vscode-jupyter-cell-tags"
 vscode "ms-toolsai.vscode-jupyter-slideshow"
 vscode "ms-vscode.live-server"
+vscode "ms-vscode.vscode-chat-customizations-evaluations"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "oderwat.indent-rainbow"
-vscode "orta.vscode-jest"
 vscode "oven.bun-vscode"
+vscode "oxc.oxc-vscode"
 vscode "p42ai.refactor"
 vscode "phoenisx.cssvar"
-vscode "pkief.material-icon-theme"
 vscode "pnp.polacode"
-vscode "prisma.prisma"
 vscode "pucelle.vscode-css-navigation"
 vscode "qwtel.sqlite-viewer"
 vscode "ritwickdey.liveserver"
-vscode "stkb.rewrap"
+vscode "sonarsource.sonarlint-vscode"
 vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
-vscode "svelte.svelte-vscode"
-vscode "tal7aouy.icons"
 vscode "tamasfe.even-better-toml"
 vscode "tomoki1207.pdf"
+vscode "typescriptteam.native-preview"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "vivaxy.vscode-conventional-commits"
-vscode "vscjava.migrate-java-to-azure"
-vscode "vscjava.vscode-java-upgrade"
-vscode "vue.volar"
+vscode "voidzero.vite-plus-extension-pack"
 vscode "wallabyjs.quokka-vscode"
 vscode "wix.vscode-import-cost"
 vscode "xabikos.javascriptsnippets"
 vscode "xyc.vscode-mdx-preview"
-vscode "yoavbls.pretty-ts-errors"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 vscode "zhuangtongfa.material-theme"
+npm "corepack"

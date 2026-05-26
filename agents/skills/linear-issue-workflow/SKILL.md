@@ -86,28 +86,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 
 ### Step 8: Create the PR
 
-#### Prepare PR Content
-
-- Prepare the PR using the repository's PR template
-- Title: use the Linear ticket title exactly
-- In the "Related to" section, add: `[#<issue-number>](<linear-issue-url>)`
-- If the "Developers heads up" section is not applicable, set it to "N/A"
-
-#### Review PR Content with User
-
-- **Save the PR content as a temporary markdown file named `tmp-pr-draft.md` in the repository root.**
-- **Prompt the user to review and edit the markdown file, then confirm they have finished before proceeding**
-
-#### Create the PR on GitHub
-
-- Create the PR on GitHub with the final content
-  - If PR creation fails (e.g., API error), show the error to the user
-  - If a PR already exists for this branch, provide the existing PR link instead
-- After successful PR creation, display the PR URL and add the current git user (as returned by: `gh api user`) as an assignee
-
-#### Cleanup
-
-- Delete the temporary markdown file (`tmp-pr-draft.md`) after PR creation or if the workflow is aborted at any point after the file was created. Ensure cleanup happens regardless of success or failure.
+Use the `linear-create-pr` skill with the current Linear issue identifier.
 
 ## Constraints
 

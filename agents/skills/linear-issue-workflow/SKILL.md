@@ -26,7 +26,7 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 
 ### Step 2: Create a Branch
 
-#### Base Branch Selection
+#### Select Base Branch
 
 1. **If the ticket belongs to an ongoing Linear project**, check whether a `feature/<feature-name>` branch already exists for that project. If it does, use it as the base branch.
 2. **Otherwise**, determine the base branch with the following command (use the first branch that exists):
@@ -37,8 +37,13 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 for b in staging main master; do git show-ref --verify --quiet refs/remotes/origin/$b && echo $b && break; done
 ```
 
+#### Update Base Branch
+
 - Pull the latest changes from the base branch before creating the new branch.
   - If pulling fails due to merge conflicts or network issues, display the error and ask the user to resolve before continuing.
+
+#### Create and Checkout New Branch
+
 - Create a new branch named: `em/<squad-prefix-lowercased>-<number>`, e.g. `em/dra-5005` or `em/vel-1234` (extract the prefix and number from the issue identifier)
   - If the branch already exists, ask the user whether to check it out and continue from where it left off, or delete and recreate it.
 - Checkout the new branch
@@ -79,26 +84,28 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 - Push the branch to GitHub
 - If the push fails, display the error and suggest the user check their Git authentication and remote permissions
 
-### Step 8a: Prepare PR Content
+### Step 8: Create the PR
+
+#### Prepare PR Content
 
 - Prepare the PR using the repository's PR template
 - Title: use the Linear ticket title exactly
 - In the "Related to" section, add: `[#<issue-number>](<linear-issue-url>)`
 - If the "Developers heads up" section is not applicable, set it to "N/A"
 
-### Step 8b: Review PR Content with User
+#### Review PR Content with User
 
 - **Save the PR content as a temporary markdown file named `tmp-pr-draft.md` in the repository root.**
 - **Prompt the user to review and edit the markdown file, then confirm they have finished before proceeding**
 
-### Step 8c: Create the PR
+#### Create the PR on GitHub
 
 - Create the PR on GitHub with the final content
   - If PR creation fails (e.g., API error), show the error to the user
   - If a PR already exists for this branch, provide the existing PR link instead
 - After successful PR creation, display the PR URL and add the current git user (as returned by: `gh api user`) as an assignee
 
-### Step 8d: Cleanup
+#### Cleanup
 
 - Delete the temporary markdown file (`tmp-pr-draft.md`) after PR creation or if the workflow is aborted at any point after the file was created. Ensure cleanup happens regardless of success or failure.
 

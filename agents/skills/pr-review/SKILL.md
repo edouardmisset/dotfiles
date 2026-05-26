@@ -19,8 +19,9 @@ argument-hint: "PR number or URL (optional, defaults to active PR)"
 Fetch the PR details (title, description, changed files, diffs):
 
 **When no PR is specified** (review the current branch's PR), use `github-pull-request_currentActivePullRequest`
-**When a PR number is provided** (e.g., "review PR #42"), use `mcp_github_pull_request_read`
+**When a PR number or URL is provided** (e.g., "review PR #42"), use `mcp_github_pull_request_read`
 
+- If the PR is closed or already merged, respond with: "This PR is [closed/merged]. Would you still like a review of the changes?"
 - If the PR cannot be found or accessed, respond with: "Could not find PR [number/URL]. Please verify the PR exists and you have access."
 - If the PR contains no changes, respond with: "No changes detected in this PR."
 - If the PR contains more than 30 changed files, group files by directory and summarize trivial changes (e.g., import-only edits), providing detailed feedback only for files with substantive logic changes.

@@ -21,19 +21,33 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 
 - Fetch the Linear issue details using the provided identifier. If the identifier is invalid, not found, or missing, stop and prompt the user to provide a valid Linear issue identifier before continuing.
 - Read all attached comments and sub-issues
-- If Figma links are attached, inspect the designs
-- Summarize the issue and confirm understanding with the user
+- If Figma links are found in the issue description or comments, use the Figma tool to fetch the design details (token such as sizes, colors, typography and layout) to inform the implementation
+- Present a brief summary (2-4 sentences) of the problem, expected behavior, and planned approach. Wait for the user to confirm or correct before proceeding to Step 2
 
 ### Step 2: Create a Branch
 
-- Use `staging` as the base branch if it exists; otherwise use `master`; if neither exists, use `main`
-- Create a new branch named: `em/dra-<linear-issue-number>` (extract the number from the issue identifier)
+#### Base Branch Selection
+
+1. **If the ticket belongs to an ongoing Linear project**, check whether a `feature/<feature-name>` branch already exists for that project. If it does, use it as the base branch.
+2. **Otherwise**, determine the base branch with the following command (use the first branch that exists):
+
+```sh
+# Priority order: `staging` → `main` → `master`
+
+for b in staging main master; do git show-ref --verify --quiet refs/remotes/origin/$b && echo $b && break; done
+```
+
+- Pull the latest changes from the base branch before creating the new branch.
+  - If pulling fails due to merge conflicts or network issues, display the error and ask the user to resolve before continuing.
+- Create a new branch named: `em/<squad-prefix-lowercased>-<number>`, e.g. `em/dra-5005` or `em/vel-1234` (extract the prefix and number from the issue identifier)
+  - If the branch already exists, ask the user whether to check it out and continue from where it left off, or delete and recreate it.
 - Checkout the new branch
 
 ### Step 3: Implement the Fix
 
 - Implement the necessary changes based on the issue analysis
-- Follow existing code patterns and conventions in the repository
+  - If multiple implementation approaches are viable, briefly present them and let the user choose. For straightforward changes, proceed directly.
+- Follow existing code patterns by examining files in the same directory/module as the changes. Check for linter/formatter configs (e.g., .eslintrc, .prettierrc) and apply them.
 
 ### Step 4: Manual Verification
 
@@ -49,36 +63,50 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 - Once the user confirms the fix works:
   - Update existing tests if they cover the changed behavior
   - Create new tests for the new/fixed functionality
-  - Run the test suite to confirm everything passes
+  - Run the tests related to the changes to confirm they pass
+  - If tests fail, analyze the failures, fix them, and re-run. If failures are unrelated to the current change, inform the user and ask how to proceed.
 
 ### Step 6: Commit
 
-- Stage all changes
+- Stage only the files modified or created as part of this fix. Do not stage unrelated changes.
 - Commit using **conventional commit syntax without scope**
+  - Choose the commit type based on the Linear issue: use `fix:` for bug fixes, `feat:` for new features, `refactor:` for code restructuring, `chore:` for maintenance tasks, `test:` for test-related changes, etc.
   - e.g., `fix: handle empty state in activity report`
   - e.g., `feat: add OAuth token refresh flow`
 
 ### Step 7: Push
 
 - Push the branch to GitHub
+- If the push fails, display the error and suggest the user check their Git authentication and remote permissions
 
-### Step 8: Open the PR
+### Step 8a: Prepare PR Content
 
 - Prepare the PR using the repository's PR template
 - Title: use the Linear ticket title exactly
 - In the "Related to" section, add: `[#<issue-number>](<linear-issue-url>)`
 - If the "Developers heads up" section is not applicable, set it to "N/A"
-- **Save the PR content as a temporary markdown file**
-- **Prompt the user to review and edit the markdown file**
-- **Wait for the user to close the file**
+
+### Step 8b: Review PR Content with User
+
+- **Save the PR content as a temporary markdown file named `tmp-pr-draft.md` in the repository root.**
+- **Prompt the user to review and edit the markdown file, then confirm they have finished before proceeding**
+
+### Step 8c: Create the PR
+
 - Create the PR on GitHub with the final content
-- Delete the temporary markdown file
+  - If PR creation fails (e.g., API error), show the error to the user
+  - If a PR already exists for this branch, provide the existing PR link instead
+- After successful PR creation, display the PR URL and add the current git user (as returned by: `gh api user`) as an assignee
+
+### Step 8d: Cleanup
+
+- Delete the temporary markdown file (`tmp-pr-draft.md`) after PR creation or if the workflow is aborted at any point after the file was created. Ensure cleanup happens regardless of success or failure.
 
 ## Constraints
 
 **Branching:**
 
-- Branch naming must follow the `em/dra-<number>` pattern exactly
+- Branch naming must follow the `em/<squad-prefix-lowercased>-<number>` pattern exactly (e.g., `em/dra-5005`, `em/vel-1234`)
 
 **Commits:**
 

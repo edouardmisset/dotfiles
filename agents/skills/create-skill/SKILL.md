@@ -36,11 +36,13 @@ Create in `~/.dotfiles/agents/skills/<skill-name>/`:
 
 ```
 <skill-name>/
-├── SKILL.md
-├── scripts/      # (if needed)
-├── references/   # (if large docs needed)
-└── assets/       # (if templates needed)
+├── SKILL.md       # (always)
+├── scripts/       # (only if user answered yes to scripts)
+├── references/    # (only if user answered yes to large docs)
+└── assets/        # (only if user answered yes to templates)
 ```
+
+Create `SKILL.md` unconditionally. Create only the optional subdirectories (`scripts/`, `references/`, `assets/`) that correspond to "yes" answers from Step 1.
 
 ### Step 4: Write SKILL.md
 

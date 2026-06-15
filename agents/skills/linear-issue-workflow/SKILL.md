@@ -24,7 +24,15 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 - If Figma links are found in the issue description or comments, use the Figma tool to fetch the design details (token such as sizes, colors, typography and layout) to inform the implementation
 - Present a brief summary (2-4 sentences) of the problem, expected behavior, and planned approach. Wait for the user to confirm or correct before proceeding to Step 2
 
-### Step 2: Create a Branch
+### Step 2: Ensure Issue Status and Ownership
+
+- Verify the issue status is `In Progress`.
+  - If not, update the issue status to `In Progress` before continuing.
+- Verify the issue assignee is the currently authenticated Linear user (e.g. `Edouard Misset`).
+  - If not, assign the issue to the currently authenticated Linear user before continuing.
+- If either update fails due to permissions or API errors, stop and ask the user how to proceed.
+
+### Step 3: Create a Branch
 
 #### Select Base Branch
 
@@ -48,13 +56,13 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
   - If the branch already exists, ask the user whether to check it out and continue from where it left off, or delete and recreate it.
 - Checkout the new branch
 
-### Step 3: Implement the Fix
+### Step 4: Implement the Fix
 
 - Implement the necessary changes based on the issue analysis
   - If multiple implementation approaches are viable, briefly present them and let the user choose. For straightforward changes, proceed directly.
 - Follow existing code patterns by examining files in the same directory/module as the changes. Check for linter/formatter configs (e.g., .eslintrc, .prettierrc) and apply them.
 
-### Step 4: Manual Verification
+### Step 5: Manual Verification
 
 - **Stop and prompt the user** to manually check the UI
 - Provide specific instructions on what to verify:
@@ -63,7 +71,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
   - What the expected behavior should be
 - **Wait for user confirmation** before proceeding
 
-### Step 5: Tests
+### Step 6: Tests
 
 - Once the user confirms the fix works:
   - Update existing tests if they cover the changed behavior
@@ -71,7 +79,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
   - Run the tests related to the changes to confirm they pass
   - If tests fail, analyze the failures, fix them, and re-run. If failures are unrelated to the current change, inform the user and ask how to proceed.
 
-### Step 6: Commit
+### Step 7: Commit
 
 - Stage only the files modified or created as part of this fix. Do not stage unrelated changes.
 - Commit using **conventional commit syntax without scope**
@@ -79,12 +87,12 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
   - e.g., `fix: handle empty state in activity report`
   - e.g., `feat: add OAuth token refresh flow`
 
-### Step 7: Push
+### Step 8: Push
 
 - Push the branch to GitHub
 - If the push fails, display the error and suggest the user check their Git authentication and remote permissions
 
-### Step 8: Create the PR
+### Step 9: Create the PR
 
 Use the `linear-create-pr` skill with the current Linear issue identifier.
 
@@ -100,5 +108,5 @@ Use the `linear-create-pr` skill with the current Linear issue identifier.
 
 **Verification & Review (never skip):**
 
-- Never skip the manual verification step (Step 4)
-- Never open the PR without user review of the content (Step 8)
+- Never skip the manual verification step (Step 5)
+- Never open the PR without user review of the content (Step 9)

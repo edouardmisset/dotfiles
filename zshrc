@@ -147,10 +147,9 @@ alias trail="<<<${(F)path}"
 alias z-="z -"
 alias zz="z -"
 # Update all package managers and system software
-alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && sudo softwareupdate --install --all --verbose"
+alias update="brew update && brew upgrade && tldr --update && omz update && mas upgrade && system_update"
 alias system_update="sudo softwareupdate --install --all --verbose"
 alias python="python3"
-alias watch="watchexec"
 
 # ZSH
 alias p10k="code ~/.p10k.zsh"

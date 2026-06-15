@@ -411,6 +411,9 @@ bindkey '^[[1;3D' backward-word
 # Vite+ bin (https://viteplus.dev)
 . "$HOME/.vite-plus/env"
 
+# Make tab completion case-insensitive (e.g., cd Do<Tab> -> Documents)
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}'
+
 if type brew &>/dev/null; then
   FPATH=$(brew --prefix)/share/zsh-completions:$FPATH
 

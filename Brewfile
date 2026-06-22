@@ -21,8 +21,6 @@ brew "bumblebee"
 brew "cocoapods"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
-# JavaScript runtime, package manager, bundler, and test runner
-brew "oven-sh/bun/bun"
 # More intuitive version of du in rust
 brew "dust"
 # Run arbitrary commands when files change
@@ -91,8 +89,6 @@ brew "protobuf"
 brew "python@3.13"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Simplified and community-driven man pages
-brew "tldr"
 # Official tldr client written in Rust
 brew "tlrc"
 # Terminal multiplexer
@@ -103,8 +99,6 @@ brew "trash-cli", link: true
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
-# Watch files and take action when they change
-brew "watchman"
 # Command-line interface for Vercel
 brew "vercel-cli"
 # Internet file retriever
@@ -119,8 +113,6 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# UNIX shell (command interpreter)
-brew "zsh"
 # Coding agent with the IDE wired in
 brew "can1357/tap/omp", trusted: true
 # Utility to add Dynamic Island like features to notch area
@@ -216,8 +208,6 @@ cask "t3-code"
 cask "transmission"
 # Open-source code editor
 cask "visual-studio-code"
-# Multimedia player
-cask "vlc"
 # Native desktop client for WhatsApp
 cask "whatsapp"
 # Multiplayer code editor
@@ -272,7 +262,6 @@ vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
 vscode "github.codespaces"
-vscode "github.copilot-chat"
 vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "hideoo.starlight-links"

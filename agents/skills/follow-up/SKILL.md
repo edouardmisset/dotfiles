@@ -112,22 +112,22 @@ For each PR, fetch the latest CI run. If failing:
 For each `Ready for RC` issue with one or more linked PRs:
 
 1. Confirm the latest CI pipeline is green **on every linked PR**. If any PR is failing, surface the failure(s) as in 5d and stop here for this issue.
-2. Show each PR's base branch (e.g. `master`, `staging`, `feature/<name>`).
-3. Ask me: "Merge this/these PR(s) and advance the Linear issue to the next status?" with options:
+2. Check if each PR can be merged without conflicts (using GitHub's mergeable status). If any PR has conflicts, surface them and stop here for this issue.
+3. Show each PR's base branch (e.g. `master`, `staging`, `feature/<name>`).
+4. Ask me: "Merge this/these PR(s) and advance the Linear issue to the next status?" with options:
    - merge all + advance
    - merge all only
    - skip
-4. On confirmation:
+5. On confirmation:
    - Merge each linked PR with the repo's standard strategy ("create a merge commit" unless the repo convention says otherwise). If a merge fails partway through a multi-PR issue, stop and report which PRs were merged and which weren't.
    - Transition the Linear issue per the workflow reference (Step 1).
    - Report the new state.
-
 ### Step 7: Final Report
 
 Output a single condensed markdown report grouped by Linear status. One block per issue, with:
 
 - `<LINEAR-ID> <title>` (link to Linear)
-- One sub-bullet **per linked PR**: PR `#<num>` in `<repo>` (link) — CI ✅/❌ · approvals X/2 · unresolved threads Y
+- One sub-bullet **per linked PR**: PR `#<num>` in `<repo>` (link) — CI ✅/❌ · Conflicts ✅/❌ · approvals X/2 · unresolved threads Y
 - One-line **next action** for the issue as a whole (e.g. "respond to @alice's comment on `foo.ts:42` in PR #234", "regenerate test link on PR #235", "merge both PRs & move to Released"). If different PRs need different actions, list them as separate sub-actions.
 
 Omit any status section that has zero items.

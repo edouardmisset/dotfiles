@@ -1,6 +1,8 @@
 tap "anomalyco/tap"
+tap "can1357/tap"
 tap "libsql/sqld"
 tap "oven-sh/bun"
+tap "xykong/tap"
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # Next-generation aircrack with lots of new features
@@ -13,6 +15,8 @@ brew "bat-extras"
 brew "blueutil"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
+# Read-only developer endpoint scanner for supply-chain exposure
+brew "bumblebee"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
 # Secure runtime for JavaScript and TypeScript
@@ -33,6 +37,8 @@ brew "fzf"
 brew "gh"
 # Distributed revision control system
 brew "git"
+# Open source programming language to build simple/reliable/efficient software
+brew "go"
 # World's fastest and most advanced password recovery utility
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
@@ -79,8 +85,8 @@ brew "protobuf"
 brew "python@3.13"
 # Cross-shell prompt for astronauts
 brew "starship"
-# Simplified and community-driven man pages
-brew "tldr"
+# Official tldr client written in Rust
+brew "tlrc"
 # Terminal multiplexer
 brew "tmux"
 # Command-line interface to the freedesktop.org trashcan
@@ -89,6 +95,8 @@ brew "trash-cli", link: true
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
+# Command-line interface for Vercel
+brew "vercel-cli"
 # Internet file retriever
 brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -103,8 +111,10 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# Incredibly fast JavaScript runtime, bundler, transpiler and package manager - all in one.
-brew "oven-sh/bun/bun"
+# Coding agent with the IDE wired in
+brew "can1357/tap/omp", trusted: true
+# Utility to add Dynamic Island like features to notch area
+cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
 # Distribution of the Python and R programming languages for scientific computing
@@ -125,12 +135,16 @@ cask "cleanmymac"
 cask "dbeaver-community"
 # Voice and text chat software
 cask "discord"
+# Window peeking utility app
+cask "dockdoor"
 # App to build and share containerised applications and microservices
 cask "docker-desktop"
 # Downloads videos from different websites
 cask "downie"
 # Web browser
 cask "firefox"
+# Markdown previews in Finder QuickLook with diagrams and math
+cask "xykong/tap/flux-markdown"
 cask "font-atkinson-hyperlegible"
 cask "font-atkinson-hyperlegible-mono"
 cask "font-atkinson-hyperlegible-next"
@@ -154,6 +168,12 @@ cask "imageoptim"
 cask "istat-menus"
 # Spot and merge differences in text and image files or folders
 cask "kaleidoscope@3"
+# Customise mouse behavior
+cask "linearmouse"
+# Discover, download, and run local LLMs
+cask "lm-studio"
+# Desktop application for Open WebUI
+cask "open-webui"
 # Home media player
 cask "plex"
 # Home media server
@@ -162,8 +182,6 @@ cask "plex-media-server"
 cask "pycharm"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
-# Quick Look generator for Markdown files
-cask "qlmarkdown"
 # Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
 # Quick Look plugin for CSV files
@@ -184,8 +202,8 @@ cask "t3-code"
 cask "transmission"
 # Open-source code editor
 cask "visual-studio-code"
-# Multimedia player
-cask "vlc"
+# Native desktop client for WhatsApp
+cask "whatsapp"
 # Multiplayer code editor
 cask "zed"
 mas "Actions", id: 1586435171
@@ -198,17 +216,18 @@ mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
 mas "Gifski", id: 1351639930
 mas "JustFocus", id: 1142151959
+mas "Mactracker", id: 430255202
 mas "MindNode Classic", id: 1289197285
 mas "Name Mangler 3", id: 603637384
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
+mas "One Thing", id: 1604176982
 mas "Pages", id: 409201541
 mas "Pandan", id: 1569600264
 mas "PrettyJSON for Safari", id: 1445328303
 mas "Reeder", id: 880001334
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
-mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
@@ -230,7 +249,6 @@ vscode "dotiful.dotfiles-syntax-highlighting"
 vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "foxundermoon.shell-format"
-vscode "github.copilot-chat"
 vscode "github.vscode-pull-request-github"
 vscode "hideoo.starlight-links"
 vscode "ibm.output-colorizer"
@@ -244,6 +262,9 @@ vscode "markis.code-coverage"
 vscode "mechatroner.rainbow-csv"
 vscode "mgmcdermott.vscode-language-babel"
 vscode "ms-playwright.playwright"
+vscode "ms-vscode-remote.remote-ssh"
+vscode "ms-vscode-remote.remote-ssh-edit"
+vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "oven.bun-vscode"

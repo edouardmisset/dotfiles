@@ -10,9 +10,5 @@ else
   n lts
 fi
 
-# Install Global NPM PAckages
-npm install --global yarn
-npm install --global typescript
-
 echo "Global NPM Packages Installed: "
 npm list --global --depth=0

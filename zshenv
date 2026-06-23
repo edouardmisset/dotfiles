@@ -1,13 +1,39 @@
-function exists() {
-  # `command -v` is similar to `which`
-  # `$1` first argument of the function
-  # `>/dev/null` redirects the successfull output to /dev/null (a black hole)
-  # `2>&1` redirects the error output to the same output as the standard input (/dev/null)
-  command -v $1 >/dev/null 2>&1
-  # If the function succeeds the exit code is `0` (and CAN be chained with `&&`)
-  # Otherwise the function fails with a non-zero exit code (thus, it CANNOT be chained with `&&`)
-}
-[ -f "$HOME/.cargo/env" ] && source "$HOME/.cargo/env"
+# ~/.zshenv — sourced for every shell (login, interactive, scripts).
+# Single source of truth for environment variables and PATH, so scripts and
+# non-interactive shells get the same environment as interactive ones.
 
-# Vite+ bin (https://viteplus.dev)
-. "$HOME/.vite-plus/env"
+# Helper: returns success (exit 0) if a command exists on PATH.
+function exists() {
+  command -v "$1" >/dev/null 2>&1
+}
+
+# Homebrew (Apple Silicon) — sets PATH, MANPATH, etc.
+if [[ -f "/opt/homebrew/bin/brew" ]]; then
+  eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Tool homes
+export BUN_INSTALL="$HOME/.bun"
+export PNPM_HOME="$HOME/.local/share/pnpm"
+
+# Behaviour
+export HOMEBREW_CASK_OPTS="--no-quarantine" # skip Gatekeeper quarantine for casks
+export NULLCMD=bat                           # default viewer for `< file`
+
+# PATH (custom dirs first, system PATH in the middle, app bins last).
+# `typeset -U path` keeps PATH de-duplicated and idempotent across re-sourcing.
+path=(
+  "$BUN_INSTALL/bin"
+  "$PNPM_HOME"
+  "$HOME/.local/bin"
+  "$HOME/.local/share/jupyter/runtime"
+  "$HOME/Projects/code/scripts/bin"
+  $path
+  "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
+  "$HOME/.lmstudio/bin"
+)
+typeset -U path
+
+# Extra environments (sourced only when present)
+[[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
+[[ -f "$HOME/.vite-plus/env" ]] && source "$HOME/.vite-plus/env" # https://viteplus.dev

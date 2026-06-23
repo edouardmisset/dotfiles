@@ -113,12 +113,6 @@ brew "yazi"
 brew "zoxide"
 # UNIX shell (command interpreter)
 brew "zsh"
-# Fish-like fast/unobtrusive autosuggestions for zsh
-brew "zsh-autosuggestions"
-# Additional completion definitions for zsh
-brew "zsh-completions"
-# Fish shell like syntax highlighting for zsh
-brew "zsh-syntax-highlighting"
 # Coding agent with the IDE wired in
 brew "can1357/tap/omp", trusted: true
 # Utility to add Dynamic Island like features to notch area

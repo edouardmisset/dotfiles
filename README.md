@@ -10,7 +10,7 @@ Keeping track of dot files for easy computer configuration
 xcode-select --install
 ```
 
-2. Clone repo into new hidden directory.
+1. Clone repo into new hidden directory.
 
 ```zsh
 # Use SSH (if set up)...
@@ -20,13 +20,41 @@ git clone git@github.com:edouardmisset/dotfiles.git ~/.dotfiles
 git clone https://github.com/edouardmisset/dotfiles.git ~/.dotfiles
 ```
 
-3. Create symlinks, install brew and other packages & software using the
+1. Create symlinks, install Homebrew, packages and other software with the
    `install` script.
 
 ```zsh
-~/.dotfiles/install
 cd ~/.dotfiles && ./install
 ```
+
+The `install` script is plain `zsh` with no third-party dependencies. It is
+**idempotent** — safe to run as many times as you like; it only changes what is
+out of date.
+
+## How `install` works
+
+Running `./install`:
+
+1. **Cleans** broken symlinks it manages.
+2. **Links** every entry in [`links.conf`](links.conf) into place
+   (`source target [force]`, one per line). Parent directories are created as
+   needed; an existing real file/directory is left untouched unless the line is
+   marked `force`.
+3. **Creates** required directories (e.g. `~/Projects`).
+4. **Runs** the setup scripts: `setup_homebrew.zsh` (installs Homebrew and runs
+   `brew bundle` against the [`Brewfile`](Brewfile)), `setup_zsh.zsh` (makes the
+   Homebrew `zsh` the default shell) and `setup_node.zsh`.
+
+To add a new symlink, add a line to [`links.conf`](links.conf) and re-run
+`./install`.
+
+### Shell layout
+
+- [`zshenv`](zshenv) — environment variables and `PATH` (sourced by every shell).
+- [`zshrc`](zshrc) — interactive setup: zinit plugins (turbo-loaded), completion,
+  history, Starship prompt.
+- [`zsh/aliases.zsh`](zsh/aliases.zsh) — all aliases, sourced from `zshrc`.
+- [`zsh/functions/autoload`](zsh/functions/autoload) — autoloaded shell functions.
 
 ## TODO List
 

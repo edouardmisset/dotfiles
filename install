@@ -1,15 +1,88 @@
-#!/usr/bin/env bash
+#!/usr/bin/env zsh
+# Idempotent dotfiles installer — no third-party tools.
+#   1. removes broken symlinks it manages
+#   2. creates the symlinks listed in links.conf
+#   3. creates required directories
+#   4. runs the setup scripts (Homebrew, zsh, Node)
+# Safe to run repeatedly.
 
 set -e
 
-CONFIG="install.conf.yaml"
-DOTBOT_DIR="dotbot"
+ROOT="${0:A:h}"
+cd "$ROOT"
 
-DOTBOT_BIN="bin/dotbot"
-BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+LINKS_FILE="$ROOT/links.conf"
 
-cd "${BASEDIR}"
-git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
-git submodule update --init --recursive "${DOTBOT_DIR}"
+info() { print -P "%F{33}::%f $*"; }
+ok()   { print -P "%F{34}✓%f $*"; }
+warn() { print -P "%F{220}!%f $*" >&2; }
 
-"${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+# Expand a leading ~ to $HOME.
+expand() { print -r -- "${1/#\~/$HOME}"; }
+
+link_one() {
+  local rel="$1" force="$3" src target
+  src="$ROOT/$rel"
+  target="$(expand "$2")"
+
+  if [[ ! -e "$src" ]]; then
+    warn "source missing, skipping: $rel"
+    return
+  fi
+
+  # Already pointing where we want — nothing to do.
+  if [[ -L "$target" && "$(readlink "$target")" == "$src" ]]; then
+    ok "$target"
+    return
+  fi
+
+  mkdir -p "${target:h}"
+
+  if [[ -e "$target" && ! -L "$target" ]]; then
+    if [[ "$force" == "force" ]]; then
+      warn "replacing existing $target (force)"
+      rm -rf "$target"
+    else
+      warn "exists and is not a symlink, skipping: $target"
+      return
+    fi
+  fi
+
+  ln -sfn "$src" "$target"
+  ok "$target -> $src"
+}
+
+# Read the manifest, ignoring blank lines and comments.
+read_manifest() {
+  local src tgt force
+  while read -r src tgt force; do
+    [[ -z "$src" || "$src" == \#* ]] && continue
+    "$1" "$src" "$tgt" "$force"
+  done < "$LINKS_FILE"
+}
+
+clean_broken() {
+  local rel="$1" target
+  target="$(expand "$2")"
+  if [[ -L "$target" && ! -e "$target" ]]; then
+    warn "removing broken symlink: $target"
+    rm -f "$target"
+  fi
+}
+
+info "Cleaning broken symlinks"
+read_manifest clean_broken
+
+info "Linking dotfiles"
+read_manifest link_one
+
+info "Creating directories"
+mkdir -p "$HOME/Projects"
+ok "$HOME/Projects"
+
+info "Running setup scripts"
+zsh ./setup_homebrew.zsh
+zsh ./setup_zsh.zsh
+zsh ./setup_node.zsh
+
+ok "Done."

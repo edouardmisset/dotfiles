@@ -5,5 +5,5 @@ list_deno_tasks() {
     echo "Error: deno is not installed" >&2
     return 1
   fi
-  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks.tasks).join('\t'))" | deno run --allow-read -
+  echo "import tasks from './deno.json' with { type: 'json' };console.log(Object.keys(tasks?.tasks ?? {}).join('\t'))" | deno run --allow-read -
 }

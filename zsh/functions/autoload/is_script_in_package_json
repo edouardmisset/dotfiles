@@ -1,10 +1,16 @@
 #!/usr/bin/env zsh
 # Check if script exists in package.json
 is_script_in_package_json() {
-  node -e "try {
-    const pkg = require('./package.json');
-    console.log(pkg.scripts && pkg.scripts['$1'] ? 'true' : 'false');
+  node -e 'try {
+    const script = process.argv[1];
+    const pkg = require("./package.json");
+    console.log(
+      pkg.scripts && Object.prototype.hasOwnProperty.call(pkg.scripts, script)
+        ? "true"
+        : "false"
+    );
   } catch (error) {
-    throw new Error('Failed to read package.json: ' + error.message);
-  }"
+    console.error("Failed to read package.json: " + error.message);
+    process.exit(1);
+  }' -- "$1"
 }

@@ -74,6 +74,9 @@ alias gpf="git push --force-with-lease"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
+# Work in progress commit (add all changes, including deletions, and commit with a skip-ci message)
+alias gwip="git add -A; git rm \$(git ls-files --deleted) 2> /dev/null; git commit --no-verify --no-gpg-sign --message \"--wip-- [skip ci]\""
+alias gunwip="git log -n 1 | grep -q -c \"\\-\\-wip\\-\\-\" && git reset HEAD~1"
 
 # Log
 alias glast="git log -1 --pretty=\"$_git_log_pretty\""
@@ -90,7 +93,7 @@ function glolsm() { git log "$(get_default_branch)..HEAD" --stat  --pretty="$_gi
 alias glolm="glm"
 
 # ── Homebrew ──────────────────────────────────────────────────────────────
-alias bbd="brew bundle dump --force --describe --file='~/.dotfiles/Brewfile'"
+alias bbd="brew bundle dump --force --describe --file=\"\$HOME/.dotfiles/Brewfile\""
 alias bubu="brew update && brew upgrade"
 
 # ── pnpm ──────────────────────────────────────────────────────────────────

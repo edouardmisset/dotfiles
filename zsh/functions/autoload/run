@@ -16,7 +16,7 @@ run() {
   fi
 
   if [[ -f package.json ]]; then
-    IS_SCRIPT=$(is_script_in_package_json "$SCRIPT")
+    IS_SCRIPT=$(is_script_in_package_json "$SCRIPT") || return $?
     if [[ "$IS_SCRIPT" == "false" ]]; then
       echo "Error: Script '$SCRIPT' not found in package.json 🚫" >&2
       echo "Available scripts:" >&2
@@ -50,7 +50,7 @@ run() {
       return $?
     fi
   elif [[ -f deno.json ]]; then
-    IS_SCRIPT=$(is_script_in_deno_json "$SCRIPT")
+    IS_SCRIPT=$(is_script_in_deno_json "$SCRIPT") || return $?
     if [[ "$IS_SCRIPT" == "false" ]]; then
       echo "Error: Task '$SCRIPT' not found in deno.json 🚫" >&2
       echo "Available tasks:" >&2

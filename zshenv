@@ -16,10 +16,6 @@ fi
 export BUN_INSTALL="$HOME/.bun"
 export PNPM_HOME="$HOME/.local/share/pnpm"
 
-# Behaviour
-export HOMEBREW_CASK_OPTS="--no-quarantine" # skip Gatekeeper quarantine for casks
-export NULLCMD=bat                           # default viewer for `< file`
-
 # PATH (custom dirs first, system PATH in the middle, app bins last).
 # `typeset -U path` keeps PATH de-duplicated and idempotent across re-sourcing.
 path=(

@@ -3,10 +3,20 @@
 echo "\n<<<Starting ZSH Setup >>>\n"
 
 # Resolve the Homebrew zsh path (works on both Apple Silicon and Intel).
-if exists brew; then
+if command -v brew >/dev/null 2>&1; then
   BREW_ZSH="$(brew --prefix)/bin/zsh"
-else
+elif [[ -x /opt/homebrew/bin/zsh ]]; then
+  BREW_ZSH="/opt/homebrew/bin/zsh"
+elif [[ -x /usr/local/bin/zsh ]]; then
   BREW_ZSH="/usr/local/bin/zsh"
+else
+  echo "Homebrew zsh not found. Install zsh first (e.g. brew install zsh)." >&2
+  exit 1
+fi
+
+if [[ ! -x "$BREW_ZSH" ]]; then
+  echo "Resolved zsh is not executable: $BREW_ZSH" >&2
+  exit 1
 fi
 
 if grep -Fxq "$BREW_ZSH" '/etc/shells'; then

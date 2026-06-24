@@ -24,11 +24,11 @@ zstyle ':completion:*:git-checkout:*' sort false        # keep git checkout orde
 zstyle ':completion:*:descriptions' format '[%d]'       # NOTE: no color escapes (fzf-tab ignores them)
 # fzf-tab directory previews: prefer eza, fall back to ls
 if command -v eza >/dev/null 2>&1; then
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always $realpath'
-  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always $realpath'
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'eza -1 --color=always ${(Q)realpath}'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'eza -1 --color=always ${(Q)realpath}'
 else
-  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -G $realpath'
-  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls -G $realpath'
+  zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls -G ${(Q)realpath}'
+  zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls -G ${(Q)realpath}'
 fi
 
 # ── Plugins (deferred via turbo mode for faster startup) ──────────────────
@@ -44,8 +44,8 @@ zinit wait lucid for \
   zsh-users/zsh-syntax-highlighting
 
 # ── Shell integrations ────────────────────────────────────────────────────
-eval "$(zoxide init zsh)"
-eval "$(fzf --zsh)"
+command -v zoxide >/dev/null 2>&1 && eval "$(zoxide init zsh)"
+command -v fzf >/dev/null 2>&1 && eval "$(fzf --zsh)"
 
 # ── Keybindings ───────────────────────────────────────────────────────────
 # Alt+Left / Alt+Right move by word (VS Code & common terminals)
@@ -60,8 +60,11 @@ HISTDUP=erase
 setopt appendhistory sharehistory hist_ignore_space
 setopt hist_ignore_dups hist_ignore_all_dups hist_save_no_dups hist_find_no_dups
 
+# ── Behaviour ─────────────────────────────────────────────────────────────
+export NULLCMD=bat                           # default viewer for `< file`
+
 # ── Prompt ────────────────────────────────────────────────────────────────
 eval "$(starship init zsh)"
 
 # ── Aliases ───────────────────────────────────────────────────────────────
-source "$HOME/.dotfiles/zsh/aliases.zsh"
+[[ -f "$HOME/.dotfiles/zsh/aliases.zsh" ]] && source "$HOME/.dotfiles/zsh/aliases.zsh"

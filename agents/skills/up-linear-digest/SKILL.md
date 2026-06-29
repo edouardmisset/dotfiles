@@ -1,5 +1,5 @@
 ---
-name: linear-digest
+name: up-linear-digest
 description: "Generates a Linear sprint digest for the current user's squad and sprint, including issue counts, point totals, sprint completion, and sprint time remaining. Use when: linear digest, sprint digest, squad progress, current sprint status."
 argument-hint: "Optional squad name, cycle name, or date context when the target squad or sprint is ambiguous"
 ---

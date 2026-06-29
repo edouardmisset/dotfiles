@@ -73,6 +73,7 @@ alias update="brew update && brew upgrade && tldr --update && mas upgrade && sys
 alias system_update="sudo softwareupdate --install --all --verbose"
 alias python="python3"
 alias vsc="code ."
+alias upcode="cd ~/Documents/code/upfluence && opencode"
 
 # ZSH
 alias zshrc="code ~/.dotfiles && code ~/.zshrc"

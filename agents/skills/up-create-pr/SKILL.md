@@ -1,5 +1,5 @@
 ---
-name: linear-create-pr
+name: up-create-pr
 description: "Create a GitHub PR for a Linear issue branch using the repo's PR template, with Linear issue linking and user review. Use when: opening a PR for a Linear ticket, creating a pull request for Linear, submitting Linear work for review."
 argument-hint: "Linear issue identifier (e.g., DRA-1234)"
 ---

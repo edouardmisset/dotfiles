@@ -20,7 +20,7 @@ argument-hint: "Package manifest file path (optional, auto-detected from project
 
 Locate dependency files:
 
-- `package.json` / `package-lock.json` / `yarn.lock` / `pnpm-lock.yaml` (Node.js)
+- `package.json` / `package-lock.json` / `yarn.lock` / `pnpm-lock.yaml` / `bun.lock` / `deno.json` (JavaScript/TypeScript)
 - `Gemfile` / `Gemfile.lock` (Ruby)
 - `requirements.txt` / `pyproject.toml` / `Pipfile` (Python)
 - `go.mod` (Go)

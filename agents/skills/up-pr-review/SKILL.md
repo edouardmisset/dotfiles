@@ -1,5 +1,5 @@
 ---
-name: pr-review
+name: up-pr-review
 description: "Review a pull request for code quality, bugs, security, and logic errors. Use when: reviewing a PR, code review, reviewing changes, analyzing diffs, giving feedback on code."
 argument-hint: "PR number or URL (optional, defaults to active PR)"
 ---

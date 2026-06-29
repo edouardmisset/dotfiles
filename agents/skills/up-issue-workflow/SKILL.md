@@ -1,5 +1,5 @@
 ---
-name: linear-issue-workflow
+name: up-issue-workflow
 description: "End-to-end workflow to fix a Linear issue: analyze, branch, implement, test, commit, push, and open a PR. Use when: fixing a Linear ticket, working on a Linear issue, implementing a DRA/ENG ticket, creating a branch for Linear, opening a PR for an issue."
 argument-hint: "Linear issue identifier (e.g., DRA-5005)"
 ---

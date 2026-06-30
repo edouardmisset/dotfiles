@@ -1,0 +1,15 @@
+#!/usr/bin/env zsh
+# Kill process listening on a specific port
+killport() {
+  if (( $# == 0 )); then
+    echo "Usage: killport <port>" >&2
+    return 1
+  fi
+  local pids
+  pids=$(lsof -t -i:"$1" 2>/dev/null)
+  if [[ -z "$pids" ]]; then
+    echo "No process found on port $1" >&2
+    return 1
+  fi
+  kill -9 $pids
+}

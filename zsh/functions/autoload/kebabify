@@ -1,0 +1,18 @@
+#!/usr/bin/env zsh
+# Rename files from PascalCase or snake_case to kebab-case
+kebabify() {
+  if (( $# == 0 )); then
+    echo "Usage: kebabify <file1> [file2...]" >&2
+    return 1
+  fi
+
+  local file new_name
+  for file in "$@"; do
+    if [[ ! -e "$file" ]]; then
+      echo "Skipping: '$file' not found" >&2
+      continue
+    fi
+    new_name=$(printf '%s\n' "$file" | sed -E 's/([a-z0-9])([A-Z])/\1-\2/g; s/_/-/g' | tr '[:upper:]' '[:lower:]')
+    mv -n -- "$file" "$new_name" && echo "Renamed: $file -> $new_name"
+  done
+}

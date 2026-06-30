@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+# Change directory and list contents
+cl() {
+  local DIR="$*"
+  # if no DIR given, go home
+  if (( $# < 1 )); then
+    DIR=$HOME
+  fi
+  builtin cd "${DIR}" && ls
+}

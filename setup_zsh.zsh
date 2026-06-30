@@ -2,18 +2,35 @@
 
 echo "\n<<<Starting ZSH Setup >>>\n"
 
-if grep -Fxq '/usr/local/bin/zsh' '/etc/shells'; then
-  echo '/usr/local/bin/zsh already exists in /etc/shells'
+# Resolve the Homebrew zsh path (works on both Apple Silicon and Intel).
+if command -v brew >/dev/null 2>&1; then
+  BREW_ZSH="$(brew --prefix)/bin/zsh"
+elif [[ -x /opt/homebrew/bin/zsh ]]; then
+  BREW_ZSH="/opt/homebrew/bin/zsh"
+elif [[ -x /usr/local/bin/zsh ]]; then
+  BREW_ZSH="/usr/local/bin/zsh"
 else
-  echo "Enter superuser (sudo) password to edit the acceptable shells in /etc/shells"
-  echo '/usr/local/bin/zsh' | sudo tee -a /etc/shells >/dev/null
+  echo "Homebrew zsh not found. Install zsh first (e.g. brew install zsh)." >&2
+  exit 1
 fi
 
-if [ "$SHELL" = '/usr/local/bin/zsh' ]; then
-  echo '$SHELL is already in /usr/local/bin/zsh'
+if [[ ! -x "$BREW_ZSH" ]]; then
+  echo "Resolved zsh is not executable: $BREW_ZSH" >&2
+  exit 1
+fi
+
+if grep -Fxq "$BREW_ZSH" '/etc/shells'; then
+  echo "$BREW_ZSH already exists in /etc/shells"
 else
-  echo "Enter user password to login change shell (from $SHELL to /usr/local/bin/zsh)"
-  chsh -s '/usr/local/bin/zsh'
+  echo "Enter superuser (sudo) password to edit the acceptable shells in /etc/shells"
+  echo "$BREW_ZSH" | sudo tee -a /etc/shells >/dev/null
+fi
+
+if [ "$SHELL" = "$BREW_ZSH" ]; then
+  echo "\$SHELL is already $BREW_ZSH"
+else
+  echo "Enter user password to login change shell (from $SHELL to $BREW_ZSH)"
+  chsh -s "$BREW_ZSH"
 fi
 
 if sh --version | grep -q zsh; then

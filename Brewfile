@@ -2,6 +2,7 @@ tap "anomalyco/tap"
 tap "can1357/tap"
 tap "libsql/sqld"
 tap "oven-sh/bun"
+tap "rtk-ai/tap"
 tap "xykong/tap"
 # Search tool like grep, but optimized for programmers
 brew "ack"
@@ -19,6 +20,8 @@ brew "btop"
 brew "bumblebee"
 # Dependency manager for Cocoa projects
 brew "cocoapods"
+# TIFF library and utilities
+brew "libtiff"
 # Secure runtime for JavaScript and TypeScript
 brew "deno"
 # More intuitive version of du in rust
@@ -43,10 +46,10 @@ brew "go"
 brew "hashcat"
 # Utils for conversion of cap/pcap/pcapng WiFi dump files
 brew "hcxtools"
+# Self-improving AI agent that creates skills from experience
+brew "hermes-agent"
 # Apache HTTP server
 brew "httpd"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.14"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Command-line benchmarking tool
@@ -57,10 +60,6 @@ brew "icu4c@76"
 brew "jq"
 # Pager program similar to more
 brew "less"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
-# Fast, flexible, config-based cli for linting Markdown/CommonMark files
-brew "markdownlint-cli2"
 # Mac App Store command-line interface
 brew "mas"
 # Matroska media files manipulation tools
@@ -71,6 +70,8 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
 # Create, run, and share large language models (LLMs)
 brew "ollama", restart_service: :changed
 # Search tool like grep and The Silver Searcher
@@ -109,6 +110,8 @@ brew "wget"
 brew "yazi"
 # Shell extension to navigate your filesystem faster
 brew "zoxide"
+# UNIX shell (command interpreter)
+brew "zsh"
 # Fish-like fast/unobtrusive autosuggestions for zsh
 brew "zsh-autosuggestions"
 # Additional completion definitions for zsh
@@ -117,6 +120,8 @@ brew "zsh-completions"
 brew "zsh-syntax-highlighting"
 # Coding agent with the IDE wired in
 brew "can1357/tap/omp", trusted: true
+# Rust Token Killer - High-performance CLI proxy to minimize LLM token consumption
+brew "rtk-ai/tap/rtk", trusted: true
 # Utility to add Dynamic Island like features to notch area
 cask "alcove"
 # Application launcher and productivity software
@@ -135,6 +140,10 @@ cask "brave-browser"
 cask "chatgpt"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
+# AI code review CLI
+cask "coderabbit"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Universal database tool and SQL client
 cask "dbeaver-community"
 # Voice and text chat software
@@ -188,14 +197,12 @@ cask "plex-media-server"
 cask "pycharm"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
-# Quick Look generator for Markdown files
-cask "qlmarkdown"
 # Quick Look plugin for plaintext files without an extension
 cask "qlstephen"
+# Quick Look plugin to pretty-print JSON
+cask "quickjson"
 # Quick Look plugin for CSV files
 cask "quicklook-csv"
-# Quick Look plugin for JSON files
-cask "quickjson"
 # Thumbnails, static previews, cover art and metadata for video files
 cask "quicklook-video"
 # Team communication and collaboration software
@@ -236,13 +243,11 @@ mas "PrettyJSON for Safari", id: 1445328303
 mas "Reeder", id: 880001334
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
-mas "WhatsApp", id: 310633997
 mas "Xcode", id: 497799835
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
-vscode "bierner.markdown-mermaid"
 vscode "bradgashler.htmltagwrap"
 vscode "bradlc.vscode-tailwindcss"
 vscode "catppuccin.catppuccin-vsc"
@@ -251,20 +256,15 @@ vscode "chakrounanas.turbo-console-log"
 vscode "christian-kohler.npm-intellisense"
 vscode "christian-kohler.path-intellisense"
 vscode "clinyong.vscode-css-modules"
-vscode "codacy-app.codacy"
 vscode "coderabbit.coderabbit-vscode"
-vscode "cosminalco.pomodoro"
-vscode "ctcuff.font-preview"
 vscode "davidanson.vscode-markdownlint"
 vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
-vscode "donjayamanne.githistory"
 vscode "dotiful.dotfiles-syntax-highlighting"
 vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
+vscode "fallow-rs.fallow-vscode"
 vscode "foxundermoon.shell-format"
-vscode "github.codespaces"
-vscode "github.vscode-github-actions"
 vscode "github.vscode-pull-request-github"
 vscode "hideoo.starlight-links"
 vscode "ibm.output-colorizer"
@@ -283,6 +283,7 @@ vscode "ms-vscode-remote.remote-ssh-edit"
 vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
+vscode "ollama.ollama"
 vscode "oven.bun-vscode"
 vscode "oxc.oxc-vscode"
 vscode "p42ai.refactor"
@@ -307,4 +308,4 @@ vscode "wix.vscode-import-cost"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
-npm "corepack"
+npm "ember-cli"

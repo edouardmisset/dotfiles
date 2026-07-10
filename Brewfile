@@ -101,6 +101,8 @@ brew "tree"
 brew "typescript"
 # Command-line interface for Vercel
 brew "vercel-cli"
+# Unified toolchain and entry point for web development
+brew "vite-plus"
 # Internet file retriever
 brew "wget"
 # Blazing fast terminal file manager written in Rust, based on async I/O
@@ -193,7 +195,7 @@ cask "qlstephen"
 # Quick Look plugin for CSV files
 cask "quicklook-csv"
 # Quick Look plugin for JSON files
-cask "quicklook-json"
+cask "quickjson"
 # Thumbnails, static previews, cover art and metadata for video files
 cask "quicklook-video"
 # Team communication and collaboration software

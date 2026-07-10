@@ -17,6 +17,8 @@ info() { print -P "%F{33}::%f $*"; }
 ok()   { print -P "%F{34}✓%f $*"; }
 warn() { print -P "%F{220}!%f $*" >&2; }
 
+[[ -r "$LINKS_FILE" ]] || { warn "manifest not readable: $LINKS_FILE"; exit 1; }
+
 # Expand a leading ~ to $HOME.
 expand() { print -r -- "${1/#\~/$HOME}"; }
 
@@ -40,6 +42,10 @@ link_one() {
 
   if [[ -e "$target" && ! -L "$target" ]]; then
     if [[ "$force" == "force" ]]; then
+      if [[ -z "$target" || "$target" == "/" || "$target" == "$HOME" || "$target" != "$HOME/"* ]]; then
+        warn "refusing to force-replace unsafe target: $target"
+        return
+      fi
       warn "replacing existing $target (force)"
       rm -rf "$target"
     else
@@ -54,9 +60,21 @@ link_one() {
 
 # Read the manifest, ignoring blank lines and comments.
 read_manifest() {
-  local src tgt force
-  while read -r src tgt force; do
+  local src tgt force extra
+  while read -r src tgt force extra; do
     [[ -z "$src" || "$src" == \#* ]] && continue
+    if [[ -z "$tgt" ]]; then
+      warn "invalid manifest row, missing target: $src"
+      continue
+    fi
+    if [[ -n "$force" && "$force" != "force" ]]; then
+      warn "invalid manifest flag for $src: $force"
+      continue
+    fi
+    if [[ -n "$extra" ]]; then
+      warn "invalid manifest row, too many fields: $src $tgt $force $extra"
+      continue
+    fi
     "$1" "$src" "$tgt" "$force"
   done < "$LINKS_FILE"
 }

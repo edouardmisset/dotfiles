@@ -13,9 +13,8 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Lazy-loaded on first use from ~/.dotfiles/zsh/functions/autoload.
 fpath=("$HOME/.dotfiles/zsh/functions/autoload" $fpath)
 autoload -Uz \
-  gmove killport mkcd cl kebabify run \
-  list_deno_tasks is_script_in_deno_json \
-  is_script_in_package_json list_scripts_in_package_json get_package_manager
+  gmove killport mkcd cl kebabify run install \
+  list_deno_tasks is_script_in_deno_json
 
 if command -v brew >/dev/null 2>&1; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" "$(brew --prefix)/share/zsh-completions" $fpath)

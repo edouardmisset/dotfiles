@@ -24,6 +24,7 @@ alias lst="eza -lF --git --tree --icons --level=2"
 alias trail="<<<${(F)path}"
 alias python="python3"
 alias vsc="code ."
+alias oc="opencode"
 # Update all package managers and system software
 alias update="brew update && brew upgrade && tldr --update && mas upgrade && system_update"
 alias system_update="sudo softwareupdate --install --all --verbose"
@@ -143,3 +144,6 @@ alias dtc="deno task check" # e.g. "deno lint && deno fmt && deno test --reporte
 alias dtd="deno task dev"   # e.g. "deno lint --watch & deno fmt --watch & deno run ... --watch ./entry.ts"
 alias dtdoc="deno task docs" # e.g. "deno doc --html --name='my-app' ./entry.ts"
 alias dtl="deno task cache" # e.g. "deno cache --lock=deno.lock --lock-write ./entry.ts"
+
+# --- Vite --------------------------------------------------------------------
+alias vrun="vp run"

@@ -2,8 +2,8 @@
 
 echo "\n<<<Starting Node Setup >>>\n"
 
-if exists node; then
-  echo "Node $(node --version) & npm $(npm --version) already are installed"
+if command -v node >/dev/null 2>&1; then
+  echo "Node is installed: $(node --version) & npm $(npm --version) already are installed"
 else
   echo "Installing Node"
   n latest

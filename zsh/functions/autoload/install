@@ -1,0 +1,25 @@
+#!/usr/bin/env zsh
+# Install deps: deno for Deno projects, vite plus (vp) otherwise.
+# vp install already detects and delegates to the right package manager (pnpm/npm/yarn/bun).
+install() {
+  if [[ -f deno.json ]]; then
+    if ! command -v deno &> /dev/null; then
+      echo "Error: deno is not installed" >&2
+      return 1
+    fi
+    deno install "$@"
+    return $?
+  fi
+
+  if [[ ! -f package.json ]]; then
+    echo "Error: No package.json or deno.json found" >&2
+    return 1
+  fi
+
+  if ! command -v vp &> /dev/null; then
+    echo "Error: vp (Vite+) is not installed. Run './install' or 'brew install vite-plus'." >&2
+    return 1
+  fi
+
+  vp install "$@"
+}

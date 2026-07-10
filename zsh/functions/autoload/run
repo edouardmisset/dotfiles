@@ -1,55 +1,22 @@
 #!/usr/bin/env zsh
-# Run npm/yarn/pnpm/deno scripts with automatic detection
+# Run scripts: deno task for Deno projects, vite plus (vp run) otherwise.
+# vp run already detects the package manager and executes package.json scripts and cache its results.
+# Called with no script name, it lists the available scripts/tasks instead.
 run() {
-  local SCRIPT="$1" IS_SCRIPT PACKAGE_MANAGER
-  
-  # Validate required argument
-  if [[ -z "$SCRIPT" ]]; then
-    echo "Error: run requires a script name" >&2
-    echo "Usage: run <script-name> [args...]" >&2
-    return 1
-  fi
-  
-  if [[ ! -f package.json && ! -f deno.json ]]; then
-    echo "Error: No package.json or deno.json found" >&2
-    return 1
-  fi
+  local SCRIPT="$1" IS_SCRIPT
 
-  if [[ -f package.json ]]; then
-    IS_SCRIPT=$(is_script_in_package_json "$SCRIPT") || return $?
-    if [[ "$IS_SCRIPT" == "false" ]]; then
-      echo "Error: Script '$SCRIPT' not found in package.json 🚫" >&2
-      echo "Available scripts:" >&2
-      list_scripts_in_package_json >&2
-      PACKAGE_MANAGER=$(get_package_manager)
-      echo "Package manager in use: $PACKAGE_MANAGER 🚀" >&2
+  if [[ -f deno.json ]]; then
+    if ! command -v deno &> /dev/null; then
+      echo "Error: deno is not installed" >&2
       return 1
     fi
 
-    PACKAGE_MANAGER=$(get_package_manager)
-    if [[ "$PACKAGE_MANAGER" == "unknown" ]]; then
-      echo "No package manager lock file found. Trying to install packages..." >&2
-      if command -v bun &> /dev/null; then
-        bun install && bun run "$@"
-        return $?
-      elif command -v pnpm &> /dev/null; then
-        pnpm install && pnpm run "$@"
-        return $?
-      elif command -v npm &> /dev/null; then
-        npm install && npm run "$@"
-        return $?
-      elif command -v yarn &> /dev/null; then
-        yarn install && yarn run "$@"
-        return $?
-      else
-        echo "Error: No package manager found 🚫" >&2
-        return 1
-      fi
-    else
-      "$PACKAGE_MANAGER" run "$@"
+    if [[ -z "$SCRIPT" ]]; then
+      echo "Available tasks:" >&2
+      list_deno_tasks
       return $?
     fi
-  elif [[ -f deno.json ]]; then
+
     IS_SCRIPT=$(is_script_in_deno_json "$SCRIPT") || return $?
     if [[ "$IS_SCRIPT" == "false" ]]; then
       echo "Error: Task '$SCRIPT' not found in deno.json 🚫" >&2
@@ -60,4 +27,19 @@ run() {
     deno task "$@"
     return $?
   fi
+
+  if [[ ! -f package.json ]]; then
+    echo "Error: No package.json or deno.json found" >&2
+    return 1
+  fi
+
+  if ! command -v vp &> /dev/null; then
+    echo "Error: vp (Vite+) is not installed. Run './install' or 'brew install vite-plus'." >&2
+    return 1
+  fi
+
+  # With no script name, `vp run` opens its interactive task picker.
+  vp run --cache "$@"
 }
+
+

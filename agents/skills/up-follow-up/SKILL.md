@@ -1,5 +1,5 @@
 ---
-name: follow-up
+name: up-follow-up
 description: "Daily follow-up for an Upfluence frontend developer: scans Linear issues assigned to me by status (In Progress, In Review, Ready for RC) and the matching open GitHub PRs in the upfluence org, surfacing unread comments, stale review threads, missing/outdated test links, failing CI, and merge-ready tickets. Use when: doing daily follow-up, checking my sprint progress, preparing for standup, reviewing my open PRs, checking test link freshness, finding mergeable Ready for RC tickets."
 ---
 

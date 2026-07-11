@@ -64,12 +64,19 @@ alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
 
+# Commit
+alias gca="git commit --amend --no-edit"
+alias gmsg="git commit --message"
+alias gaa="git add -A"
+
 # Pull / sync
+alias gl="git pull"
 alias gla="git pull --all && git fetch --all"
 alias gmu="git switch main && git pull --all && git fetch --all"
 alias gmm="git merge main"
 
 # Push / tag
+alias gp="git push"
 alias gpo="git push --set-upstream origin \$(git branch --show-current)"
 alias gpf="git push --force-with-lease"
 alias gt="git tag"

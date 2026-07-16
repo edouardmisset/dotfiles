@@ -100,8 +100,6 @@ brew "trash-cli", link: true
 brew "tree"
 # Language for application scale JavaScript development
 brew "typescript"
-# Command-line interface for Vercel
-brew "vercel-cli"
 # Unified toolchain and entry point for web development
 brew "vite-plus"
 # Internet file retriever
@@ -126,8 +124,6 @@ brew "rtk-ai/tap/rtk", trusted: true
 cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
-# Distribution of the Python and R programming languages for scientific computing
-cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
@@ -144,8 +140,6 @@ cask "cleanmymac"
 cask "coderabbit"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
-# Universal database tool and SQL client
-cask "dbeaver-community"
 # Voice and text chat software
 cask "discord"
 # Window peeking utility app
@@ -171,8 +165,6 @@ cask "font-petit-formal-script"
 cask "ghostty"
 # Web browser
 cask "google-chrome"
-# Client for the Google Drive storage service
-cask "google-drive"
 # Open-source video transcoder
 cask "handbrake-app"
 # Free and open-source media player
@@ -219,8 +211,6 @@ cask "transmission"
 cask "visual-studio-code"
 # Native desktop client for WhatsApp
 cask "whatsapp"
-# Multiplayer code editor
-cask "zed"
 mas "Actions", id: 1586435171
 mas "Amazing AI", id: 1660147028
 mas "Amphetamine", id: 937984704

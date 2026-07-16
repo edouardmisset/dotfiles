@@ -30,5 +30,15 @@
     }
   },
   "model": "omlx/gemma-4-12B-it-4bit",
+  "agent": {
+    "build": {
+      "model": "openai/gpt-5.6-sol",
+      "variant": "low"
+    },
+    "plan": {
+      "model": "openai/gpt-5.6-sol",
+      "variant": "low"
+    }
+  },
   "lsp": true
 }

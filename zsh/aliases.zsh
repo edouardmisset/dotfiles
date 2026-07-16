@@ -100,6 +100,10 @@ function glm()    { git log "$(get_default_branch)..HEAD" --graph --pretty="$_gi
 function glolsm() { git log "$(get_default_branch)..HEAD" --stat  --pretty="$_git_log_pretty" }
 alias glolm="glm"
 
+# Status
+alias gs="git status"
+alias gss="git status --short"
+
 # ── Homebrew ──────────────────────────────────────────────────────────────
 alias bbd="brew bundle dump --force --describe --file=\"\$HOME/.dotfiles/Brewfile\""
 alias bubu="brew update && brew upgrade"

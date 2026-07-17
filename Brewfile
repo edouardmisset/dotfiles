@@ -3,7 +3,7 @@ tap "can1357/tap"
 tap "libsql/sqld"
 tap "oven-sh/bun"
 tap "rtk-ai/tap"
-tap "xykong/tap"
+tap "xykong/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"
 # Next-generation aircrack with lots of new features
@@ -30,6 +30,8 @@ brew "dust"
 brew "entr"
 # Modern, maintained replacement for ls
 brew "eza"
+# Codebase intelligence for TypeScript and JavaScript
+brew "fallow"
 # Simple, fast and user-friendly alternative to find
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
@@ -116,14 +118,14 @@ brew "zsh-autosuggestions"
 brew "zsh-completions"
 # Fish shell like syntax highlighting for zsh
 brew "zsh-syntax-highlighting"
-# Coding agent with the IDE wired in
-brew "can1357/tap/omp", trusted: true
 # Rust Token Killer - High-performance CLI proxy to minimize LLM token consumption
 brew "rtk-ai/tap/rtk", trusted: true
 # Utility to add Dynamic Island like features to notch area
 cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
+# Distribution of the Python and R programming languages for scientific computing
+cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
@@ -140,6 +142,8 @@ cask "cleanmymac"
 cask "coderabbit"
 # OpenAI's coding agent that runs in your terminal
 cask "codex"
+# Universal database tool and SQL client
+cask "dbeaver-community"
 # Voice and text chat software
 cask "discord"
 # Window peeking utility app
@@ -151,7 +155,7 @@ cask "downie"
 # Web browser
 cask "firefox"
 # Markdown previews in Finder QuickLook with diagrams and math
-cask "xykong/tap/flux-markdown"
+cask "xykong/tap/flux-markdown", trusted: true
 cask "font-atkinson-hyperlegible"
 cask "font-atkinson-hyperlegible-mono"
 cask "font-atkinson-hyperlegible-next"
@@ -165,6 +169,8 @@ cask "font-petit-formal-script"
 cask "ghostty"
 # Web browser
 cask "google-chrome"
+# Client for the Google Drive storage service
+cask "google-drive"
 # Open-source video transcoder
 cask "handbrake-app"
 # Free and open-source media player
@@ -234,6 +240,7 @@ mas "Reeder", id: 880001334
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
 mas "Xcode", id: 497799835
+mas "Zush", id: 6758432449
 vscode "1000ch.svgo"
 vscode "aaron-bond.better-comments"
 vscode "andrejunges.handlebars"

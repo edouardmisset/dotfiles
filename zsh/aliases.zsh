@@ -56,6 +56,7 @@ alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:
 alias gclean="git remote prune origin && git switch main && git branch --merged | grep -Ev '(^\*|master|main|dev)' | xargs git branch -d"
 
 # Checkout shortcuts
+alias gco="git checkout"
 alias gco-="git checkout -"
 alias gco--="git checkout @{-2}"
 alias gco---="git checkout @{-3}"
@@ -63,6 +64,7 @@ alias gco-2="gco--"
 alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout main"
+alias gcb="git checkout -b"
 
 # Commit
 alias gca="git commit --amend --no-edit"

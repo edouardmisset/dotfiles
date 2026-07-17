@@ -11,6 +11,8 @@ function exists() {
 if [[ -f "/opt/homebrew/bin/brew" ]]; then
   eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
+# Disable gatekeeper for Homebrew
+export HOMEBREW_CASK_OPTS="--no-quarantine"
 
 # Tool homes
 export BUN_INSTALL="$HOME/.bun"

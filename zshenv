@@ -33,3 +33,7 @@ typeset -U path
 # Extra environments (sourced only when present)
 [[ -f "$HOME/.cargo/env" ]] && source "$HOME/.cargo/env"
 [[ -f "$HOME/.vite-plus/env" ]] && source "$HOME/.vite-plus/env" # https://viteplus.dev
+
+# Secrets (gitignored, not tracked). Kept out of zshrc so scripts/non-interactive
+# shells also get the tokens.
+[[ -f "$HOME/.dotfiles/tokens" ]] && source "$HOME/.dotfiles/tokens"

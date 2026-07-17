@@ -3,3 +3,4 @@ config/gh
 config/configstore/update-notifier-@docusaurus
 config/yarn/global
 DS_Store
+tokens

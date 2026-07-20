@@ -108,7 +108,7 @@ alias gst="git status"
 alias gsts="git status --short"
 
 # ── Homebrew ──────────────────────────────────────────────────────────────
-alias bbd="brew bundle dump --force --describe --file=\"\$HOME/.dotfiles/Brewfile\""
+alias bbd="brew bundle dump --force --file=\"\$HOME/.dotfiles/Brewfile\""
 alias bubu="brew update && brew upgrade"
 
 # ── pnpm ──────────────────────────────────────────────────────────────────

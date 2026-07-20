@@ -65,6 +65,7 @@ alias gco-3="gco---"
 alias gcod="git checkout dev"
 alias gcom="git checkout \$(get_default_branch)"
 alias gcb="git checkout -b"
+alias gcos="git checkout staging"
 
 # Commit
 alias gca="git commit --amend --no-edit"

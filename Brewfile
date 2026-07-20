@@ -238,7 +238,6 @@ mas "One Thing", id: 1604176982
 mas "Pages", id: 409201541
 mas "Pandan", id: 1569600264
 mas "PrettyJSON for Safari", id: 1445328303
-mas "Reeder", id: 880001334
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
 mas "Xcode", id: 497799835

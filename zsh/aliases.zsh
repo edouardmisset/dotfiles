@@ -52,8 +52,8 @@ alias gca="git commit --amend --no-edit"
 alias gdel="git branch -D"
 # Branch list with subject, relative date and author, newest first
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
-# Prune remotes, switch to main and delete merged local branches
-alias gclean="git remote prune origin && git switch main && git branch --merged | grep -Ev '(^\*|master|main|dev)' | xargs git branch -d"
+# Prune remotes, switch to default branch and delete merged local branches
+alias gclean="git remote prune origin && git switch \$(get_default_branch) && git branch --merged | grep -Ev '(^\*|master|main|dev|staging)' | xargs git branch -d"
 
 # Checkout shortcuts
 alias gco="git checkout"
@@ -63,7 +63,7 @@ alias gco---="git checkout @{-3}"
 alias gco-2="gco--"
 alias gco-3="gco---"
 alias gcod="git checkout dev"
-alias gcom="git checkout main"
+alias gcom="git checkout \$(get_default_branch)"
 alias gcb="git checkout -b"
 
 # Commit
@@ -74,8 +74,9 @@ alias gaa="git add -A"
 # Pull / sync
 alias gl="git pull"
 alias gla="git pull --all && git fetch --all"
-alias gmu="git switch main && git pull --all && git fetch --all"
-alias gmm="git merge main"
+alias gmu="git switch \$(get_default_branch) && git pull --all && git fetch --all"
+alias gmm="git merge \$(get_default_branch)"
+alias gsu="git switch staging && git pull --all && git fetch --all"
 
 # Push / tag
 alias gp="git push"
@@ -124,11 +125,6 @@ alias prm="pnpm remove"
 alias prun="pnpm run"
 alias pst="pnpm start"
 alias pt="pnpm test"
-
-# ── Yarn ──────────────────────────────────────────────────────────────────
-alias ylf="yarn lint:fix"
-alias yst="BROWSER=none yarn start"
-alias yta="yarn test:all"
 
 # ── Bun ───────────────────────────────────────────────────────────────────
 alias b="bun"

@@ -1,5 +1,3 @@
-tap "anomalyco/tap"
-tap "libsql/sqld"
 tap "rtk-ai/tap"
 tap "xykong/tap", trusted: true
 # Search tool like grep, but optimized for programmers

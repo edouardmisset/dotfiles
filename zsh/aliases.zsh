@@ -73,11 +73,14 @@ alias gmsg="git commit --message"
 alias gaa="git add -A"
 
 # Pull / sync
+alias gfa="git fetch --all"
 alias gl="git pull"
-alias gla="git pull --all && git fetch --all"
-alias gmu="git switch \$(get_default_branch) && git pull --all && git fetch --all"
+alias gla="git pull --all && gfa"
+alias gmu="git switch \$(get_default_branch) && gla"
 alias gmm="git merge \$(get_default_branch)"
-alias gsu="git switch staging && git pull --all && git fetch --all"
+alias gsu="git switch staging && gla"
+alias grb="git rebase"
+alias grbi="git rebase --interactive"
 
 # Push / tag
 alias gp="git push"

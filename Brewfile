@@ -138,8 +138,6 @@ cask "chatgpt"
 cask "cleanmymac"
 # AI code review CLI
 cask "coderabbit"
-# OpenAI's coding agent that runs in your terminal
-cask "codex"
 # Voice and text chat software
 cask "discord"
 # Window peeking utility app
@@ -187,8 +185,6 @@ cask "open-webui"
 cask "plex"
 # Home media server
 cask "plex-media-server"
-# IDE for professional Python development
-cask "pycharm"
 # Quick Look plug-in that renders source code with syntax highlighting
 cask "qlcolorcode"
 # Quick Look generator for Markdown files
@@ -209,6 +205,8 @@ cask "soundsource"
 cask "spotify"
 # Application for inspecting installer packages
 cask "suspicious-package"
+# Quicklook extension for source files
+cask "syntax-highlight"
 # Minimal GUI for AI code agents
 cask "t3-code"
 # Open-source BitTorrent client
@@ -303,4 +301,5 @@ vscode "wix.vscode-import-cost"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
+npm "corepack"
 npm "ember-cli"

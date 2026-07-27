@@ -12,13 +12,8 @@
         "gemma-4-12B-it-4bit": {
           "name": "gemma-4-12B-it-4bit",
           "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
+            "input": ["text", "image"],
+            "output": ["text"]
           },
           "attachment": true,
           "limit": {
@@ -29,23 +24,17 @@
       }
     }
   },
-  "model": "openai/gpt-5.6-sol",
-  "agent": {
-    "build": {
-      "model": "openai/gpt-5.6-sol",
-      "variant": "low"
-    },
-    "plan": {
-      "model": "openai/gpt-5.6-sol",
-      "variant": "low"
-    }
-  },
   "lsp": true,
   "mcp": {
     "linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "oauth": {}
+    },
+    "playwright": {
+      "type": "local",
+      "command": ["npx", "-y", "@playwright/mcp"],
+      "enabled": false
     }
   }
 }

@@ -2,5 +2,5 @@ Brewfile.lock.json
 config/gh
 config/configstore/update-notifier-@docusaurus
 config/yarn/global
-DS_Store
+.DS_Store
 tokens

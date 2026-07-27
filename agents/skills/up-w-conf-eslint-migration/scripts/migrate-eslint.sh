@@ -1,29 +1,12 @@
 #!/bin/bash
 # Automated ESLint migration script for Upfluence projects
-# Usage: ./scripts/migrate-eslint.sh <project-path> [--mode=local|--mode=production]
+# Usage: ./scripts/migrate-eslint.sh <project-path>
 #
-# Modes:
-#   local      - Link to ../w-conf (for local development/testing) [default]
-#   production - Install from npm registry (for production deployments)
+# Always installs @upfluence/w-conf from the npm registry (production mode).
 
 set -e
 
 PROJECT_PATH="${1:-.}"
-MODE="${2:-local}"
-
-# Parse mode flag
-if [[ "$MODE" == --mode=* ]]; then
-  MODE="${MODE#--mode=}"
-fi
-
-# Default to local mode
-MODE="${MODE:-local}"
-
-# Validate mode
-if [[ ! "$MODE" =~ ^(local|production)$ ]]; then
-  echo "❌ Error: Invalid mode '$MODE'. Must be 'local' or 'production'"
-  exit 1
-fi
 
 if [ ! -d "$PROJECT_PATH" ]; then
   echo "❌ Error: Project path '$PROJECT_PATH' does not exist"
@@ -50,22 +33,11 @@ if [ -f ".eslintignore" ]; then
 fi
 
 echo ""
-echo "📦 Updating package.json dependencies (Mode: $MODE)..."
+echo "📦 Updating package.json dependencies..."
 
-# Update w-conf based on mode
-if [ "$MODE" = "local" ]; then
-  if [ -d "../w-conf" ]; then
-    echo "  → Using local w-conf link (../w-conf)"
-    npm pkg set devDependencies['@upfluence/w-conf']='link:../w-conf'
-  else
-    echo "⚠️  Warning: ../w-conf directory not found"
-    echo "  → Falling back to published npm version"
-    npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
-  fi
-elif [ "$MODE" = "production" ]; then
-  echo "  → Using npm registry (production version)"
-  npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
-fi
+# Install @upfluence/w-conf from the npm registry
+echo "  → Using npm registry (production version)"
+npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
 
 # Update ESLint to satisfy w-conf's peerDependencies range (eslint stays a direct dep)
 npm pkg set devDependencies.eslint='^10.5.0'
@@ -95,7 +67,7 @@ if [ -f ".eslintignore" ]; then
 fi
 
 echo ""
-echo "✅ Migration complete! (Mode: $MODE)"
+echo "✅ Migration complete!"
 echo ""
 echo "📝 Next steps:"
 echo "  1. Create eslint.config.mjs in your project root"

@@ -67,8 +67,8 @@ elif [ "$MODE" = "production" ]; then
   npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
 fi
 
-# Update ESLint to v10+
-npm pkg set devDependencies.eslint='^10.0.0'
+# Update ESLint to satisfy w-conf's peerDependencies range (eslint stays a direct dep)
+npm pkg set devDependencies.eslint='^10.5.0'
 
 # Remove legacy ESLint packages
 echo "  → Removing legacy ESLint packages..."
@@ -80,7 +80,6 @@ npm pkg delete devDependencies['eslint-plugin-node']
 npm pkg delete devDependencies['eslint-plugin-n']
 npm pkg delete devDependencies['eslint-plugin-prettier']
 npm pkg delete devDependencies['eslint-plugin-qunit']
-npm pkg delete devDependencies['@trivago/prettier-plugin-sort-imports']
 
 echo ""
 echo "🗑️  Removing old ESLint config files..."
@@ -100,7 +99,8 @@ echo "✅ Migration complete! (Mode: $MODE)"
 echo ""
 echo "📝 Next steps:"
 echo "  1. Create eslint.config.mjs in your project root"
-echo "  2. Run: pnpm install"
-echo "  3. Run: pnpm lint:js to verify the new config works"
+echo "  2. Make sure prettier (^3.6.2) is also present as a direct dependency"
+echo "  3. Run: pnpm install"
+echo "  4. Run: pnpm lint:js to verify the new config works"
 echo ""
 echo "📚 For detailed instructions, see: ./references/MIGRATION_GUIDE.md"

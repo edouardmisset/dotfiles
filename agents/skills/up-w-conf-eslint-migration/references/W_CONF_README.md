@@ -17,16 +17,16 @@ It includes:
 
 ### Why w-conf?
 
-The ESLint export bundles its plugins and presets as package dependencies. In consumer repositories, the minimal install is:
+The ESLint export bundles its plugins and presets as package dependencies of w-conf itself. `eslint` and `prettier` remain `peerDependencies` — a single instance stays under the consumer's control (CLI/editor tooling), while every plugin/parser is versioned centrally by w-conf. In consumer repositories, the minimal install is:
 
 ```bash
-pnpm add -D @upfluence/w-conf eslint
+pnpm add -D @upfluence/w-conf eslint@^10.5.0 prettier@^3.6.2
 ```
 
-When migrating from legacy `.eslintrc`, you can remove:
+When migrating from legacy `.eslintrc`, you can remove all plugins/parsers now bundled by w-conf:
 
 ```bash
-pnpm remove @typescript-eslint/parser @typescript-eslint/eslint-plugin
+pnpm remove @typescript-eslint/parser @typescript-eslint/eslint-plugin eslint-config-prettier eslint-plugin-ember eslint-plugin-n eslint-plugin-qunit
 ```
 
 ### Basic Usage
@@ -37,8 +37,8 @@ By default, the package exports a standard, zero-config resolved array:
 
 ```js
 // @ts-check
-import { defineConfig } from 'eslint/config';
-import upfluence from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import upfluence from "@upfluence/w-conf/eslint";
 
 export default defineConfig(...upfluence);
 ```
@@ -48,15 +48,20 @@ export default defineConfig(...upfluence);
 To customize globs/ignores, use `buildConfiguration`:
 
 ```js
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...buildConfiguration({
-    ignores: ['dist/', 'declarations/', 'coverage/', 'my-custom-unlinted-folder/'],
-    testFiles: ['packages/*/tests/**/*-test.{js,ts}'],
-    nodeFiles: ['ember-cli-build.js', 'config/**/*.js', 'gulpfile.js']
-  })
+    ignores: [
+      "dist/",
+      "declarations/",
+      "coverage/",
+      "my-custom-unlinted-folder/",
+    ],
+    testFiles: ["packages/*/tests/**/*-test.{js,ts}"],
+    nodeFiles: ["ember-cli-build.js", "config/**/*.js", "gulpfile.js"],
+  }),
 );
 ```
 
@@ -72,7 +77,7 @@ For advanced composition (monorepos, custom blocks), use named exports and keep
 `eslintConfigPrettierPlaceLast` last:
 
 ```js
-import { defineConfig } from 'eslint/config';
+import { defineConfig } from "eslint/config";
 import {
   core,
   emberConfig,
@@ -81,8 +86,8 @@ import {
   qunitTests,
   nodeFiles,
   DEFAULT_IGNORES,
-  eslintConfigPrettierPlaceLast
-} from '@upfluence/w-conf/eslint';
+  eslintConfigPrettierPlaceLast,
+} from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...DEFAULT_IGNORES,
@@ -90,9 +95,9 @@ export default defineConfig(
   ...emberConfig,
   ...javascript,
   ...typescript,
-  ...qunitTests(['packages/*/tests/**/*-test.{js,ts}']),
+  ...qunitTests(["packages/*/tests/**/*-test.{js,ts}"]),
   ...nodeFiles(),
-  eslintConfigPrettierPlaceLast
+  eslintConfigPrettierPlaceLast,
 );
 ```
 
@@ -104,9 +109,9 @@ export default defineConfig(
 
 ```ts
 interface BuildConfigurationOptions {
-  ignores?: string[];      // Glob patterns to ignore
-  testFiles?: string[];    // Glob patterns for test files (optional)
-  nodeFiles?: string[];    // Glob patterns for Node/config files
+  ignores?: string[]; // Glob patterns to ignore
+  testFiles?: string[]; // Glob patterns for test files (optional)
+  nodeFiles?: string[]; // Glob patterns for Node/config files
 }
 ```
 

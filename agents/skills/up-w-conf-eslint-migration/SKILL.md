@@ -43,8 +43,8 @@ Automates the conversion of Upfluence projects from the legacy `.eslintrc.js` fo
 1. Add/update `@upfluence/w-conf` based on mode:
    - **Local mode** (default): `link:../w-conf`
    - **Production mode**: Latest npm version (e.g., `^0.3.0`)
-2. Update `eslint` to v10+: `^10.0.0`
-3. Remove legacy ESLint packages that w-conf bundles:
+2. Keep `eslint` and `prettier` as direct deps in the consuming project (they remain w-conf `peerDependencies`), updating `eslint` to satisfy `>=10.5.0`
+3. Remove legacy packages that w-conf now bundles as its own `dependencies` (no longer needed in the consuming project):
    - `@typescript-eslint/parser`
    - `@typescript-eslint/eslint-plugin`
    - `eslint-config-prettier`
@@ -52,7 +52,6 @@ Automates the conversion of Upfluence projects from the legacy `.eslintrc.js` fo
    - `eslint-plugin-node` (or `eslint-plugin-n`)
    - `eslint-plugin-prettier`
    - `eslint-plugin-qunit`
-   - `@trivago/prettier-plugin-sort-imports` (if present)
 
 ### Phase 3: Generate New Config
 
@@ -91,7 +90,8 @@ export default defineConfig(
 
 ## Constraints
 
-- **ESLint version:** Must be v10.0.0 or higher (flat config required)
+- **ESLint version:** Must satisfy w-conf's `peerDependencies` range (`>=10.5.0`, flat config required)
+- **Dependency ownership:** `eslint` and `prettier` stay as direct deps of the consuming project (peer deps of w-conf); all ESLint plugins/parsers (`typescript-eslint`, `eslint-plugin-ember`, `eslint-plugin-n`, `eslint-plugin-qunit`, `eslint-config-prettier`, etc.) are owned and versioned by w-conf as its own `dependencies` — do not add them to the consuming project
 - **Node files:** List all config/build files that shouldn't be linted as browser code
 - **Mode flag:** Use `--mode=local` (default) for testing or `--mode=production` for npm-based installs
 - **Local mode:** Requires `../w-conf` directory to exist relative to the project

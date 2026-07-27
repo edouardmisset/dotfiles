@@ -20,12 +20,14 @@ This guide walks through migrating an Upfluence Ember project from the legacy `.
 ### Understanding the Modes
 
 **Local Mode** (default)
+
 - Links to `../w-conf` using `link:` protocol
 - Use when developing/testing changes to w-conf alongside your project
 - Allows fast iteration on ESLint config changes
 - ⚠️ Requires the `w-conf` directory to exist locally
 
 **Production Mode**
+
 - Installs `@upfluence/w-conf@^0.3.0` from npm registry
 - Use for stable, team-wide, and CI/CD deployments
 - Ensures everyone uses the same released version
@@ -34,11 +36,13 @@ This guide walks through migrating an Upfluence Ember project from the legacy `.
 ### Step 1: Understand Your Current Setup
 
 Examine your `.eslintrc.js`:
+
 - What plugins are active? (ember, node, prettier, typescript, qunit)
 - What ignore patterns are in `.eslintignore`?
 - Any custom rules or overrides?
 
 The w-conf config includes:
+
 - `eslint:recommended`
 - `eslint-plugin-ember`
 - `typescript-eslint` (recommended, untyped)
@@ -51,21 +55,24 @@ The w-conf config includes:
 #### Option A: Automated (Using Script)
 
 **Default (Local Mode):**
+
 ```bash
 cd your-project
 bash path/to/migrate-eslint.sh .
 ```
 
 **Production Mode:**
+
 ```bash
 cd your-project
 bash path/to/migrate-eslint.sh . --mode=production
 ```
 
 The script will:
-- Update eslint to ^10.0.0
+
+- Update eslint to ^10.5.0 (kept as a direct dep, since eslint/prettier remain peerDependencies of w-conf)
 - Add/update @upfluence/w-conf (local link or npm version based on mode)
-- Remove legacy plugins
+- Remove legacy plugins now bundled as w-conf's own `dependencies`
 - Delete old config files
 
 #### Option B: Manual
@@ -73,24 +80,27 @@ The script will:
 Update `package.json`:
 
 **Local Mode (for development/testing):**
+
 ```bash
 # Link to local w-conf
 npm pkg set devDependencies['@upfluence/w-conf']='link:../w-conf'
 
-# Update ESLint
-npm pkg set devDependencies.eslint='^10.0.0'
+# Update ESLint (eslint/prettier remain direct deps — they're peerDependencies of w-conf)
+npm pkg set devDependencies.eslint='^10.5.0'
 ```
 
 **Production Mode (for deployments):**
+
 ```bash
 # Install from npm registry
 npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
 
 # Update ESLint
-npm pkg set devDependencies.eslint='^10.0.0'
+npm pkg set devDependencies.eslint='^10.5.0'
 ```
 
 Then remove old plugins:
+
 ```bash
 npm pkg delete devDependencies['@typescript-eslint/parser']
 npm pkg delete devDependencies['@typescript-eslint/eslint-plugin']
@@ -99,7 +109,6 @@ npm pkg delete devDependencies['eslint-plugin-ember']
 npm pkg delete devDependencies['eslint-plugin-node']
 npm pkg delete devDependencies['eslint-plugin-prettier']
 npm pkg delete devDependencies['eslint-plugin-qunit']
-npm pkg delete devDependencies['@trivago/prettier-plugin-sort-imports']
 ```
 
 ### Step 3: Create New Config
@@ -110,33 +119,33 @@ Create `eslint.config.mjs` in your project root. Use your old `.eslintrc.js` and
 
 ```javascript
 // @ts-check
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...buildConfiguration({
     // Preserve your ignore patterns from .eslintignore
     ignores: [
-      'blueprints/*/files/',
-      'vendor/',
-      'dist/',
-      'tmp/',
-      'node_modules/',
-      'coverage/',
+      "blueprints/*/files/",
+      "vendor/",
+      "dist/",
+      "tmp/",
+      "node_modules/",
+      "coverage/",
       // Add any custom patterns specific to your project
     ],
     // Files that should be linted with Node/CommonJS rules
     nodeFiles: [
-      '.eslintrc.js',
-      '.template-lintrc.js',
-      'ember-cli-build.js',
-      'index.js',
-      'testem.js',
-      'blueprints/*/index.js',
-      'config/**/*.js',
-      'tests/dummy/config/**/*.js'
-    ]
-  })
+      ".eslintrc.js",
+      ".template-lintrc.js",
+      "ember-cli-build.js",
+      "index.js",
+      "testem.js",
+      "blueprints/*/index.js",
+      "config/**/*.js",
+      "tests/dummy/config/**/*.js",
+    ],
+  }),
 );
 ```
 
@@ -169,21 +178,21 @@ pnpm lint:js:fix
 If you need to add project-specific rules, you can extend the base configuration:
 
 ```javascript
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...buildConfiguration({
-    ignores: ['dist/', 'vendor/'],
-    nodeFiles: ['ember-cli-build.js', 'config/**/*.js']
+    ignores: ["dist/", "vendor/"],
+    nodeFiles: ["ember-cli-build.js", "config/**/*.js"],
   }),
   {
     // Custom rule overrides for your project
-    files: ['addon/**/*.ts'],
+    files: ["addon/**/*.ts"],
     rules: {
-      'ember/no-deprecated-methods': 'warn'
-    }
-  }
+      "ember/no-deprecated-methods": "warn",
+    },
+  },
 );
 ```
 
@@ -192,7 +201,7 @@ export default defineConfig(
 For fine-grained control, import individual config blocks:
 
 ```javascript
-import { defineConfig } from 'eslint/config';
+import { defineConfig } from "eslint/config";
 import {
   core,
   emberConfig,
@@ -201,8 +210,8 @@ import {
   qunitTests,
   nodeFiles,
   DEFAULT_IGNORES,
-  eslintConfigPrettierPlaceLast
-} from '@upfluence/w-conf/eslint';
+  eslintConfigPrettierPlaceLast,
+} from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...DEFAULT_IGNORES,
@@ -210,9 +219,9 @@ export default defineConfig(
   ...emberConfig,
   ...javascript,
   ...typescript,
-  ...qunitTests(['tests/**/*-test.{js,ts}']),
-  ...nodeFiles(['config/**/*.js']),
-  eslintConfigPrettierPlaceLast
+  ...qunitTests(["tests/**/*-test.{js,ts}"]),
+  ...nodeFiles(["config/**/*.js"]),
+  eslintConfigPrettierPlaceLast,
 );
 ```
 
@@ -223,6 +232,7 @@ export default defineConfig(
 **Cause:** Dependencies not installed after updating package.json
 
 **Solution:**
+
 ```bash
 pnpm install
 ```

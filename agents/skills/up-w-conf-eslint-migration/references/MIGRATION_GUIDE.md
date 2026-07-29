@@ -17,28 +17,16 @@ This guide walks through migrating an Upfluence Ember project from the legacy `.
 
 ## Step-by-Step Migration
 
-### Understanding the Modes
-
-**Local Mode** (default)
-- Links to `../w-conf` using `link:` protocol
-- Use when developing/testing changes to w-conf alongside your project
-- Allows fast iteration on ESLint config changes
-- ⚠️ Requires the `w-conf` directory to exist locally
-
-**Production Mode**
-- Installs `@upfluence/w-conf@^0.3.0` from npm registry
-- Use for stable, team-wide, and CI/CD deployments
-- Ensures everyone uses the same released version
-- Recommended for production environments
-
 ### Step 1: Understand Your Current Setup
 
 Examine your `.eslintrc.js`:
+
 - What plugins are active? (ember, node, prettier, typescript, qunit)
 - What ignore patterns are in `.eslintignore`?
 - Any custom rules or overrides?
 
 The w-conf config includes:
+
 - `eslint:recommended`
 - `eslint-plugin-ember`
 - `typescript-eslint` (recommended, untyped)
@@ -50,47 +38,32 @@ The w-conf config includes:
 
 #### Option A: Automated (Using Script)
 
-**Default (Local Mode):**
 ```bash
 cd your-project
 bash path/to/migrate-eslint.sh .
 ```
 
-**Production Mode:**
-```bash
-cd your-project
-bash path/to/migrate-eslint.sh . --mode=production
-```
-
 The script will:
-- Update eslint to ^10.0.0
-- Add/update @upfluence/w-conf (local link or npm version based on mode)
-- Remove legacy plugins
+
+- Update eslint to ^10.5.0 (kept as a direct dep, since eslint/prettier remain peerDependencies of w-conf)
+- Add/update @upfluence/w-conf to the latest published npm version
+- Remove legacy plugins now bundled as w-conf's own `dependencies`
 - Delete old config files
 
 #### Option B: Manual
 
 Update `package.json`:
 
-**Local Mode (for development/testing):**
-```bash
-# Link to local w-conf
-npm pkg set devDependencies['@upfluence/w-conf']='link:../w-conf'
-
-# Update ESLint
-npm pkg set devDependencies.eslint='^10.0.0'
-```
-
-**Production Mode (for deployments):**
 ```bash
 # Install from npm registry
 npm pkg set devDependencies['@upfluence/w-conf']='^0.3.0'
 
-# Update ESLint
-npm pkg set devDependencies.eslint='^10.0.0'
+# Update ESLint (eslint/prettier remain direct deps — they're peerDependencies of w-conf)
+npm pkg set devDependencies.eslint='^10.5.0'
 ```
 
 Then remove old plugins:
+
 ```bash
 npm pkg delete devDependencies['@typescript-eslint/parser']
 npm pkg delete devDependencies['@typescript-eslint/eslint-plugin']
@@ -99,7 +72,6 @@ npm pkg delete devDependencies['eslint-plugin-ember']
 npm pkg delete devDependencies['eslint-plugin-node']
 npm pkg delete devDependencies['eslint-plugin-prettier']
 npm pkg delete devDependencies['eslint-plugin-qunit']
-npm pkg delete devDependencies['@trivago/prettier-plugin-sort-imports']
 ```
 
 ### Step 3: Create New Config
@@ -110,33 +82,33 @@ Create `eslint.config.mjs` in your project root. Use your old `.eslintrc.js` and
 
 ```javascript
 // @ts-check
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...buildConfiguration({
     // Preserve your ignore patterns from .eslintignore
     ignores: [
-      'blueprints/*/files/',
-      'vendor/',
-      'dist/',
-      'tmp/',
-      'node_modules/',
-      'coverage/',
+      "blueprints/*/files/",
+      "vendor/",
+      "dist/",
+      "tmp/",
+      "node_modules/",
+      "coverage/",
       // Add any custom patterns specific to your project
     ],
     // Files that should be linted with Node/CommonJS rules
     nodeFiles: [
-      '.eslintrc.js',
-      '.template-lintrc.js',
-      'ember-cli-build.js',
-      'index.js',
-      'testem.js',
-      'blueprints/*/index.js',
-      'config/**/*.js',
-      'tests/dummy/config/**/*.js'
-    ]
-  })
+      ".eslintrc.js",
+      ".template-lintrc.js",
+      "ember-cli-build.js",
+      "index.js",
+      "testem.js",
+      "blueprints/*/index.js",
+      "config/**/*.js",
+      "tests/dummy/config/**/*.js",
+    ],
+  }),
 );
 ```
 
@@ -169,21 +141,21 @@ pnpm lint:js:fix
 If you need to add project-specific rules, you can extend the base configuration:
 
 ```javascript
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
+import { defineConfig } from "eslint/config";
+import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...buildConfiguration({
-    ignores: ['dist/', 'vendor/'],
-    nodeFiles: ['ember-cli-build.js', 'config/**/*.js']
+    ignores: ["dist/", "vendor/"],
+    nodeFiles: ["ember-cli-build.js", "config/**/*.js"],
   }),
   {
     // Custom rule overrides for your project
-    files: ['addon/**/*.ts'],
+    files: ["addon/**/*.ts"],
     rules: {
-      'ember/no-deprecated-methods': 'warn'
-    }
-  }
+      "ember/no-deprecated-methods": "warn",
+    },
+  },
 );
 ```
 
@@ -192,7 +164,7 @@ export default defineConfig(
 For fine-grained control, import individual config blocks:
 
 ```javascript
-import { defineConfig } from 'eslint/config';
+import { defineConfig } from "eslint/config";
 import {
   core,
   emberConfig,
@@ -201,8 +173,8 @@ import {
   qunitTests,
   nodeFiles,
   DEFAULT_IGNORES,
-  eslintConfigPrettierPlaceLast
-} from '@upfluence/w-conf/eslint';
+  eslintConfigPrettierPlaceLast,
+} from "@upfluence/w-conf/eslint";
 
 export default defineConfig(
   ...DEFAULT_IGNORES,
@@ -210,9 +182,9 @@ export default defineConfig(
   ...emberConfig,
   ...javascript,
   ...typescript,
-  ...qunitTests(['tests/**/*-test.{js,ts}']),
-  ...nodeFiles(['config/**/*.js']),
-  eslintConfigPrettierPlaceLast
+  ...qunitTests(["tests/**/*-test.{js,ts}"]),
+  ...nodeFiles(["config/**/*.js"]),
+  eslintConfigPrettierPlaceLast,
 );
 ```
 
@@ -223,6 +195,7 @@ export default defineConfig(
 **Cause:** Dependencies not installed after updating package.json
 
 **Solution:**
+
 ```bash
 pnpm install
 ```
@@ -257,6 +230,74 @@ pnpm lint
 # Run tests to ensure nothing broke
 pnpm test
 ```
+
+## Part 2: Iterative Rule-by-Rule Violation Cleanup
+
+Swapping in w-conf's bundled rules commonly surfaces a backlog of pre-existing violations that the
+legacy config never caught (stricter TypeScript rules, `prefer-const`, QUnit assertion rules, etc.).
+Rather than fixing everything in one sprawling commit, pay it down incrementally: one rule per commit,
+most frequent first, with a standalone auto-fix commit first and a single grouped commit for the
+long tail of low-count rules.
+
+### Step 1: Auto-fix pass (Commit 0)
+
+```bash
+pnpm lint:js:fix
+```
+
+Stage and commit this on its own, before any manual fixing begins:
+
+```bash
+git add -A
+git commit -m "fix: apply eslint --fix auto-fixes"
+```
+
+### Step 2: Tally violations by rule
+
+Get a table of rule name → violation count, sorted descending, using the script bundled with this
+skill (requires `pnpm`, `jq`, and `column` on `PATH`):
+
+```bash
+path/to/skill/scripts/eslint-summary.zsh
+```
+
+### Step 3: Fix the most frequent rule, verify, commit
+
+For the single most frequent rule:
+
+1. Fix every violation of that rule only — pick the correct semantic fix per call site (e.g.
+   `assert.strictEqual` vs `assert.deepEqual`/`assert.propEqual` depending on what's being compared;
+   don't blind find/replace)
+2. Re-run the lint/summary command and confirm the rule's count is now 0 and nothing else regressed
+3. `git add -A`
+4. Stop and get explicit approval before committing
+5. Commit as `fix: resolve <rule-name> violations`
+
+Repeat for the next most frequent rule.
+
+### Step 4: Group the tail (count <= 3) into one final commit
+
+As soon as the next rule's count drops to **3 or fewer**, stop doing one-commit-per-rule. Instead,
+fix that rule together with every remaining smaller rule in a single final pass, verify with a full
+lint run (expect 0 errors), stage, get approval, and commit as:
+
+```text
+fix: resolve remaining rule violations (<rule1>, <rule2>, ...)
+```
+
+### Step 5: Final verification
+
+```bash
+pnpm lint
+pnpm test
+```
+
+### Rules of the loop
+
+- One rule per commit, except the final grouped pass for rules with count <= 3
+- Never fix an unrelated rule while working a given pass
+- Always stop for explicit user approval before every commit — never chain commits automatically
+- Re-verify after each pass before staging
 
 ## Reference
 

@@ -122,8 +122,6 @@ brew "rtk-ai/tap/rtk", trusted: true
 cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
-# Distribution of the Python and R programming languages for scientific computing
-cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
@@ -134,10 +132,16 @@ cask "betterzip"
 cask "brave-browser"
 # OpenAI's official ChatGPT desktop app
 cask "chatgpt"
+# Terminal-based AI coding assistant
+cask "claude-code"
 # Tool to remove unnecessary files and folders from disk
 cask "cleanmymac"
+# Ghostty-based terminal with vertical tabs and notifications for AI coding agents
+cask "cmux"
 # AI code review CLI
 cask "coderabbit"
+# OpenAI's coding agent that runs in your terminal
+cask "codex"
 # Voice and text chat software
 cask "discord"
 # Window peeking utility app

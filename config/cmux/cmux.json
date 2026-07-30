@@ -1,0 +1,12 @@
+{
+  "$schema": "https://raw.githubusercontent.com/manaflow-ai/cmux/main/web/data/cmux.schema.json",
+  "schemaVersion": 1,
+  "markdown": {
+    "fontFamily": "'Atkinson Hyperlegible Next', system-ui, sans-serif"
+  },
+  "agentChat": {
+    "fonts": {
+      "monoFamily": "'Monaspace Neon', 'FiraCode Nerd Font', 'FiraCode Nerd Font Mono', Consolas, 'Courier New', monospace"
+    }
+  }
+}

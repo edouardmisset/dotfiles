@@ -1,0 +1,10 @@
+[
+  {
+    "command": "globalDictationHold",
+    "key": null
+  },
+  {
+    "command": "toggleTerminal",
+    "key": "Ctrl+$"
+  }
+]

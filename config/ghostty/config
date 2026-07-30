@@ -1,0 +1,4 @@
+confirm-close-surface = false
+theme = catppuccin-macchiato.conf
+font-family = MesloLGS NF
+font-family = FiraCode Nerd Font

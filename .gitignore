@@ -1,5 +1,6 @@
 Brewfile.lock.json
-config/gh
+config/gh/*
+!config/gh/config.yml
 config/configstore/update-notifier-@docusaurus
 config/yarn/global
 .omo/

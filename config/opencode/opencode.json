@@ -1,5 +1,15 @@
 {
   "$schema": "https://opencode.ai/config.json",
+  "small_model": "openai/gpt-5.4-mini",
+  "compaction": {
+    "auto": true,
+    "prune": true,
+    "tail_turns": 2
+  },
+  "tool_output": {
+    "max_lines": 2000,
+    "max_bytes": 25600
+  },
   "provider": {
     "omlx": {
       "npm": "@ai-sdk/openai-compatible",
@@ -12,8 +22,13 @@
         "gemma-4-12B-it-4bit": {
           "name": "gemma-4-12B-it-4bit",
           "modalities": {
-            "input": ["text", "image"],
-            "output": ["text"]
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
           },
           "attachment": true,
           "limit": {
@@ -24,17 +39,26 @@
       }
     }
   },
+  "model": "openai/gpt-5.6-sol",
+  "agent": {
+    "build": {
+      "model": "openai/gpt-5.6-sol",
+      "variant": "low"
+    },
+    "plan": {
+      "model": "openai/gpt-5.6-sol",
+      "variant": "low"
+    }
+  },
   "lsp": true,
   "mcp": {
     "linear": {
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "oauth": {}
-    },
-    "playwright": {
-      "type": "local",
-      "command": ["npx", "-y", "@playwright/mcp"],
-      "enabled": false
     }
-  }
+  },
+  "plugin": [
+    "@dietrichgebert/ponytail"
+  ]
 }

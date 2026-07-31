@@ -24,5 +24,6 @@
   "theme": "dark-ansi",
   "enabledPlugins": {
     "ponytail@ponytail": true
-  }
+  },
+  "effortLevel": "medium"
 }

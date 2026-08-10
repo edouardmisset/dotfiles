@@ -29,6 +29,13 @@
             "output": [
               "text"
             ]
+            "input": [
+              "text",
+              "image"
+            ],
+            "output": [
+              "text"
+            ]
           },
           "attachment": true,
           "limit": {
@@ -56,9 +63,19 @@
       "type": "remote",
       "url": "https://mcp.linear.app/mcp",
       "oauth": {}
+    },
+    "playwright": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@playwright/mcp"
+      ],
+      "enabled": false
     }
   },
   "plugin": [
+    "oh-my-openagent@latest",
     "@dietrichgebert/ponytail"
   ]
 }

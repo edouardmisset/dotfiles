@@ -38,7 +38,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 
 ### Step 3: Prepare PR Content
 
-- Locate the repository's PR template (check `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`)
+- Locate the repository's PR template (check `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`). If the repository does not provide one, use the bundled [PR template](references/pull_request_template.md).
 - Fill in the template:
   - **Title**: use the Linear ticket title exactly
   - **"Related to" section**: add `[#<issue-number>](<linear-issue-url>)` (e.g., `[#DRA-1234](https://linear.app/upfluence/issue/DRA-1234)`)

@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# Start lightweight OpenCode with the work GitHub Copilot profile.
+oc-work() {
+  OMO_PROFILE=work-light \
+    OPENCODE_CONFIG_CONTENT='{"enabled_providers":["github-copilot"],"model":"github-copilot/gpt-5.6-terra"}' \
+    opencode "$@"
+}

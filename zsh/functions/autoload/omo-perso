@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# Start cmux OMO orchestration with the personal OpenAI profile.
+omo-perso() {
+  OMO_PROFILE=perso \
+    OPENCODE_CONFIG_CONTENT='{"enabled_providers":["openai"],"model":"openai/gpt-5.6-terra"}' \
+    cmux omo "$@"
+}

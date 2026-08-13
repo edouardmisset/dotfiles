@@ -58,5 +58,10 @@
       "enabled": false
     }
   },
-  "plugin": ["oh-my-openagent@latest", "@dietrichgebert/ponytail"]
+  "plugin": [
+    "oh-my-openagent@latest",
+    "@dietrichgebert/ponytail",
+    "./plugins/cmux-session.js",
+    "./plugins/cmux-feed.js"
+  ]
 }

@@ -3,6 +3,7 @@ config/gh/*
 !config/gh/config.yml
 config/configstore/update-notifier-@docusaurus
 config/yarn/global
-.omo/
+.omo/*
+!.omo/omo.jsonc
 .DS_Store
 tokens

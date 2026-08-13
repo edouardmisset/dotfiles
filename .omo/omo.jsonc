@@ -1,0 +1,77 @@
+{
+  "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
+
+  "profiles": {
+    "perso": {
+      "[opencode]": {
+        "agents": {
+          "sisyphus": { "model": "openai/gpt-5.6-sol", "reasoning": "medium" },
+          "hephaestus": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "prometheus": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "metis": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "momus": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "oracle": { "model": "openai/gpt-5.6-sol", "reasoning": "high" },
+          "atlas": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "sisyphus-junior": { "model": "openai/gpt-5.6-luna-fast", "reasoning": "low" },
+          "explore": { "model": "openai/gpt-5.6-luna-fast", "reasoning": "low" },
+          "librarian": { "model": "openai/gpt-5.6-luna-fast", "reasoning": "low" },
+          "multimodal-looker": { "model": "openai/gpt-5.6-terra", "reasoning": "low" }
+        },
+        "categories": {
+          "quick": { "model": "openai/gpt-5.6-luna-fast", "reasoning": "low" },
+          "unspecified-low": { "model": "openai/gpt-5.6-terra", "reasoning": "medium" },
+          "unspecified-high": { "model": "openai/gpt-5.6-sol", "reasoning": "high" },
+          "deep": { "model": "openai/gpt-5.6-sol", "reasoning": "medium" },
+          "ultrabrain": { "model": "openai/gpt-5.6-sol", "reasoning": "high" }
+        },
+        "background_task": {
+          "defaultConcurrency": 3,
+          "providerConcurrency": { "openai": 3 },
+          "modelConcurrency": { "openai/gpt-5.6-sol": 1 }
+        }
+      }
+    },
+
+    "work": {
+      "[opencode]": {
+        "agents": {
+          "sisyphus": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
+          "hephaestus": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "medium" },
+          "prometheus": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
+          "metis": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
+          "momus": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "medium" },
+          "oracle": { "model": "github-copilot/gpt-5.6-sol", "reasoning": "high" },
+          "atlas": { "model": "github-copilot/claude-sonnet-5", "reasoning": "medium" },
+          "sisyphus-junior": { "model": "github-copilot/claude-haiku-4-5", "reasoning": "low" },
+          "explore": { "model": "github-copilot/claude-haiku-4-5", "reasoning": "low" },
+          "librarian": { "model": "github-copilot/claude-haiku-4-5", "reasoning": "low" },
+          "multimodal-looker": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "low" }
+        },
+        "categories": {
+          "quick": { "model": "github-copilot/claude-haiku-4-5", "reasoning": "low" },
+          "unspecified-low": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "medium" },
+          "unspecified-high": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
+          "deep": { "model": "github-copilot/gpt-5.6-sol", "reasoning": "high" },
+          "ultrabrain": { "model": "github-copilot/gpt-5.6-sol", "reasoning": "high" }
+        },
+        "background_task": {
+          "defaultConcurrency": 3,
+          "providerConcurrency": { "github-copilot": 3 },
+          "modelConcurrency": { "github-copilot/gpt-5.6-sol": 1 }
+        }
+      }
+    },
+
+    "perso-light": {
+      "[opencode]": {
+        "sisyphus_agent": { "disabled": true }
+      }
+    },
+
+    "work-light": {
+      "[opencode]": {
+        "sisyphus_agent": { "disabled": true }
+      }
+    }
+  }
+}

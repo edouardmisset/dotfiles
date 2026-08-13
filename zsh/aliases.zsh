@@ -24,7 +24,8 @@ alias lst="eza -lF --git --tree --icons --level=2"
 alias trail="<<<${(F)path}"
 alias python="python3"
 alias vsc="code ."
-alias oc="opencode"
+
+alias oc="oc-perso"
 # Update all package managers and system software
 alias update="brew update && brew upgrade && tldr --update && mas upgrade && system_update"
 alias system_update="sudo softwareupdate --install --all --verbose"

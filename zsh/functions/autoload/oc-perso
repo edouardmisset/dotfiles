@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# Start lightweight OpenCode with the personal OpenAI profile.
+oc-perso() {
+  OMO_PROFILE=perso-light \
+    OPENCODE_CONFIG_CONTENT='{"enabled_providers":["openai"],"model":"openai/gpt-5.6-terra"}' \
+    opencode "$@"
+}

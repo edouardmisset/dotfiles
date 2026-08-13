@@ -1,0 +1,7 @@
+#!/usr/bin/env zsh
+# Start cmux OMO orchestration with the work GitHub Copilot profile.
+omo-work() {
+  OMO_PROFILE=work \
+    OPENCODE_CONFIG_CONTENT='{"enabled_providers":["github-copilot"],"model":"github-copilot/gpt-5.6-terra"}' \
+    cmux omo "$@"
+}

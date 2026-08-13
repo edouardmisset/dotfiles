@@ -22,20 +22,8 @@
         "gemma-4-12B-it-4bit": {
           "name": "gemma-4-12B-it-4bit",
           "modalities": {
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
-            "input": [
-              "text",
-              "image"
-            ],
-            "output": [
-              "text"
-            ]
+            "input": ["text", "image"],
+            "output": ["text"]
           },
           "attachment": true,
           "limit": {
@@ -66,16 +54,9 @@
     },
     "playwright": {
       "type": "local",
-      "command": [
-        "npx",
-        "-y",
-        "@playwright/mcp"
-      ],
+      "command": ["npx", "-y", "@playwright/mcp"],
       "enabled": false
     }
   },
-  "plugin": [
-    "oh-my-openagent@latest",
-    "@dietrichgebert/ponytail"
-  ]
+  "plugin": ["oh-my-openagent@latest", "@dietrichgebert/ponytail"]
 }

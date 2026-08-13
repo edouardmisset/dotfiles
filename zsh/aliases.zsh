@@ -24,6 +24,7 @@ alias lst="eza -lF --git --tree --icons --level=2"
 alias trail="<<<${(F)path}"
 alias python="python3"
 alias vsc="code ."
+alias ql="qlmanage -p"
 
 alias oc="oc-perso"
 # Update all package managers and system software
@@ -75,7 +76,7 @@ alias gaa="git add -A"
 
 # Pull / sync
 alias gfa="git fetch --all"
-alias gl="git pull"
+alias gl="git pull --quiet"
 alias gla="git pull --all && gfa"
 alias gmu="git switch \$(get_default_branch) && gla"
 alias gmm="git merge \$(get_default_branch)"
@@ -84,9 +85,9 @@ alias grb="git rebase"
 alias grbi="git rebase --interactive"
 
 # Push / tag
-alias gp="git push"
-alias gpo="git push --set-upstream origin \$(git branch --show-current)"
-alias gpf="git push --force-with-lease"
+alias gp="git push --quiet"
+alias gpo="git push --quiet --set-upstream origin \$(git branch --show-current)"
+alias gpf="git push --quiet --force-with-lease"
 alias gt="git tag"
 alias gta="git tag -a"
 alias gundo="git reset --soft HEAD^"
@@ -109,8 +110,7 @@ function glolsm() { git log "$(get_default_branch)..HEAD" --stat  --pretty="$_gi
 alias glolm="glm"
 
 # Status
-alias gst="git status"
-alias gsts="git status --short"
+alias gst="git status --short"
 
 # ── Homebrew ──────────────────────────────────────────────────────────────
 alias bbd="brew bundle dump --force --file=\"\$HOME/.dotfiles/Brewfile\""

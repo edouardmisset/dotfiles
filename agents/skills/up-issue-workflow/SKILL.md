@@ -11,9 +11,12 @@ argument-hint: "Linear issue identifier (e.g., DRA-5005)"
 - Starting work on a Linear issue
 - Full workflow from issue analysis to PR creation
 
-## Required Tools
+## Tools
 
-This workflow requires access to: Linear, GitHub, and optionally Figma (if designs are attached).
+- Linear MCP: issue, comments, sub-issues, status, and assignee.
+- Figma MCP: only when the issue or its comments include a Figma URL.
+- `git`: all local branch, diff, commit, and push operations.
+- `gh`: GitHub authentication and remote operations.
 
 ## Procedure
 
@@ -34,27 +37,42 @@ This workflow requires access to: Linear, GitHub, and optionally Figma (if desig
 
 ### Step 3: Create a Branch
 
-#### Select Base Branch
-
-1. **If the ticket belongs to an ongoing Linear project**, check whether a `feature/<feature-name>` branch already exists for that project. If it does, use it as the base branch.
-2. **Otherwise**, determine the base branch with the following command (use the first branch that exists):
-
 ```sh
-# Priority order: `staging` → `main` → `master`
-
-for b in staging main master; do git show-ref --verify --quiet refs/remotes/origin/$b && echo $b && break; done
+set -euo pipefail
+test -z "$(git status --porcelain)" || {
+  printf '%s\n' 'Worktree has uncommitted changes; stop.' >&2
+  exit 1
+}
+git fetch origin --prune
+branch="em/$(printf '%s' "$issue_id" | tr '[:upper:]' '[:lower:]')"
+base=''
+for candidate in "${project_branch:-}" staging main master; do
+  test -n "$candidate" || continue
+  if git show-ref --verify --quiet "refs/remotes/origin/$candidate"; then
+    base=$candidate
+    break
+  fi
+done
+test -n "$base" || {
+  printf '%s\n' 'No project, staging, main, or master remote branch found.' >&2
+  exit 1
+}
 ```
 
-#### Update Base Branch
+- Set `project_branch` only when the Linear issue or project explicitly gives a `feature/<name>` branch. Do not infer one from the project title.
+- `base` is the first existing remote branch in this order: explicit project branch, `staging`, `main`, `master`.
 
-- Pull the latest changes from the base branch before creating the new branch.
-  - If pulling fails due to merge conflicts or network issues, display the error and ask the user to resolve before continuing.
+```sh
+if git show-ref --verify --quiet "refs/heads/$branch"; then
+  printf '%s\n' "Branch already exists: $branch"
+else
+  git switch --detach "origin/$base"
+  git switch -c "$branch"
+fi
+```
 
-#### Create and Checkout New Branch
-
-- Create a new branch named: `em/<squad-prefix-lowercased>-<number>`, e.g. `em/dra-5005` or `em/vel-1234` (extract the prefix and number from the issue identifier)
-  - If the branch already exists, ask the user whether to check it out and continue from where it left off, or delete and recreate it.
-- Checkout the new branch
+- If the branch exists, tell the user and run `git switch "$branch"` and continue; never delete or recreate it without a separate explicit request.
+- When invoking `up-create-pr`, pass `project_branch="$base"` so it targets the verified base selected here.
 
 ### Step 4: Implement the Fix
 
@@ -81,20 +99,31 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 
 ### Step 7: Commit
 
-- Stage only the files modified or created as part of this fix. Do not stage unrelated changes.
-- Commit using **conventional commit syntax without scope**
-  - Choose the commit type based on the Linear issue: use `fix:` for bug fixes, `feat:` for new features, `refactor:` for code restructuring, `chore:` for maintenance tasks, `test:` for test-related changes, etc.
-  - e.g., `fix: handle empty state in activity report`
-  - e.g., `feat: add OAuth token refresh flow`
+```sh
+git diff --check
+git status --short
+git add -- path/to/changed-file
+git diff --cached --check
+git diff --cached --stat
+git diff --cached
+git commit -m 'fix: concise imperative summary'
+```
+
+- Replace `path/to/changed-file` with only files changed for this issue; never use `git add -A` or `git add .`.
+- Use conventional commit syntax without a scope. Valid examples: `fix: handle empty state in activity report`, `feat: add OAuth token refresh flow`.
+- If the staged diff contains unrelated changes, unstage them with `git restore --staged -- <path>` and re-check before committing.
 
 ### Step 8: Push
 
-- Push the branch to GitHub
-- If the push fails, display the error and suggest the user check their Git authentication and remote permissions
+```sh
+git push --set-upstream origin "$branch"
+```
+
+- If the push fails, show the error and stop. Do not force-push or alter the remote without an explicit user request.
 
 ### Step 9: Create the PR
 
-Use the `linear-create-pr` skill with the current Linear issue identifier.
+Use the `up-create-pr` skill with the current Linear issue identifier.
 
 ## Constraints
 

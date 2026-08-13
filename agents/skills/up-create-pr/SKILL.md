@@ -12,85 +12,160 @@ argument-hint: "Linear issue identifier (e.g., DRA-1234)"
 - Creating a PR after completing work on a Linear ticket
 - Submitting Linear issue changes for review
 
-## Required Tools
+## Tools
 
-This skill requires access to: Linear and GitHub.
+- Linear MCP: issue read, comment, and status transition.
+- `gh`: every GitHub read and write.
+- `git`: local repository and branch state.
+
+## Rules
+
+- Run all commands from the target repository.
+- Set `REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)` once and pass `--repo "$REPO"` to every `gh` command.
+- Stop on a dirty worktree, missing upstream branch, missing Linear issue, or GitHub authentication failure.
+- Every write requires the confirmation stated in its step. Do not combine confirmations.
+- Delete `tmp-pr-draft.md` before stopping for any reason after creating it.
+- Treat fenced shell blocks as independent commands. Before running a block, provide each named procedure value it requires; every block must validate those values before use.
 
 ## Procedure
 
 ### Step 1: Resolve the Linear Issue
 
-- If a Linear issue identifier is provided, use it directly.
-- Otherwise, detect it from the current branch name (e.g., `em/dra-1234` → `DRA-1234`).
-  - If the branch name does not match the `em/<prefix>-<number>` pattern, prompt the user for the Linear issue identifier.
-- Fetch the Linear issue details (title, URL, identifier). If the issue is not found, stop and ask the user to provide a valid identifier.
+- Use the provided issue identifier. Otherwise derive it from `em/<prefix>-<number>`; if the branch does not match, ask for the identifier and stop.
+
+```sh
+set -euo pipefail
+test -z "$(git status --porcelain)" || {
+  printf '%s\n' 'Worktree has uncommitted changes; stop.' >&2
+  exit 1
+}
+branch=$(git branch --show-current)
+git rev-parse --abbrev-ref '@{upstream}' >/dev/null
+if test -z "${issue_id:-}"; then
+  printf '%s\n' "$branch" | rg -qi '^em/[a-z]+-[0-9]+$' || {
+    printf '%s\n' 'Provide a Linear issue identifier.' >&2
+    exit 1
+  }
+  issue_id=$(printf '%s\n' "$branch" | sed -E 's#^em/##' | tr '[:lower:]' '[:upper:]')
+fi
+REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+gh api user --jq .login >/dev/null
+```
+
+- Read `issue_id` through Linear MCP. Retain its identifier, title, and URL; stop if the issue is absent.
+- Set `linear_title` to the returned title. The PR title must equal `linear_title` exactly.
 
 ### Step 2: Determine the Base Branch
 
-- Identify the base branch for the PR target with the following command (use the first branch that exists):
-
 ```sh
-# Priority order: `staging` → `main` → `master`
-for b in staging main master; do git show-ref --verify --quiet refs/remotes/origin/$b && echo $b && break; done
+base=''
+for candidate in "${project_branch:-}" staging main master; do
+  test -n "$candidate" || continue
+  if git show-ref --verify --quiet "refs/remotes/origin/$candidate"; then
+    base=$candidate
+    break
+  fi
+done
+test -n "$base" || {
+  printf '%s\n' 'No staging, main, or master remote branch found.' >&2
+  exit 1
+}
 ```
 
-- If the current branch name starts with `feature/<feature-name>/`, use `remote/feature/<feature-name>` as the PR target instead.
+- When invoked from `up-issue-workflow`, pass its verified `base` as `project_branch`; this preserves an explicitly configured project base.
+- If `branch` matches `feature/<name>`, set `base=feature/<name>` only when `refs/remotes/origin/$base` exists. Otherwise retain the selected base.
+- Do not guess another base branch.
 
-### Step 3: Prepare PR Content
+### Step 3: Detect an Existing PR
 
-- Locate the repository's PR template (check `.github/PULL_REQUEST_TEMPLATE.md` or `.github/pull_request_template.md`). If the repository does not provide one, use the bundled [PR template](references/pull_request_template.md).
-- Fill in the template:
-  - **Title**: use the Linear ticket title exactly
-  - **"Related to" section**: add `[#<issue-number>](<linear-issue-url>)` (e.g., `[#DRA-1234](https://linear.app/upfluence/issue/DRA-1234)`)
-  - **"Developers heads up" section**: set to "N/A" if not applicable
-  - **Additional Notes**: set to "N/A" if not applicable
+```sh
+REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
+branch=$(git branch --show-current)
+existing_pr=$(gh pr list --repo "$REPO" --head "$branch" --state open --json url --jq '.[0].url')
+```
 
-### Step 4: Review PR Content with User
+- If `existing_pr` is non-empty, display it and stop. Do not create, modify, or notify on an existing PR.
 
-- **Save the PR content as a temporary markdown file named `tmp-pr-draft.md` in the repository root and open it for editing**
-- **Prompt the user to review and edit the markdown file, then confirm they have finished before proceeding**
-- Never create the PR without user review
+### Step 4: Prepare PR Content
 
-### Step 5: Create the PR on GitHub
+```sh
+test -n "${issue_id:-}" && test -n "${linear_url:-}" || {
+  printf '%s\n' 'Linear issue details are unavailable; stop.' >&2
+  exit 1
+}
+test ! -e tmp-pr-draft.md || {
+  printf '%s\n' 'tmp-pr-draft.md already exists; stop to preserve it.' >&2
+  exit 1
+}
+template=''
+for candidate in .github/PULL_REQUEST_TEMPLATE.md .github/pull_request_template.md; do
+  test -f "$candidate" && { template=$candidate; break; }
+done
+test -n "$template" || template="$HOME/.dotfiles/agents/skills/up-create-pr/references/pull_request_template.md"
+test -f "$template" || {
+  printf '%s\n' 'No PR template found.' >&2
+  exit 1
+}
+cp "$template" tmp-pr-draft.md || {
+  printf '%s\n' 'Could not create tmp-pr-draft.md.' >&2
+  exit 1
+}
+if rg -q '^Related to:' tmp-pr-draft.md; then
+  LINEAR_ID=$issue_id LINEAR_URL=$linear_url \
+    perl -0pi -e 's{^Related to:.*$}{Related to: [$ENV{LINEAR_ID}]($ENV{LINEAR_URL})}m' tmp-pr-draft.md || {
+      rm -f tmp-pr-draft.md
+      printf '%s\n' 'Could not update tmp-pr-draft.md.' >&2
+      exit 1
+    }
+fi
+```
 
-- Create the PR on GitHub with the final content from `tmp-pr-draft.md`
-  - If PR creation fails (e.g., API error), show the error to the user
-  - If a PR already exists for this branch, provide the existing PR link instead
-- After successful PR creation, add the current git user (as returned by: `gh api user`) as an assignee
-- Display the PR URL
-- Prompt the user whether they want to generate a test link for the PR.
-  - If they confirm, add the following label to the PR: `actions/fe-deploy-preview`
-  - If they don't, continue without adding the label
+- Populate only fields that exist in the selected template. Do not add headings, placeholder text, or unrelated content.
 
-### Step 6: Cleanup
+### Step 5: Review PR Content with User
 
-- Delete the temporary markdown file (`tmp-pr-draft.md`) after PR creation
-- Ensure cleanup happens regardless of success or failure — if the workflow is aborted at any point after the file was created, delete it
+- Open `tmp-pr-draft.md` and ask the user to review and edit it.
+- Wait for explicit confirmation that the draft is final. Never create a PR without it.
 
-### Step 7: Optionally Notify Squad on Linear
+### Step 6: Create the PR on GitHub
 
-- Prompt the user whether they want to add a new comment on the Linear issue to tag squad-mates for review.
-- If they confirm, post a new comment on the Linear issue (resolved in Step 1).
-- Use this default comment template (let the user edit names/message before posting):
+Ask separately for confirmation to create the PR. On confirmation, provide `REPO`, `base`, and `linear_title` from the verified procedure state, then run:
+
+```sh
+test -n "${REPO:-}" && test -n "${base:-}" && test -n "${linear_title:-}" || {
+  rm -f tmp-pr-draft.md
+  printf '%s\n' 'PR creation details are unavailable; stop.' >&2
+  exit 1
+}
+pr_url=$(gh pr create --repo "$REPO" --base "$base" --title "$linear_title" --body-file tmp-pr-draft.md) || {
+  rm -f tmp-pr-draft.md
+  printf '%s\n' 'PR creation failed; no PR was created.' >&2
+  exit 1
+}
+rm -f tmp-pr-draft.md
+printf '%s\n' "$pr_url"
+```
+
+- If creation fails, show the error and stop. Do not retry with altered title, base, or body unless the user directs it.
+- Run `gh pr edit "$pr_url" --repo "$REPO" --add-assignee @me`; if it fails, report that the PR was created but assignment failed, then stop.
+- Ask separately whether to request a preview deployment. On confirmation only:
+
+```sh
+make run_preview_job
+```
+
+### Step 7: Cleanup
+
+- The creation command removes only the draft it created immediately after a successful PR creation. On a declined draft or creation confirmation, run `rm -f tmp-pr-draft.md` before stopping.
+
+### Step 8: Optionally Notify Squad on Linear
+
+- Ask whether to notify the squad on Linear by posting a squad-review comment and moving the issue to `In Review`, showing the proposed text before writing it. The default comment is:
 
 ```txt
-Ready for review 🙂
+Ready for review
 
 @owen.coogan, @nathalie, @max
 ```
 
-- Change the status of the linear issue to "In Review"
-
-## Constraints
-
-**Review (never skip):**
-
-- Never create the PR without user review of the draft content (Step 4)
-
-**Title:**
-
-- PR title must match the Linear ticket title exactly
-
-**Cleanup:**
-
-- Always delete `tmp-pr-draft.md` after completion or abort
+- On confirmation, read the workflow reference, then post the comment and transition the issue through Linear MCP.

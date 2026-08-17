@@ -1,6 +1,10 @@
 # ~/.zshrc — interactive shell configuration.
 # Environment & PATH live in ~/.zshenv. Aliases live in zsh/aliases.zsh.
 
+# Compiled personal developer tools. Individual command names are symlinks to
+# the single `dev-tools` executable in this directory.
+path=("$HOME/.dotfiles/tools/bin" $path)
+
 # ── Zinit (plugin manager) ────────────────────────────────────────────────
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 if [[ ! -d "$ZINIT_HOME" ]]; then
@@ -13,9 +17,7 @@ source "${ZINIT_HOME}/zinit.zsh"
 # Lazy-loaded on first use from ~/.dotfiles/zsh/functions/autoload.
 fpath=("$HOME/.dotfiles/zsh/functions/autoload" $fpath)
 autoload -Uz \
-  gmove killport mkcd cl kebabify run install \
-  list_deno_tasks is_script_in_deno_json csv2json \
-  oc-perso oc-work omo-perso omo-work
+  mkcd cl oc-perso oc-work omo-perso omo-work
 
 if command -v brew >/dev/null 2>&1; then
   fpath=("$(brew --prefix)/share/zsh/site-functions" "$(brew --prefix)/share/zsh-completions" $fpath)

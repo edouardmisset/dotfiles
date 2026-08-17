@@ -1,0 +1,24 @@
+{
+  "tasks": {
+    "check": "deno fmt --check && deno lint && deno test --allow-read --allow-write --allow-env --allow-run",
+    "dev": "deno run --allow-read --allow-write --allow-env --allow-run src/cli.ts",
+    "compile": "deno compile --engine=v8 --allow-read --allow-write --allow-env --allow-run --output=bin/dev-tools src/cli.ts",
+    "compile:small": "deno compile --engine=quickjs --allow-read --allow-write --allow-env --allow-run --output=bin/dev-tools src/cli.ts",
+    "install": "deno task compile && deno run --allow-read --allow-write scripts/install.ts"
+  },
+  "imports": {
+    "@std/path": "jsr:@std/path@1.0.8"
+  },
+  "fmt": {
+    "semiColons": false,
+    "singleQuote": true,
+    "indentWidth": 2
+  },
+  "lint": {
+    "rules": {
+      "tags": [
+        "recommended"
+      ]
+    }
+  }
+}

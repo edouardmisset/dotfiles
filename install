@@ -4,6 +4,7 @@
 #   2. creates the symlinks listed in links.conf
 #   3. creates required directories
 #   4. runs the setup scripts (Homebrew, zsh, Node)
+#   5. compiles and installs dev-tools into the dotfiles-managed PATH
 # Safe to run repeatedly.
 
 set -e
@@ -102,5 +103,8 @@ info "Running setup scripts"
 zsh ./setup_homebrew.zsh
 zsh ./setup_zsh.zsh
 zsh ./setup_node.zsh
+
+info "Installing dev-tools"
+(cd "$ROOT/tools" && deno task install)
 
 ok "Done."

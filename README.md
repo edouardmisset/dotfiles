@@ -44,6 +44,8 @@ Running `./install`:
 4. **Runs** the setup scripts: `setup_homebrew.zsh` (installs Homebrew and runs
    `brew bundle` against the [`Brewfile`](Brewfile)), `setup_zsh.zsh` (makes the
    Homebrew `zsh` the default shell) and `setup_node.zsh`.
+5. **Builds and installs** the compiled [`dev-tools`](tools) command suite. Its
+   commands are linked into `~/.dotfiles/tools/bin`, which `zshrc` adds to `PATH`.
 
 To add a new symlink, add a line to [`links.conf`](links.conf) and re-run
 `./install`.

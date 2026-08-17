@@ -1,9 +1,0 @@
-#!/usr/bin/env zsh
-# Usage: csv2json <csv_file> > <output_json_file>
-csv2json() {
-  python3 -c "
-import csv, json, sys
-with open(sys.argv[1], encoding='utf-8-sig', newline='') as f:
-    print(json.dumps(list(csv.DictReader(f)), indent=2, ensure_ascii=False))
-" "$1"
-}

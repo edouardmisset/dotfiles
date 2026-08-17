@@ -7,3 +7,4 @@ config/yarn/global
 !.omo/omo.jsonc
 .DS_Store
 tokens
+tools/bin/

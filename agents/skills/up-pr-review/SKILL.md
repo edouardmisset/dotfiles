@@ -12,80 +12,38 @@ argument-hint: "PR number or URL (optional, defaults to active PR)"
 - Providing structured code review feedback
 - Analyzing diffs for bugs, security issues, and logic errors
 
-## Rules
-
-- Use `gh` for every GitHub read. Do not use GitHub MCP for this skill.
-- Resolve `REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)` in the target checkout, then pass `--repo "$REPO"` to every later `gh` command.
-- Review only the current PR head. Do not report defects that were fixed in later commits.
-- Do not claim workspace line links unless the matching repository checkout is present at the PR head.
-
 ## Procedure
 
-### Step 1: Resolve the PR and Fetch Metadata
+### Step 1: Gather PR Context
 
-```sh
-set -euo pipefail
-if test -n "${pr_input:-}"; then
-	pr_ref=$pr_input
-	if printf '%s\n' "$pr_input" | rg -q '^https://github\.com/[^/]+/[^/]+/pull/[0-9]+/?$'; then
-		REPO=$(printf '%s\n' "$pr_input" | sed -E 's#^https://github\.com/([^/]+/[^/]+)/pull/[0-9]+/?$#\1#')
-		resolved_repo=$(gh repo view "$REPO" --json nameWithOwner --jq .nameWithOwner)
-		test "$resolved_repo" = "$REPO" || {
-			printf '%s\n' 'PR URL repository could not be validated.' >&2
-			exit 1
-		}
-	else
-		REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
-	fi
-else
-	REPO=$(gh repo view --json nameWithOwner --jq .nameWithOwner)
-	pr_ref=$(gh pr view --repo "$REPO" --json url --jq .url)
-fi
-gh pr view "$pr_ref" --repo "$REPO" \
-	--json number,url,state,title,body,headRefName,headRefOid,baseRefName,changedFiles,files \
-	> /tmp/up-pr-review.json
-gh pr diff "$pr_ref" --repo "$REPO" > /tmp/up-pr-review.diff
-```
+Fetch the PR details (title, description, changed files, diffs):
 
-- A PR URL must match `https://github.com/<owner>/<repo>/pull/<number>`; its owner/repository is validated before `gh pr view` and `gh pr diff` run.
-- Stop for an absent, closed, or merged PR and ask whether to review it anyway. Stop if `changedFiles` is zero.
-- For more than 30 files, group paths by directory and inspect substantive files first. Note generated, binary, lock, and build-artifact files without reviewing their internals.
+**When no PR is specified** (review the current branch's PR), use `github-pull-request_currentActivePullRequest`
+**When a PR number or URL is provided** (e.g., "review PR #42"), use `mcp_github_pull_request_read`
+
+- If the PR is closed or already merged, respond with: "This PR is [closed/merged]. Would you still like a review of the changes?"
+- If the PR cannot be found or accessed, respond with: "Could not find PR [number/URL]. Please verify the PR exists and you have access."
+- If the PR contains no changes, respond with: "No changes detected in this PR."
+- If the PR contains more than 30 changed files, group files by directory and summarize trivial changes (e.g., import-only edits), providing detailed feedback only for files with substantive logic changes.
+- Skip binary files, generated files (e.g., lock files, build artifacts, auto-generated code) and note them briefly under Changes without detailed feedback.
 
 ### Step 2: Identify Changed Files
 
-```sh
-jq -r '.files[].path' /tmp/up-pr-review.json > /tmp/up-pr-review-files.txt
-```
-
-- List each unique full repository-relative path. Never identify a file only by basename.
+List every unique file path modified in the PR. There may be multiple files with the same basename — always use full workspace-relative paths.
 
 ### Step 3: Read Changed Files
 
-```sh
-head_sha=$(jq -r .headRefOid /tmp/up-pr-review.json)
-if test "$(git rev-parse HEAD)" = "$head_sha" \
-	&& test "$(gh repo view --json nameWithOwner --jq .nameWithOwner)" = "$REPO" \
-	&& test -z "$(git status --porcelain --untracked-files=all)"; then
-	source_mode=local
-else
-	source_mode=remote
-fi
-```
+For each changed file, **read the file contents** using `read_file` to:
 
-- In `local` mode, read each substantive changed file in the open workspace and use its exact current line numbers.
-- In `remote` mode, fetch and decode the final file content only when needed, then inspect the decoded file:
+- Understand the full context around each change (not just the diff)
+- Identify exact line numbers for every feedback point
+- Verify function signatures, variable names, and control flow
 
-```sh
-remote_file=$(mktemp)
-gh api "repos/$REPO/contents/<path>?ref=$head_sha" --jq .content | base64 -D > "$remote_file"
-```
-
-	Inspect the diff first and use the GitHub file URL or diff path in findings. Do not invent workspace line links.
-- For every substantive changed file, inspect both its final source and the diff. Verify signatures, control flow, error handling, and caller-visible behavior.
+This step is mandatory — do not skip it. Accurate line numbers are required for clickable references.
 
 ### Step 4: Determine Change Ordering
 
-Use `head_sha` as the only review revision. Do not flag code removed or corrected before that revision.
+Only provide feedback on the final state of each file as of the latest commit. Do not flag issues that were introduced and then fixed within the same PR.
 
 ### Step 5: Produce the Review
 
@@ -95,42 +53,18 @@ Output the review in the format below.
 
 ### Changes
 
-- **Changed files**: bullet list of changed files linked to their full repository-relative paths and line number.
-  (e.g.,
-  `[src/foo/bar.ts](src/foo/bar.ts#L42-L45)`
-  `[src/foo/baz.ts](src/foo/baz.ts#L1-L4)`
-  )
-- **User-facing changes**: What was added, modified, or removed in the end-user product.
-  (e.g., add the ability for the user to send their expenses to the accounting system)
-- **Code changes**: What was added, modified, or removed in the codebase. (e.g., add a new function `sendExpensesToAccounting()` and the button in the UI along with tests)
+For each changed file:
+
+- **File**: [path/to/file.ext](path/to/file.ext)
+- **Summary**: What was added, modified, or removed
+- **Feature/functionality**: Describe the feature or behavior change (e.g., "Implemented user activity reporting")
 - **Refactoring**: If applicable, what was restructured and why
-  (e.g., refactor `sendExpensesToAccounting()` to separate the API call from the UI logic for better testability)
 
 ### Feedback
 
-Concise, actionable points in plain English. Each feedback item must include a **severity tag**, a source reference, and one [conventional comment](https://conventionalcomments.org/). Do not separate an action point from the conventional comment: put the rationale and exact next steps in the comment's discussion.
-
-```
-<label>: <subject>
-
-[discussion: rationale, impact, and exact next steps]
-
-(optional GH code suggestion)
-```
+Concise, actionable points in plain English. Each feedback item must include a **severity tag** and a clickable file reference.
 
 Severity levels: **🔴 Critical** (blocking) · **🟠 High** · **🟡 Medium** · **🔵 Low / Suggestion**
-
-Use these labels:
-
-- `praise`: highlight a specific positive aspect.
-- `nitpick`: request a trivial, preference-based non-blocking change.
-- `suggestion`: propose a clear improvement and explain why it helps.
-- `issue`: report a concrete problem; pair it with a remedy in the discussion.
-- `todo`: request a small but necessary change.
-- `question`: ask for clarification or investigation when the concern is uncertain.
-- `thought`: share a non-blocking idea for future consideration.
-- `chore`: request a required process or maintenance task before acceptance.
-- `note`: call attention to a non-blocking detail.
 
 Prioritize in this order:
 
@@ -146,15 +80,7 @@ Prioritize in this order:
 Example feedback item:
 
 > **🟠 High — Missing null check in `processOrder()`**
-> [src/orders/processor.ts](src/orders/processor.ts#L42-L45)
->
-> issue: Guard `order.items` before accessing it.
->
-> If the API returns an order without items, the current access throws at runtime. Add `if (!order.items?.length) return;` before the first access.
->
-> ```suggestion
-> if (!order.items?.length) return;
-> ```
+> [src/orders/processor.ts](src/orders/processor.ts#L42-L45): `order.items` is accessed without a null check. If the API returns an order with no items, this will throw at runtime. Add a guard: `if (!order.items?.length) return;`
 
 ### Highlight
 
@@ -170,16 +96,17 @@ Provide a clear recommendation:
 
 ## Constraints
 
-**Source references (always apply):**
+**File references (always apply):**
 
-- In `local` mode, reference source as a workspace-relative markdown link: `[path/to/file.ext](path/to/file.ext#L42)` or `[path/to/file.ext](path/to/file.ext#L10-L15)`.
-- In `remote` mode, reference the full repository-relative path and the GitHub file URL at `head_sha`; do not use a workspace link.
-- When referencing a function or symbol, name it and link to its definition only in `local` mode.
-- Never wrap paths in backticks. Do not combine non-contiguous line ranges.
+- Format every file reference as a markdown link: `[path/to/file.ext](path/to/file.ext#L42)` for a single line, or `[path/to/file.ext](path/to/file.ext#L10-L15)` for a range
+- Use workspace-relative paths only (no absolute paths, no `file://` scheme)
+- NEVER wrap file names in backticks — backtick-wrapped paths are not clickable in VS Code
+- When referencing a function or symbol, include both the symbol name and a clickable link to its definition: e.g., `processOrder()` in [src/orders/processor.ts](src/orders/processor.ts#L42)
+- Non-contiguous lines require separate links — never combine line references like `#L10-L12, L20`
 
 **Specificity (always apply):**
 
-- Every feedback point must reference a specific file path and, in `local` mode, exact line number(s)
+- Every feedback point must reference a specific file path and line number(s)
 - Feedback must be actionable — never generic (e.g., no "add comments" or "improve naming" without a concrete suggestion and location)
 
 **Completeness:**

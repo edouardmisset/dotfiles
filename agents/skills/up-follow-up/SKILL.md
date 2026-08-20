@@ -28,17 +28,8 @@ Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hyp
 
 **Test link patterns** (what gets posted on a PR by `make run_preview_job`):
 
-- Upfluence app: `https://staging.upfluence.co/?index_key=upfluence-web:<short-sha>`
-- Wednesday app: `https://friday.wednesday.app/?index_key=upfluence-web:<short-sha>`
-
-## Tools and Rules
-
-- Linear MCP: identity, issue list/history/comments, and all Linear writes.
-- `gh`: every GitHub read and write. Use `gh api graphql` only for review threads.
-- Scope every PR query to `upfluence`; never include forks or another organization.
-- Resolve once: `GH_LOGIN=$(gh api user --jq .login)`. Stop if it is empty or the command fails.
-- Request only listed JSON fields and cap discovery with `--limit 100`.
-- Reads need no confirmation. Every write, merge, and preview build needs the separately stated explicit confirmation.
+- Upfluence app: `https://staging.upfluence.co/?index_key=upfluence-web:<id>`
+- Wednesday app: `https://friday.wednesday.app/?index_key=upfluence-web:<id>`
 
 ## Procedure
 
@@ -48,34 +39,15 @@ Read `~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md` 
 
 ### Step 2: Resolve Identity
 
-```sh
-set -euo pipefail
-GH_LOGIN=$(gh api user --jq .login)
-test -n "$GH_LOGIN"
-gh search prs --owner upfluence --author "$GH_LOGIN" --state open --limit 100 \
-   --json number,title,url,body,repository,updatedAt \
-   > /tmp/up-follow-up-prs.json
-test "$(jq 'length' /tmp/up-follow-up-prs.json)" -lt 100 || {
-   printf '%s\n' 'PR discovery reached its limit; follow-up is incomplete.' >&2
-   exit 1
-}
-```
-
-- Resolve the current Linear user with Linear MCP and use that returned user as the sole assignee filter.
-- Stop and ask the user to authenticate if either identity lookup fails.
+- Linear: get the authenticated user (assignee filter).
+- GitHub: get the authenticated user (PR author filter), scoped to `org:upfluence`.
+- If either fails, stop and ask me to authenticate.
 
 ### Step 3: Fetch My Active Work
 
-- List Linear issues assigned to the authenticated Linear user in `In Progress`, `In Review`, and `Ready for RC`. Include `QA` only when it maps to one of the discovered PRs.
-- For every discovered PR, fetch `headRefName` and `headRefOid` before matching or checking it:
-
-```sh
-head_json=$(gh pr view "$number" --repo "$repo" --json headRefName,headRefOid)
-head_sha=$(printf '%s\n' "$head_json" | jq -er .headRefOid)
-```
-
-- Map an issue to a PR only when its identifier occurs case-insensitively as a complete token in `headRefName`, title, or body. Do not use partial number matches.
-- Keep all matching PRs under the same issue, including cross-repository PRs. List unmatched PRs separately; do not infer a Linear issue.
+- Linear: list all issues where `assignee = me` AND `status ∈ {In Progress, In Review, Ready for RC}`. Also pull issues in `QA` if they appear linked to one of my open PRs (needed for test-link checks in Step 5c).
+- GitHub: list all open PRs in `org:upfluence` where I'm the author in current sprint.
+- Build a map: Linear issue ↔ PR(s) by matching the issue identifier (e.g. `DRA-1234`) found in the PR branch name (`em/dra-1234`), title, or body. **A single Linear issue can map to multiple PRs across different repos** (e.g. a change spanning `upfluence-web` + `oss-components`); keep them all linked to the same issue and treat them as a group from Step 5 onward.
 
 ### Step 4: In Progress — New Comments to Attend
 
@@ -92,117 +64,88 @@ If there are no new comments, list the issue under "In Progress — no new activ
 
 For each `In Review` issue with one or more linked open PRs (and any open PR I authored even if its issue is in `QA`):
 
-A single Linear issue may have multiple PRs across different repos. For every linked PR, set `repo` and `number` from `/tmp/up-follow-up-prs.json`, fetch and retain `head_sha` with the Step 3 command, then run 5a-5d before aggregating the issue. Fetch `headRefOid` again after 5a-5d; if it differs from `head_sha`, mark readiness incomplete and do not use any results collected for the earlier head.
+A single Linear issue may have multiple PRs across different repos. Run **5a–5d for every linked PR**, then aggregate per issue in Step 7.
 
 #### 5a. Unaddressed review threads
 
-```sh
-query='query($owner:String!,$name:String!,$number:Int!,$after:String){repository(owner:$owner,name:$name){pullRequest(number:$number){reviewThreads(first:100,after:$after){nodes{isResolved path line comments(last:1){nodes{author{login} body url createdAt}}} pageInfo{hasNextPage endCursor}}}}}'
-pages=()
-after_args=()
-while :; do
-   page=$(mktemp)
-   gh api graphql -F owner="${repo%%/*}" -F name="${repo##*/}" -F number="$number" \
-      "${after_args[@]}" -f query="$query" > "$page" || {
-         rm -f "${pages[@]}" "$page"
-         printf '%s\n' 'Could not read every review-thread page; readiness is incomplete.' >&2
-         exit 1
-      }
-   pages+=("$page")
-   has_next=$(jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.hasNextPage' "$page")
-   test "$has_next" = true || break
-   cursor=$(jq -r '.data.repository.pullRequest.reviewThreads.pageInfo.endCursor' "$page")
-   test -n "$cursor" && test "$cursor" != null || {
-      rm -f "${pages[@]}"
-      printf '%s\n' 'Review-thread pagination is incomplete; readiness is incomplete.' >&2
-      exit 1
-   }
-   after_args=(-F "after=$cursor")
-done
-jq -s '[.[].data.repository.pullRequest.reviewThreads.nodes[]]' "${pages[@]}" > /tmp/up-follow-up-threads.json
-rm -f "${pages[@]}"
-```
+List GitHub review threads where:
 
-- A thread needs attention only when `isResolved` is false and its last comment author is not `GH_LOGIN`. If pagination cannot complete, treat readiness as incomplete and do not merge or advance the issue.
-- Output `<reviewer> on <path>:<line> · <first line> · <URL>` for each such thread. Do not infer whether a later push addressed it; resolution is the source of truth.
+- The thread is **not** resolved, AND
+- The most recent comment is from a reviewer (not me), OR a change was requested but didn't push a follow-up commit.
+
+Per thread, output: `<reviewer> on <file>:<line> · <one-line summary> · <link>`.
 
 #### 5b. Approvals & merge readiness
 
-```sh
-gh pr view "$number" --repo "$repo" \
-   --json url,baseRefName,headRefOid,mergeable,mergeStateStatus,reviews \
-   > /tmp/up-follow-up-pr.json
-```
+- Count approvals on each PR.
+- A PR is **ready to ship** when it has ≥ 2 approvals, no outstanding `changes requested`, and no unresolved blocker threads.
+- An issue is **ready to advance** only when **all** linked PRs are ready to ship. If only some PRs are ready, list which ones still block.
+- For each issue ready to advance, ask me which transition to make on the Linear issue:
+  - move to `QA`
+  - move to `Done`
+  - do nothing
 
-- For each reviewer, retain only their most recent review by submission time. Count distinct reviewers whose retained state is `APPROVED`.
-- A current `CHANGES_REQUESTED` state blocks the PR. A PR is ready to ship only with at least two retained approvals, no current changes request, zero attention threads, `mergeable=MERGEABLE`, and `mergeStateStatus=CLEAN`.
-- An issue is ready only when every linked PR is ready. For a ready issue, ask which one action to take: move to `QA`, move to `Done`, or do nothing. Transition only after that explicit confirmation.
+Wait for my answer before transitioning anything.
 
 #### 5c. Test link freshness
 
-```sh
-gh api "repos/$repo/issues/$number/comments?per_page=100&sort=created&direction=desc" \
-   > /tmp/up-follow-up-comments.json
-```
+For each PR linked to a Linear issue in `In Review` or `QA`:
 
-- Scan the newest 100 comment bodies newest first for `https://staging.upfluence.co/?index_key=upfluence-web:<short-sha>` or `https://friday.wednesday.app/?index_key=upfluence-web:<short-sha>`.
-- The canonical link is the newest matching URL. Extract its suffix after `upfluence-web:` as `preview_sha`.
-- It is current if `head_sha` begins with `preview_sha`; otherwise it is outdated. No matching URL means no link.
-- For no link or an outdated link, tell the user and ask whether to run `make run_preview_job` in `~/Documents/code/upfluence/<repo-name>`. On confirmation only, run it there, capture the link, then ask separately before adding that link to Linear issue ("Add Link...").
-- If the canonical link is current but absent from Linear, ask separately whether to add it to the Linear issue ("Add Link..."). Technical PRs may be explicitly marked as not requiring a test link.
+1. Scan the PR comments for test links matching the patterns above.
+2. **No test link found** → tell me, then ask whether to run `make run_preview_job` in the matching repo (`~/Documents/code/upfluence/<repo>`). On confirmation, run it, capture the resulting link, and post it on the Linear issue. Note that some PR are purely technical and don't need a test link; in that case, I can skip the test link generation.
+3. **Multiple test links** → keep only the latest one as the canonical reference.
+4. **Test link is outdated** (the PR has commits newer than the build the test link was generated from) → tell me, then ask whether to regenerate via `make run_preview_job`. On confirmation, regenerate and update the Linear issue.
+5. **Test link exists and is current but is missing from the Linear issue** → ask whether to add it, then add it on confirmation.
+
+Never run `make run_preview_job` or write to the Linear issue without my explicit confirmation.
 
 #### 5d. CI status
 
-```sh
-set +e
-gh pr checks "$number" --repo "$repo" --required --json name,state,bucket,link \
-   > /tmp/up-follow-up-checks.json
-checks_status=$?
-set -e
-test "$checks_status" -eq 0 || test "$checks_status" -eq 8 || {
-   printf '%s\n' 'Could not read required checks; readiness is incomplete.' >&2
-   exit 1
-}
-```
+For each PR, fetch the latest CI run. If failing:
 
-- A PR is green only when every required check has `bucket=pass` or `bucket=skipping`. Treat `fail`, `pending`, and `cancel` as blocking.
-- For failed checks, output the check link, failing job names, and one root-cause hypothesis from the first failure line or log tail. If logs cannot be read, state that the cause is unavailable rather than guessing.
+- Print the pipeline URL.
+- Print the failing job name(s).
+- Print a one-line root-cause hypothesis based on the first failure line / log tail (e.g. "lint: unused import in `app/components/foo.ts:42`", "test: assertion failure in `tests/integration/bar-test.js`", "build: missing dep `@upfluence/baz`").
 
 ### Step 6: Ready for RC — Mergeability
 
 For each `Ready for RC` issue with one or more linked PRs:
 
-1. Run 5a-5d for every linked PR. Re-fetch `headRefOid` after those checks and require it to equal the retained `head_sha`; otherwise report readiness as incomplete and stop for this issue. If any check is non-green or `mergeable` is not `MERGEABLE`, report the blocking PR and stop for this issue.
-2. Show each PR's `baseRefName` and `mergeStateStatus`.
-3. Ask: "Merge these PRs and advance the Linear issue to the next status?" with options:
+1. Confirm the latest CI pipeline is green **on every linked PR**. If any PR is failing, surface the failure(s) as in 5d and stop here for this issue.
+2. Check if each PR can be merged without conflicts (using GitHub's mergeable status). If any PR has conflicts, surface them and stop here for this issue.
+3. Show each PR's base branch (e.g. `master`, `staging`, `feature/<name>`).
+4. Ask me: "Merge this/these PR(s) and advance the Linear issue to the next status?" with options:
    - merge all + advance
    - merge all only
    - skip
-4. On confirmation, merge each PR in a stable order by `<repo>/<number>`:
-
-```sh
-gh pr merge "$number" --repo "$repo" --merge --delete-branch=true \
-   --match-head-commit "$head_sha"
-```
-
-5. If a merge fails, including a rejected `--match-head-commit` because the head changed, stop and report the merged and unmerged PRs. Never continue to the Linear transition after a partial merge.
-6. For `merge all + advance`, read the workflow reference again and ask for separate confirmation of the resulting Linear status transition before writing it through Linear MCP.
-
+5. On confirmation:
+   - Merge each linked PR with the repo's standard strategy ("create a merge commit" unless the repo convention says otherwise). If a merge fails partway through a multi-PR issue, stop and report which PRs were merged and which weren't.
+   - Transition the Linear issue per the workflow reference (Step 1).
+   - Report the new state.
 ### Step 7: Final Report
 
 Output a single condensed markdown report grouped by Linear status. One block per issue, with:
 
 - `<LINEAR-ID> <title>` (link to Linear)
-- One sub-bullet **per linked PR**: PR `#<num>` in `<repo>` (link) — CI green/failed/pending · mergeable yes/no · approvals X/2 · attention threads Y · preview current/outdated/missing/not-required
+- One sub-bullet **per linked PR**: PR `#<num>` in `<repo>` (link) — CI ✅/❌ · Conflicts ✅/❌ · approvals X/2 · unresolved threads Y
 - One-line **next action** for the issue as a whole (e.g. "respond to @alice's comment on `foo.ts:42` in PR #234", "regenerate test link on PR #235", "merge both PRs & move to Released"). If different PRs need different actions, list them as separate sub-actions.
 
 Omit any status section that has zero items.
 
 ## Constraints
 
-1. Scope GitHub activity to `upfluence`; scope Linear issues to the authenticated Linear user.
-2. Read `~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md` before every Linear status decision.
-3. Confirm each GitHub/Linear write and each preview build separately. Never batch approvals.
-4. Compare a preview short SHA as a prefix of the PR `headRefOid`; any mismatch is outdated.
-5. Run `make run_preview_job` only from `~/Documents/code/upfluence/<repo-name>`.
-6. Group the report as `In Progress`, `In Review`, then `Ready for RC`; omit empty groups. Use one short issue block, relative timestamps, short handles, and a concrete next action per item.
+**Required (must always be satisfied):**
+
+1. PR scope is the `upfluence` GitHub organization only. Never include personal forks or other orgs.
+2. Linear assignee filter must use the currently authenticated user. Never hardcode a name or id.
+3. Read the workflow reference (`~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md`) before deciding any status transition.
+4. **Reads are free; writes always require explicit confirmation.** Read-only operations (listing issues/PRs, fetching comments, checking CI status, scanning for test links, reading workflow docs, computing report data) run without asking. **Every** write to Linear or GitHub — posting or editing comments, transitioning Linear status, attaching/updating test links on a Linear issue, requesting reviews, merging PRs, and running `make run_preview_job` — must be confirmed by me each time. Never batch multiple writes behind a single "yes"; ask per action (or per clearly-scoped group) and wait for my reply before proceeding.
+5. Test link freshness is decided by comparing the link's referenced commit/build to the PR's HEAD commit SHA. Different SHA → outdated.
+6. When running `make run_preview_job`, `cd` into the correct repo under `~/Documents/code/upfluence/<repo>` first. Never run it from another repo's directory.
+
+**Quality (apply after required constraints are met):**
+
+7. Group output by Linear status (`In Progress` → `In Review` → `Ready for RC`). One bullet per issue/PR. No long paragraphs.
+8. Every reported item must end with a concrete next action.
+9. If a status section has zero items, omit the section entirely (don't print "(none)").
+10. Use relative timestamps (`2d ago`, `4h ago`) and short reviewer/author handles.

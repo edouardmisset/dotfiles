@@ -37,7 +37,7 @@
         "agents": {
           "sisyphus": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
           "hephaestus": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "medium" },
-          "prometheus": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
+          "prometheus": { "model": "github-copilot/claude-sonnet-5", "reasoning": "medium" },
           "metis": { "model": "github-copilot/claude-sonnet-5", "reasoning": "high" },
           "momus": { "model": "github-copilot/gpt-5.6-terra", "reasoning": "medium" },
           "oracle": { "model": "github-copilot/gpt-5.6-sol", "reasoning": "high" },

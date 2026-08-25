@@ -70,8 +70,6 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
-# Create, run, and share large language models (LLMs)
-brew "ollama", restart_service: :changed
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # AI coding agent, built for the terminal
@@ -179,12 +177,12 @@ cask "istat-menus"
 cask "kaleidoscope@3"
 # Customise mouse behavior
 cask "linearmouse"
-# Discover, download, and run local LLMs
-cask "lm-studio"
 # Detailed information on every Apple product ever made
 cask "mactracker"
 # Desktop application for Open WebUI
 cask "open-webui"
+# Run large language models locally
+cask "ollama-app"
 # Home media player
 cask "plex"
 # Home media server
@@ -297,7 +295,6 @@ vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
-vscode "techopolis.omlx-copilot-chat"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "voidzero.vite-plus-extension-pack"

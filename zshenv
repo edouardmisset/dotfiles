@@ -28,7 +28,6 @@ path=(
   "$HOME/Projects/code/scripts/bin"
   $path
   "/Applications/Visual Studio Code.app/Contents/Resources/app/bin"
-  "$HOME/.lmstudio/bin"
 )
 typeset -U path
 

@@ -2,6 +2,8 @@ tap "rtk-ai/tap"
 tap "xykong/tap", trusted: true
 # Search tool like grep, but optimized for programmers
 brew "ack"
+# Code searching, linting, rewriting
+brew "ast-grep"
 # Clone of cat(1) with syntax highlighting and Git integration
 brew "bat"
 # Bash scripts that integrate bat with various command-line tools
@@ -40,8 +42,14 @@ brew "gh"
 brew "git"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
+# Grammar Checker for Developers
+brew "harper"
+# Open-source, cross-platform JavaScript runtime environment
+brew "node"
 # Interpreted, interactive, object-oriented programming language
 brew "python@3.14"
+# Search tool like grep and The Silver Searcher
+brew "ripgrep"
 # Self-improving AI agent that creates skills from experience
 brew "hermes-agent"
 # Apache HTTP server
@@ -56,8 +64,6 @@ brew "icu4c@76"
 brew "jq"
 # Pager program similar to more
 brew "less"
-# Open-source, cross-platform JavaScript runtime environment
-brew "node"
 # Fast, flexible, config-based cli for linting Markdown/CommonMark files
 brew "markdownlint-cli2"
 # Mac App Store command-line interface
@@ -70,8 +76,8 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
-# Search tool like grep and The Silver Searcher
-brew "ripgrep"
+# Create, run, and share large language models (LLMs)
+brew "ollama", restart_service: :changed
 # AI coding agent, built for the terminal
 brew "opencode"
 # Cryptography and SSL/TLS Toolkit
@@ -120,6 +126,8 @@ brew "rtk-ai/tap/rtk", trusted: true
 cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
+# Distribution of the Python and R programming languages for scientific computing
+cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
@@ -167,6 +175,10 @@ cask "ghostty"
 cask "google-chrome"
 # Open-source video transcoder
 cask "handbrake-app"
+# Speech to text application
+cask "handy"
+# Grammar checker for developers
+cask "harper-desktop"
 # Free and open-source media player
 cask "iina"
 # Tool to optimise images to a smaller size
@@ -177,12 +189,12 @@ cask "istat-menus"
 cask "kaleidoscope@3"
 # Customise mouse behavior
 cask "linearmouse"
+# Discover, download, and run local LLMs
+cask "lm-studio"
 # Detailed information on every Apple product ever made
 cask "mactracker"
 # Desktop application for Open WebUI
 cask "open-webui"
-# Run large language models locally
-cask "ollama-app"
 # Home media player
 cask "plex"
 # Home media server
@@ -241,6 +253,7 @@ mas "Shareful", id: 1522267256
 mas "Xcode", id: 497799835
 mas "Zush", id: 6758432449
 vscode "aaron-bond.better-comments"
+vscode "adpyke.codesnap"
 vscode "andrejunges.handlebars"
 vscode "astro-build.astro-vscode"
 vscode "bierner.markdown-mermaid"
@@ -258,6 +271,7 @@ vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
 vscode "donjayamanne.githistory"
 vscode "dotiful.dotfiles-syntax-highlighting"
+vscode "elijah-potter.harper"
 vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "fallow-rs.fallow-vscode"
@@ -295,6 +309,7 @@ vscode "streetsidesoftware.code-spell-checker"
 vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
+vscode "techopolis.omlx-copilot-chat"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "voidzero.vite-plus-extension-pack"

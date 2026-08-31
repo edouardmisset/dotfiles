@@ -64,20 +64,7 @@ no local-link mode.
 
 ### Configuration Template
 
-Use the template in `./assets/eslint.config.template.mjs` as a reference. Key patterns:
-
-```javascript
-// @ts-check
-import { defineConfig } from 'eslint/config';
-import { buildConfiguration } from '@upfluence/w-conf/eslint';
-
-export default defineConfig(
-  ...buildConfiguration({
-    ignores: ['dist/', 'vendor/', 'node_modules/', ...],
-    nodeFiles: ['ember-cli-build.js', 'config/**/*.js', ...]
-  })
-);
-```
+Use the template in `./assets/eslint.config.template.mjs` as a reference. Make sure to adjust the specific config to the project's needs and double check the default config in `@upfluence/w-conf` for any updates.
 
 ### Constraints
 
@@ -86,6 +73,8 @@ export default defineConfig(
 - **Node files:** List all config/build files that shouldn't be linted as browser code
 - **Always production:** Install `@upfluence/w-conf` from the npm registry — there is no local-link mode
 - **No mixing:** Do not keep both `.eslintrc.js` and `eslint.config.mjs` in the same project
+
+At the end of this phase, commit the changes as: `chore: migrate to @upfluence/w-conf flat config`
 
 ## Part 2: Iterative Rule-by-Rule Violation Cleanup
 
@@ -102,33 +91,34 @@ rather than in one large, hard-to-review commit.
 
 0. **Commit 0 — auto-fix pass**
    - Run `pnpm lint:js:fix` (or `eslint . --fix`) to resolve every auto-fixable violation in one shot.
-   - Stage and commit this alone, before any manual fixing begins: `fix(lint): apply eslint --fix auto-fixes`
+   - Stage and commit this alone, before any manual fixing begins: `fix: apply eslint --fix auto-fixes`
 1. **Get violation counts per rule**
    - Run `./scripts/eslint-summary.zsh` (bundled with this skill) to tally violations by rule name, sorted descending
    - Requires `pnpm`, `jq`, and `column` on `PATH`
    - Sort rules descending by count
+   - Display the result to the user for review and approval before proceeding
 2. **Loop through rules, most frequent first**
    - Pick the single most frequent remaining rule
-   - Fix every violation of *that rule only* — no drive-by fixes of other rules in the same pass
+   - Fix every violation of _that rule only_ in a type-safe manner — no drive-by fixes of other rules in the same pass
    - Choose the correct semantic fix per call site rather than a blind find/replace (e.g. `assert.strictEqual` vs `assert.deepEqual` depends on the value types being compared)
    - Re-run lint and confirm this rule's count is 0 and no other rule regressed
-   - Stage the changes (`git add -A`)
+   - Stage the changes
    - **Stop and ask the user for approval before committing**
-   - Once approved, commit as: `fix(lint): resolve <rule-name> violations`
+   - Once approved, commit as: `fix: resolve <rule-name> violations`
    - Repeat with the next most frequent rule
 3. **Threshold: group the tail into one final pass**
    - As soon as the next rule's count is **<= 3**, stop processing rules individually
    - Group that rule together with every remaining (smaller) rule into a single final pass
    - Fix them all, verify with a full lint run (0 errors expected), stage, and **stop for one last approval**
-   - Commit as: `fix(lint): resolve remaining rule violations (<rule1>, <rule2>, ...)`
+   - Commit as: `fix: resolve remaining rule violations (<rule1>, <rule2>, ...)`
 4. **Final verification**
    - Run the full lint suite (JS + template linting, e.g. `pnpm lint`) to confirm no regressions across the whole cleanup
 
 ### Commit Message Convention
 
-- Commit 0: `fix(lint): apply eslint --fix auto-fixes`
-- Per-rule commits: `fix(lint): resolve <rule> violations`
-- Final combined commit: `fix(lint): resolve remaining rule violations (<rule1>, <rule2>, ...)`
+- Commit 0: `fix: apply eslint --fix auto-fixes`
+- Per-rule commits: `fix: resolve <rule> violations`
+- Final combined commit: `fix: resolve remaining rule violations (<rule1>, <rule2>, ...)`
 
 ### Constraints
 

@@ -85,31 +85,7 @@ Create `eslint.config.mjs` in your project root. Use your old `.eslintrc.js` and
 import { defineConfig } from "eslint/config";
 import { buildConfiguration } from "@upfluence/w-conf/eslint";
 
-export default defineConfig(
-  ...buildConfiguration({
-    // Preserve your ignore patterns from .eslintignore
-    ignores: [
-      "blueprints/*/files/",
-      "vendor/",
-      "dist/",
-      "tmp/",
-      "node_modules/",
-      "coverage/",
-      // Add any custom patterns specific to your project
-    ],
-    // Files that should be linted with Node/CommonJS rules
-    nodeFiles: [
-      ".eslintrc.js",
-      ".template-lintrc.js",
-      "ember-cli-build.js",
-      "index.js",
-      "testem.js",
-      "blueprints/*/index.js",
-      "config/**/*.js",
-      "tests/dummy/config/**/*.js",
-    ],
-  }),
-);
+export default defineConfig(...buildConfiguration());
 ```
 
 ### Step 4: Clean Up Old Files

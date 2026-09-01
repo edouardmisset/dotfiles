@@ -42,24 +42,26 @@ brew "gh"
 brew "git"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
-# Grammar Checker for Developers
-brew "harper"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.14"
+brew "python@3.13"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Self-improving AI agent that creates skills from experience
 brew "hermes-agent"
 # Apache HTTP server
 brew "httpd"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.14"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Command-line benchmarking tool
 brew "hyperfine"
 # C/C++ and Java libraries for Unicode and globalization
 brew "icu4c@76"
+# CLI for ImageOptim, ImageAlpha and JPEGmini
+brew "imageoptim-cli"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
 # Pager program similar to more
@@ -88,8 +90,6 @@ brew "php"
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Official tldr client written in Rust
@@ -126,8 +126,6 @@ brew "rtk-ai/tap/rtk", trusted: true
 cask "alcove"
 # Application launcher and productivity software
 cask "alfred"
-# Distribution of the Python and R programming languages for scientific computing
-cask "anaconda"
 # Menu bar icon organiser
 cask "bartender"
 # Tool to customise input devices and automate computer systems
@@ -177,8 +175,6 @@ cask "google-chrome"
 cask "handbrake-app"
 # Speech to text application
 cask "handy"
-# Grammar checker for developers
-cask "harper-desktop"
 # Free and open-source media player
 cask "iina"
 # Tool to optimise images to a smaller size
@@ -193,6 +189,8 @@ cask "linearmouse"
 cask "lm-studio"
 # Detailed information on every Apple product ever made
 cask "mactracker"
+# Get up and running with large language models locally
+cask "ollama-app"
 # Desktop application for Open WebUI
 cask "open-webui"
 # Home media player
@@ -271,7 +269,6 @@ vscode "dbaeumer.vscode-eslint"
 vscode "denoland.vscode-deno"
 vscode "donjayamanne.githistory"
 vscode "dotiful.dotfiles-syntax-highlighting"
-vscode "elijah-potter.harper"
 vscode "embertooling.vscode-ember"
 vscode "esbenp.prettier-vscode"
 vscode "fallow-rs.fallow-vscode"
@@ -317,5 +314,5 @@ vscode "wix.vscode-import-cost"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
+npm "@colbymchenry/codegraph"
 npm "corepack"
-npm "ember-cli"

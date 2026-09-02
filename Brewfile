@@ -10,6 +10,8 @@ brew "bat"
 brew "bat-extras"
 # Get/set bluetooth power and discoverable state
 brew "blueutil"
+# Collection of portable C++ source libraries
+brew "boost"
 # Resource monitor. C++ version and continuation of bashtop and bpytop
 brew "btop"
 # Read-only developer endpoint scanner for supply-chain exposure
@@ -26,6 +28,12 @@ brew "deno"
 brew "docker"
 # More intuitive version of du in rust
 brew "dust"
+# Collection of reusable C++ library artifacts developed at Facebook
+brew "folly"
+# Facebook's branch of Apache Thrift, including a new C++ server
+brew "fbthrift"
+# Shared library for Watchman and Eden projects
+brew "edencommon"
 # Modern, maintained replacement for ls
 brew "eza"
 # Codebase intelligence for TypeScript and JavaScript
@@ -34,6 +42,8 @@ brew "fallow"
 brew "fd"
 # Play, record, convert, and stream select audio and video codecs
 brew "ffmpeg"
+# Libraries to talk to Microsoft SQL Server and Sybase databases
+brew "freetds"
 # Command-line fuzzy finder written in Go
 brew "fzf"
 # GitHub command-line tool
@@ -42,6 +52,8 @@ brew "gh"
 brew "git"
 # Open source programming language to build simple/reliable/efficient software
 brew "go"
+# SIMD-accelerated C++ JSON parser
+brew "simdjson"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Interpreted, interactive, object-oriented programming language
@@ -79,7 +91,7 @@ brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
 # Create, run, and share large language models (LLMs)
-brew "ollama", restart_service: :changed
+brew "ollama", link: false
 # AI coding agent, built for the terminal
 brew "opencode"
 # Cryptography and SSL/TLS Toolkit
@@ -230,7 +242,6 @@ cask "whatsapp"
 mas "Actions", id: 1586435171
 mas "Amazing AI", id: 1660147028
 mas "Amphetamine", id: 937984704
-mas "Asphalt", id: 1491129197
 mas "Assemble", id: 6459060454
 mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
@@ -307,6 +318,7 @@ vscode "streetsidesoftware.code-spell-checker-french"
 vscode "stylelint.vscode-stylelint"
 vscode "tamasfe.even-better-toml"
 vscode "techopolis.omlx-copilot-chat"
+vscode "typescriptteam.native-preview"
 vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "voidzero.vite-plus-extension-pack"
@@ -316,3 +328,4 @@ vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
 npm "@colbymchenry/codegraph"
 npm "corepack"
+npm "opencode-ai"

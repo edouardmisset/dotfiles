@@ -33,6 +33,10 @@ alias system_update="sudo softwareupdate --install --all --verbose"
 
 # ── Editor / dotfiles ─────────────────────────────────────────────────────
 alias zshrc="code ~/.dotfiles && code ~/.zshrc"
+alias sourcez="source ~/.zshrc"
+alias aliases="code ~/.dotfiles && code ~/.dotfiles/zsh/aliases.zsh"
+alias aliass="aliases"
+
 
 # ── Git ───────────────────────────────────────────────────────────────────
 # Resolve the repo's default branch (main or master), falling back to main.

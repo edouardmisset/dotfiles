@@ -9,11 +9,11 @@ ${Object.keys(commands).sort().map((name) => `  ${name}`).join('\n')}`)
 
 function commandFromInvocation(): { command?: Command; args: string[] } {
   const invokedAs = (process.argv0 ?? '').split('/').at(-1) ?? ''
-  const directCommand = commands[invokedAs]
+  const directCommand = commands[invokedAs as keyof typeof commands]
   if (directCommand) return { command: directCommand, args: Deno.args }
 
   const [name, ...args] = Deno.args
-  return { command: name ? commands[name] : undefined, args }
+  return { command: name ? commands[name as keyof typeof commands] : undefined, args }
 }
 
 const { command, args } = commandFromInvocation()

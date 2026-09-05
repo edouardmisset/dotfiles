@@ -5,6 +5,7 @@
 	defaultBranch = main
 [core]
 	editor = code --wait
+	excludesFile = ~/.config/git/ignore
 [alias]
 	se = !git rev-list --all | xargs git grep -F
 [help]

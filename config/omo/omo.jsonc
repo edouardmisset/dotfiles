@@ -1,6 +1,15 @@
 {
   "$schema": "https://raw.githubusercontent.com/code-yeongyu/oh-my-openagent/dev/assets/omo.schema.json",
 
+  "[opencode]": {
+    "tmux": {
+      "agent_pane_min_width": 30,
+      "enabled": true,
+      "main_pane_min_width": 60,
+      "main_pane_size": 50
+    }
+  },
+
   "profiles": {
     "perso": {
       "[opencode]": {

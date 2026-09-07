@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "diagram_type": "architecture",
+  "meta": {
+    "title": "Dotfiles Repository Architecture",
+    "locale": "en",
+    "quality_profile": "showcase",
+    "repository": {
+      "url": "https://github.com/edouardmisset/dotfiles",
+      "revision": "5f08e2835a7205299f4794f9f298cfe3621b259c"
+    },
+    "viewBox": [1180, 740]
+  },
+  "components": [
+    {
+      "id": "repository",
+      "type": "cloud",
+      "label": "Dotfiles repository",
+      "sublabel": "Source of truth",
+      "pos": [40, 290],
+      "size": [160, 72],
+      "sources": [{ "path": "README.md", "line": 1, "label": "Repository overview" }]
+    },
+    {
+      "id": "installer",
+      "type": "backend",
+      "label": "./install",
+      "sublabel": "Idempotent orchestrator",
+      "pos": [260, 290],
+      "size": [170, 72],
+      "sources": [{ "path": "install", "line": 1, "label": "Bootstrap entrypoint" }]
+    },
+    {
+      "id": "manifest",
+      "type": "database",
+      "label": "links.conf",
+      "sublabel": "Symlink manifest",
+      "pos": [500, 290],
+      "size": [160, 72],
+      "sources": [{ "path": "links.conf", "line": 1, "label": "Managed links" }]
+    },
+    {
+      "id": "home",
+      "type": "external",
+      "label": "Home directory",
+      "sublabel": "~/.config and dotfiles",
+      "pos": [970, 290],
+      "size": [170, 72]
+    },
+    {
+      "id": "config",
+      "type": "frontend",
+      "label": "App configuration",
+      "sublabel": "Terminal, CLI and agents",
+      "pos": [740, 105],
+      "size": [170, 72],
+      "sources": [{ "path": "config/starship.toml", "line": 1, "label": "Representative config" }]
+    },
+    {
+      "id": "skills",
+      "type": "backend",
+      "label": "Agent skills",
+      "sublabel": "Shared workflow library",
+      "pos": [970, 105],
+      "size": [170, 72],
+      "sources": [{ "path": "agents/skills/skills-lock.json", "line": 1, "label": "Installed skill set" }]
+    },
+    {
+      "id": "setup",
+      "type": "backend",
+      "label": "Setup scripts",
+      "sublabel": "Homebrew, Zsh and Node",
+      "pos": [500, 490],
+      "size": [160, 72],
+      "sources": [
+        { "path": "setup_homebrew.zsh", "line": 1 },
+        { "path": "setup_zsh.zsh", "line": 1 },
+        { "path": "setup_node.zsh", "line": 1 }
+      ]
+    },
+    {
+      "id": "packages",
+      "type": "external",
+      "label": "Developer runtime",
+      "sublabel": "Homebrew packages + shell",
+      "pos": [740, 490],
+      "size": [170, 72],
+      "sources": [{ "path": "Brewfile", "line": 1, "label": "Package manifest" }]
+    },
+    {
+      "id": "devtools",
+      "type": "backend",
+      "label": "dev-tools",
+      "sublabel": "Deno command dispatcher",
+      "pos": [740, 610],
+      "size": [170, 72],
+      "sources": [
+        { "path": "tools/src/cli.ts", "line": 1 },
+        { "path": "tools/src/commands.ts", "line": 1 }
+      ]
+    },
+    {
+      "id": "path",
+      "type": "external",
+      "label": "Interactive shell",
+      "sublabel": "Commands available on PATH",
+      "pos": [970, 610],
+      "size": [170, 72],
+      "sources": [{ "path": "zshrc", "line": 1, "label": "Shell startup" }]
+    }
+  ],
+  "boundaries": [
+    {
+      "kind": "region",
+      "label": "Repository-managed assets",
+      "wraps": ["repository", "installer", "manifest", "config", "skills", "setup", "devtools"],
+      "pad": 18
+    }
+  ],
+  "connections": [
+    { "id": "repo-installer", "from": "repository", "to": "installer", "label": "./install", "variant": "emphasis" },
+    { "id": "installer-manifest", "from": "installer", "to": "manifest", "label": "reads" },
+    { "id": "manifest-home", "from": "manifest", "to": "home", "label": "creates symlinks", "variant": "emphasis" },
+    { "id": "config-home", "from": "config", "to": "home", "label": "linked into ~/.config" },
+    { "id": "skills-home", "from": "skills", "to": "home", "label": "shared with agents", "labelAt": [1055, 230] },
+    { "id": "installer-setup", "from": "installer", "to": "setup", "label": "runs", "labelAt": [520, 420] },
+    { "id": "setup-packages", "from": "setup", "to": "packages", "label": "installs and configures", "labelAt": [700, 470] },
+    { "id": "installer-devtools", "from": "setup", "to": "devtools", "label": "deno task install", "labelAt": [700, 606] },
+    { "id": "devtools-path", "from": "devtools", "to": "path", "label": "links command aliases", "labelAt": [940, 596] },
+    { "id": "home-path", "from": "home", "to": "path", "label": "loads zshrc", "variant": "dashed", "labelAt": [1055, 480] }
+  ],
+  "cards": [
+    {
+      "dot": "cyan",
+      "title": "Bootstrap",
+      "items": ["Clone once, then run ./install", "Repeated runs reconcile only out-of-date state"]
+    },
+    {
+      "dot": "emerald",
+      "title": "Configuration",
+      "items": ["links.conf maps repository files into the home directory", "Application and agent settings remain version-controlled"]
+    },
+    {
+      "dot": "violet",
+      "title": "Tooling",
+      "items": ["Setup scripts establish the developer runtime", "Deno compiles one dispatcher and exposes command symlinks on PATH"]
+    }
+  ]
+}

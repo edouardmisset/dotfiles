@@ -1,13 +1,13 @@
 ---
 name: up-issue-analysis
-description: "Analyze a Linear or GitHub issue with its comments and sub-issues, then propose a detailed implementation plan. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: planning an issue, analyzing a ticket, breaking down work, proposing a solution, creating an implementation plan."
+description: "Analyze a Linear or GitHub issue with its comments and sub-issues, then propose a detailed implementation plan. Use when: planning an issue, analyzing a ticket, breaking down work, proposing a solution, or creating an implementation plan."
 argument-hint: "Issue identifier (e.g., DRA-5005 or GitHub issue URL)"
 disable-model-invocation: true
 ---
 
 ## Scope Guard
 
-Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
+Resolve the current repository from the active workspace or `git rev-parse --show-toplevel`; for GitHub issues, verify the repository belongs to the `upfluence` organization before reading repository content. Keep this workflow read-only.
 
 # Issue Analysis & Implementation Plan
 
@@ -19,7 +19,7 @@ Before starting this workflow, verify that the active workspace or repository pa
 
 ## Required Tools
 
-This workflow requires access to: Linear or GitHub (depending on the issue source).
+This workflow requires access to the configured Linear or GitHub integration, local repository read access, and the current authenticated identity when the issue source requires it.
 
 ## Procedure
 
@@ -29,6 +29,7 @@ This workflow requires access to: Linear or GitHub (depending on the issue sourc
 - Fetch all comments on the issue
 - Fetch all sub-issues / child issues
 - If linked issues exist, review those for additional context
+- Keep this workflow read-only. Do not change issue status, assignee, comments, labels, or repository files.
 
 ### Step 2: Analyze Each Item
 
@@ -48,12 +49,12 @@ For each issue/sub-issue, output:
 
 **Affected files**:
 
-- `path/to/file.ext` — what changes and why
+- `[file.ext](path/to/file.ext#L1)` — what changes and why.
 
 **Implementation**:
 
 1. Step-by-step changes with precise code blocks
-2. Each code block should show the exact modification (not the full file)
+2. Each code block should show the exact modification (not the full file) when the proposed change is concrete enough to do so
 3. Reference the specific file and location
 
 **Considerations**:

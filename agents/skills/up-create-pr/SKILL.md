@@ -1,8 +1,12 @@
 ---
 name: up-create-pr
-description: "Create a GitHub PR for a Linear issue branch using the repo's PR template, with Linear issue linking and user review. Use when: opening a PR for a Linear ticket, creating a pull request for Linear, submitting Linear work for review."
+description: "Create a GitHub PR for a Linear issue branch using the repo's PR template, with Linear issue linking and user review. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: opening a PR for a Linear ticket, creating a pull request for Linear, submitting Linear work for review."
 argument-hint: "Linear issue identifier (e.g., DRA-1234)"
 ---
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
 
 # Create PR for Linear Issue
 

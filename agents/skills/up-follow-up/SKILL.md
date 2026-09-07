@@ -1,7 +1,12 @@
 ---
 name: up-follow-up
-description: "Daily follow-up for an Upfluence frontend developer: scans Linear issues assigned to me by status (In Progress, In Review, Ready for RC) and the matching open GitHub PRs in the upfluence org, surfacing unread comments, stale review threads, missing/outdated test links, failing CI, and merge-ready tickets. Use when: doing daily follow-up, checking my sprint progress, preparing for standup, reviewing my open PRs, checking test link freshness, finding mergeable Ready for RC tickets."
+description: "Daily follow-up for an Upfluence frontend developer: scans Linear issues assigned to me by status (In Progress, In Review, Ready for RC) and the matching open GitHub PRs in the upfluence org, surfacing unread comments, stale review threads, missing/outdated test links, failing CI, and merge-ready tickets. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: doing daily follow-up, checking my sprint progress, preparing for standup, reviewing my open PRs, checking test link freshness, finding mergeable Ready for RC tickets."
+disable-model-invocation: true
 ---
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
 
 # Follow-Up
 
@@ -122,6 +127,7 @@ For each `Ready for RC` issue with one or more linked PRs:
    - Merge each linked PR with the repo's standard strategy ("create a merge commit" unless the repo convention says otherwise). If a merge fails partway through a multi-PR issue, stop and report which PRs were merged and which weren't.
    - Transition the Linear issue per the workflow reference (Step 1).
    - Report the new state.
+
 ### Step 7: Final Report
 
 Output a single condensed markdown report grouped by Linear status. One block per issue, with:

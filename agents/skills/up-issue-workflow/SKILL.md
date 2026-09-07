@@ -1,8 +1,13 @@
 ---
 name: up-issue-workflow
-description: "End-to-end workflow to fix a Linear issue: analyze, branch, implement, test, commit, push, and open a PR. Use when: fixing a Linear ticket, working on a Linear issue, implementing a DRA/ENG ticket, creating a branch for Linear, opening a PR for an issue."
+description: "End-to-end workflow to fix a Linear issue: analyze, branch, implement, test, commit, push, and open a PR. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: fixing a Linear ticket, working on a Linear issue, implementing a DRA/ENG ticket, creating a branch for Linear, opening a PR for an issue."
 argument-hint: "Linear issue identifier (e.g., DRA-5005)"
+disable-model-invocation: true
 ---
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
 
 # Linear Issue Workflow
 
@@ -94,7 +99,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 
 ### Step 9: Create the PR
 
-Use the `linear-create-pr` skill with the current Linear issue identifier.
+Use the `up-create-pr` skill with the current Linear issue identifier.
 
 ## Constraints
 

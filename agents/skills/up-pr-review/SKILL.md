@@ -1,8 +1,13 @@
 ---
 name: up-pr-review
-description: "Review a pull request for code quality, bugs, security, and logic errors. Use when: reviewing a PR, code review, reviewing changes, analyzing diffs, giving feedback on code."
+description: "Review a pull request for code quality, bugs, security, and logic errors. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: reviewing a PR, code review, reviewing changes, analyzing diffs, giving feedback on code."
 argument-hint: "PR number or URL (optional, defaults to active PR)"
+disable-model-invocation: true
 ---
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
 
 # Pull Request Review
 

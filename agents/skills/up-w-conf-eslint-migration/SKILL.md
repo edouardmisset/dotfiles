@@ -1,13 +1,18 @@
 ---
 name: up-w-conf-eslint-migration
-description: "Automates migration of Upfluence projects from legacy ESLint (.eslintrc) to the new flat config using @upfluence/w-conf, then iteratively cleans up surfaced rule violations rule-by-rule. Use when: migrating eslint to w-conf, updating eslint config, preparing an Upfluence project for ESLint v10+, converting legacy ESLint setups, cleaning up lint violations surfaced by a new config."
+description: "Automates migration of Upfluence projects from legacy ESLint (.eslintrc) to the new flat config using @upfluence/w-conf, then iteratively cleans up surfaced rule violations rule-by-rule. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: migrating eslint to w-conf, updating eslint config, preparing an Upfluence project for ESLint v10+, converting legacy ESLint setups, cleaning up lint violations surfaced by a new config."
 argument-hint: "Project path (e.g., 'ember-identity' or './path/to/project')"
 user-invocable: true
+disable-model-invocation: true
 ---
 
 # Upfluence w-conf ESLint Migration
 
 Automates the conversion of Upfluence projects from the legacy `.eslintrc.js` format to ESLint's modern flat config with `@upfluence/w-conf`. This skill handles dependency updates, file generation, and cleanup.
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it, and that the project path being migrated is also within that root. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If either path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, install dependencies, or run commands.
 
 ## When to Use
 

@@ -1,8 +1,13 @@
 ---
 name: up-issue-analysis
-description: "Analyze a Linear or GitHub issue with its comments and sub-issues, then propose a detailed implementation plan. Use when: planning an issue, analyzing a ticket, breaking down work, proposing a solution, creating an implementation plan."
+description: "Analyze a Linear or GitHub issue with its comments and sub-issues, then propose a detailed implementation plan. Only use from a workspace or repository under ~/Documents/code/upfluence/. Use when: planning an issue, analyzing a ticket, breaking down work, proposing a solution, creating an implementation plan."
 argument-hint: "Issue identifier (e.g., DRA-5005 or GitHub issue URL)"
+disable-model-invocation: true
 ---
+
+## Scope Guard
+
+Before starting this workflow, verify that the active workspace or repository path is `~/Documents/code/upfluence` or a descendant of it. Compare path components, not a string prefix, so paths such as `~/Documents/code/upfluence-other` are outside scope. If the path is outside the root, stop and tell the user that this skill is restricted to the Upfluence work tree; do not read project files, call external services, or run commands.
 
 # Issue Analysis & Implementation Plan
 

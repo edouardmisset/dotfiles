@@ -94,6 +94,7 @@ for b in staging main master; do git show-ref --verify --quiet refs/remotes/orig
 
 ### Step 8: Push
 
+- Make sure to lint and format the code before pushing
 - Push the branch to GitHub
 - If the push fails, display the error and suggest the user check their Git authentication and remote permissions
 

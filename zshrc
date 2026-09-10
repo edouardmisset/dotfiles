@@ -65,8 +65,8 @@ SAVEHIST=$HISTSIZE
 HISTFILE="$HOME/.zsh_history"
 HISTDUP=erase
 HISTORY_IGNORE='(c|clear)'
-setopt appendhistory sharehistory hist_ignore_space
-setopt hist_ignore_dups hist_ignore_all_dups hist_save_no_dups hist_find_no_dups
+setopt appendhistory hist_ignore_space hist_ignore_dups hist_ignore_all_dups hist_save_no_dups hist_find_no_dups
+unsetopt sharehistory
 
 # ── Behaviour ─────────────────────────────────────────────────────────────
 export NULLCMD=bat                           # default viewer for `< file`

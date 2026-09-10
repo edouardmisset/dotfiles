@@ -87,6 +87,16 @@ Ready for review
 
 - Separately ask whether to change the Linear issue to `In Review`. Only perform that transition after confirmation.
 
+- Lastly, ask the user if this PR should be a X-squad review request. If so, present the user with a short description providing the necessary context for the reviewers. Including a few sentences (maximum 5 lines) explaining what changed, why, and anything reviewers should pay particular attention to. This will be pasted in a dedicated slack channel. Here is an example:
+
+```txt
+Hi @frontend,
+Here is a [PR](<PR_URL>) for you to review.
+The PR takes place in the workflow table of `publishr-admin-web`, where we needed to add an extra column for tracking shipping status as we are now shipping items.
+In order to do that, we modified the relevant components (`<component-files-name>`) and updated the necessary styles (`<style-files-name>`).
+Please pay particular attention to the changes in the workflow table initialization.
+```
+
 ## Constraints
 
 **Review (never skip):**

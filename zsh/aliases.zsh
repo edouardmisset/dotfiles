@@ -56,6 +56,7 @@ typeset -g _git_log_pretty="%Cred%h%Creset -%C(auto)%d%Creset %s %Cgreen(%ar) %C
 alias gac="git add -A && git commit -m"
 alias gca="git commit --amend --no-edit"
 alias gdel="git branch -D"
+alias gbD="git branch -D"
 # Branch list with subject, relative date and author, newest first
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 # Prune remotes, switch to default branch and delete merged local branches

@@ -91,7 +91,7 @@ brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
 # Create, run, and share large language models (LLMs)
-brew "ollama", link: false
+brew "ollama"
 # AI coding agent, built for the terminal
 brew "opencode"
 # Cryptography and SSL/TLS Toolkit
@@ -205,6 +205,8 @@ cask "mactracker"
 cask "ollama-app"
 # Desktop application for Open WebUI
 cask "open-webui"
+# AI coding agent desktop client
+cask "opencode-desktop"
 # Home media player
 cask "plex"
 # Home media server
@@ -326,6 +328,4 @@ vscode "wix.vscode-import-cost"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
-npm "@colbymchenry/codegraph"
 npm "corepack"
-npm "opencode-ai"

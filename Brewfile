@@ -102,6 +102,8 @@ brew "php"
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# On-device speech toolkit for Apple Silicon: ASR, TTS, VAD, diarization
+brew "speech"
 # Cross-shell prompt for astronauts
 brew "starship"
 # Official tldr client written in Rust

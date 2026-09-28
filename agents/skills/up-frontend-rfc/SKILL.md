@@ -1,3 +1,9 @@
+---
+name: up-frontend-rfc
+description: "Skill for writing frontend RFCs in a structured two-phase workflow: first creating a document outline, then detailing the implementation."
+disable-model-invocation: true
+---
+
 # FE RFC Writing Skill
 
 This document defines the workflow to build a frontend RFC in two phases:

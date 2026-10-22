@@ -61,7 +61,7 @@ alias gbD="git branch -D"
 # Branch list with subject, relative date and author, newest first
 alias gbr+="git branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate"
 # Prune remotes, switch to default branch and delete merged local branches
-alias gclean="git remote prune origin && git switch \$(get_default_branch) && git branch --merged | grep -Ev '(^\*|master|main|dev|staging)' | xargs git branch -d"
+alias gclean="git fetch --prune origin && git switch \$(get_default_branch) && git pull --ff-only && git branch --merged "origin/$(get_default_branch)" --format="%(refname:short)" | grep -Ev "^(master|main|dev|staging)$" | xargs -r git branch -d"
 
 # Checkout shortcuts
 alias gco="git checkout"

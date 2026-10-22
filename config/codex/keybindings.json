@@ -4,6 +4,10 @@
     "key": null
   },
   {
+    "command": "openAvatarOverlay",
+    "key": null
+  },
+  {
     "command": "toggleTerminal",
     "key": "Ctrl+$"
   }

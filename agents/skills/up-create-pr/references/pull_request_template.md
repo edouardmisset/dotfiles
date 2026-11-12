@@ -30,7 +30,6 @@ Useful Resource : [Ember Octane vs Classic Cheat Sheet](https://ember-learn.gith
 - [ ] Properly assigned
 - [ ] Added/updated tests
 - [ ] Added/updated documentation
-- [ ] Migrated touched components to Glimmer Components
 - [ ] Added `data-control-name` attribute to relevant parts
 - [ ] Properly labeled
 

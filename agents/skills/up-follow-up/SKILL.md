@@ -27,9 +27,9 @@ Most-used repos:
 - `ember-identity`
 - `RFCs` — textual RFCs for project specs
 
-Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hypertable`, `hypertable-extension`, `identity-web`, `man`, `plugin-web`, `private-actions`, `uedit`, `w-conf`.
+Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hypertable`, `hypertable-extension`, `identity-web`, `_man`, `plugin-web`, `private-actions`, `uedit`, `w-conf`.
 
-**Linear ticket workflow reference:** `~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md` — read this once at the start of every follow-up so status definitions and transitions are accurate.
+**Linear ticket workflow reference:** `~/Documents/code/upfluence/_man/frontend/how-to/linear-ticket-workflow.md` — read this once at the start of every follow-up so status definitions and transitions are accurate.
 
 **Test link patterns** (what gets posted on a PR by `make run_preview_job`):
 
@@ -40,7 +40,7 @@ Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hyp
 
 ### Step 1: Load Workflow Reference
 
-Read `~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md` to ground status names, owner roles, and the transitions expected at each step. Use it to disambiguate any status decision below.
+Read `~/Documents/code/upfluence/_man/frontend/how-to/linear-ticket-workflow.md` to ground status names, owner roles, and the transitions expected at each step. Use it to disambiguate any status decision below.
 
 ### Step 2: Resolve Identity
 
@@ -144,7 +144,7 @@ Omit any status section that has zero items.
 
 1. PR scope is the `upfluence` GitHub organization only. Never include personal forks or other orgs.
 2. Linear assignee filter must use the currently authenticated user. Never hardcode a name or id.
-3. Read the workflow reference (`~/Documents/code/upfluence/man/frontend/how-to/linear-ticket-workflow.md`) before deciding any status transition.
+3. Read the workflow reference (`~/Documents/code/upfluence/_man/frontend/how-to/linear-ticket-workflow.md`) before deciding any status transition.
 4. **Reads are free; writes always require explicit confirmation.** Read-only operations (listing issues/PRs, fetching comments, checking CI status, scanning for test links, reading workflow docs, computing report data) run without asking. **Every** write to Linear or GitHub — posting or editing comments, transitioning Linear status, attaching/updating test links on a Linear issue, requesting reviews, merging PRs, and running `make run_preview_job` — must be confirmed by me each time. Never batch multiple writes behind a single "yes"; ask per action (or per clearly-scoped group) and wait for my reply before proceeding.
 5. Test link freshness is decided by comparing the link's referenced commit/build to the PR's HEAD commit SHA. Different SHA → outdated.
 6. When running `make run_preview_job`, `cd` into the correct repo under `~/Documents/code/upfluence/<repo>` first. Never run it from another repo's directory.

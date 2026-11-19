@@ -25,9 +25,9 @@ Most-used repos:
 - `upfluence-web` — monorepo with packages: `acquisition-web`, `crm-web`, `inbox-web`, `settings-web`, `affiliates-web`, `engine-base`, `publishr-admin-web` (my team uses this most), `upfluence-web`, `analytics-web`, `facade-web`, `publishr-client-web`
 - `oss-components`
 - `ember-identity`
-- `RFCs` — textual RFCs for project specs
+- `_RFCs` — textual RFCs for project specs
 
-Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hypertable`, `hypertable-extension`, `identity-web`, `_man`, `plugin-web`, `private-actions`, `uedit`, `w-conf`.
+Other repos I touch: `creators-web`, `ember-influencer`, `ember-upf-utils`, `hypertable`, `hypertable-extension`, `identity-web`, `_man`, `plugin-web`, `_private-actions`, `uedit`, `w-conf`.
 
 **Linear ticket workflow reference:** `~/Documents/code/upfluence/_man/frontend/how-to/linear-ticket-workflow.md` — read this once at the start of every follow-up so status definitions and transitions are accurate.
 

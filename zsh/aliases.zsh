@@ -35,6 +35,7 @@ alias system_update="sudo softwareupdate --install --all --verbose"
 alias zshrc="code ~/.dotfiles && code ~/.zshrc"
 alias sourcez="source ~/.zshrc"
 alias aliases="code ~/.dotfiles && code ~/.dotfiles/zsh/aliases.zsh"
+alias skillss="code ~/.dotfiles"
 alias aliass="aliases"
 alias fdns="sudo dscacheutil -flushcache && sudo killall -HUP mDNSResponder" # 192.168.1.45
 

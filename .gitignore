@@ -8,3 +8,4 @@ config/yarn/global
 .DS_Store
 tokens
 tools/bin/
+config/opencode/service.json

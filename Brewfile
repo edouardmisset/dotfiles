@@ -57,15 +57,13 @@ brew "simdjson"
 # Open-source, cross-platform JavaScript runtime environment
 brew "node"
 # Interpreted, interactive, object-oriented programming language
-brew "python@3.13"
+brew "python@3.14"
 # Search tool like grep and The Silver Searcher
 brew "ripgrep"
 # Self-improving AI agent that creates skills from experience
 brew "hermes-agent"
 # Apache HTTP server
 brew "httpd"
-# Interpreted, interactive, object-oriented programming language
-brew "python@3.14"
 # User-friendly cURL replacement (command-line HTTP client)
 brew "httpie"
 # Command-line benchmarking tool
@@ -76,12 +74,16 @@ brew "icu4c@76"
 brew "imageoptim-cli"
 # Lightweight and flexible command-line JSON processor
 brew "jq"
+# Simple terminal UI for git commands
+brew "lazygit"
 # Pager program similar to more
 brew "less"
 # Fast, flexible, config-based cli for linting Markdown/CommonMark files
 brew "markdownlint-cli2"
 # Mac App Store command-line interface
 brew "mas"
+# Modern and intuitive terminal-based text editor
+brew "micro"
 # Matroska media files manipulation tools
 brew "mkvtoolnix"
 # Read, create, and modify MP4 files
@@ -90,8 +92,10 @@ brew "mp4v2"
 brew "n"
 # Free (GNU) replacement for the Pico text editor
 brew "nano"
+# Port scanning utility for large networks
+brew "nmap"
 # Create, run, and share large language models (LLMs)
-brew "ollama"
+brew "ollama", restart_service: :changed
 # AI coding agent, built for the terminal
 brew "opencode"
 # Cryptography and SSL/TLS Toolkit
@@ -102,6 +106,8 @@ brew "php"
 brew "pnpm"
 # Protocol buffers (Google's data interchange format)
 brew "protobuf"
+# Interpreted, interactive, object-oriented programming language
+brew "python@3.13"
 # On-device speech toolkit for Apple Silicon: ASR, TTS, VAD, diarization
 brew "speech"
 # Cross-shell prompt for astronauts
@@ -251,18 +257,24 @@ mas "DaisyDisk", id: 411643860
 mas "Fantastical", id: 975937182
 mas "Gemini 2", id: 1090488118
 mas "Gifski", id: 1351639930
+mas "Home Assistant", id: 1099568401
+mas "Itsyhome", id: 6758070650
 mas "JustFocus", id: 1142151959
 mas "Mactracker", id: 430255202
 mas "MindNode Classic", id: 1289197285
+mas "MindNode Classic", id: 1289197285
 mas "Name Mangler 3", id: 603637384
+mas "Numbers", id: 361304891
 mas "Numbers", id: 409203825
 mas "OmniFocus", id: 1346203938
 mas "One Thing", id: 1604176982
+mas "Pages", id: 361309726
 mas "Pages", id: 409201541
 mas "Pandan", id: 1569600264
 mas "PrettyJSON for Safari", id: 1445328303
 mas "RetroArch", id: 6499539433
 mas "Shareful", id: 1522267256
+mas "WireGuard", id: 1451685025
 mas "Xcode", id: 497799835
 mas "Zush", id: 6758432449
 vscode "aaron-bond.better-comments"
@@ -293,6 +305,7 @@ vscode "github.vscode-pull-request-github"
 vscode "hideoo.starlight-links"
 vscode "ibm.output-colorizer"
 vscode "irongeek.vscode-env"
+vscode "jnoortheen.nix-ide"
 vscode "jock.svg"
 vscode "johnpapa.vscode-peacock"
 vscode "keesschollaart.vscode-home-assistant"
@@ -309,6 +322,8 @@ vscode "ms-vscode.remote-explorer"
 vscode "ms-vsliveshare.vsliveshare"
 vscode "naumovs.color-highlight"
 vscode "ollama.ollama"
+vscode "openai.chatgpt"
+vscode "openai.codex-audio"
 vscode "oven.bun-vscode"
 vscode "oxc.oxc-vscode"
 vscode "p42ai.refactor"
@@ -327,6 +342,7 @@ vscode "unifiedjs.vscode-mdx"
 vscode "vitest.explorer"
 vscode "voidzero.vite-plus-extension-pack"
 vscode "wix.vscode-import-cost"
+vscode "wmaurer.change-case"
 vscode "xyc.vscode-mdx-preview"
 vscode "yzane.markdown-pdf"
 vscode "yzhang.markdown-all-in-one"
